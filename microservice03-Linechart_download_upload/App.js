@@ -16,6 +16,9 @@ user.on('error', (error) => {
 
 const producer = new kafka.Producer(user);
 
+const connectDB = require("./database/connect");
+require("dotenv").config();
+
 app.get('/', (req, res) => {
   res.send('Hello, World!');
 });
