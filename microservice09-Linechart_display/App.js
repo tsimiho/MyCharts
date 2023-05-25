@@ -26,6 +26,8 @@ consumer.on('message', function (message) {
   console.log(message.value);
 });
   
+const connectDB = require("./database/connect");
+require("dotenv").config();
 
 app.get('/', (req, res) => {
   res.send('Hello, World!');
