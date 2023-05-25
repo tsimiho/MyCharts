@@ -1,5 +1,31 @@
 const express = require('express');
 const app = express();
+const kafka = require('kafka-node');
+
+const user = new kafka.KafkaClient({
+  kafkaHost: 'localhost:9092'
+});
+
+user.on('ready', () => {
+  console.log('Kafka Connected');
+});
+
+user.on('error', (error) => {
+  console.error('Error connecting to Kafka:', error);
+});
+
+// Configure Kafka consumer
+const consumer = new kafka.Consumer(
+  new kafka.KafkaClient({kafkaHost: 'localhost:9092'}),
+  [{ topic: 'My-topic' }]
+);
+
+// Consume messages from Kafka broker
+consumer.on('message', function (message) {
+  // Display the message
+  console.log(message.value);
+});
+  
 
 app.get('/', (req, res) => {
   res.send('Hello, World!');
