@@ -6,3 +6,7 @@
 1 για choreographer/orchstrator
 
 Συνολικά 16
+
+
+Δημιουργία: frontend -> (Gateway) -> kafka topic -> ms για δημιουργία
+Λήψη: frontend -> (Gateway) -> 

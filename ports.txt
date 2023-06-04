@@ -1,0 +1,5 @@
+kafka: 9092
+frontend: 3000
+Producer: 9000
+Linechart-Create: 9001
+

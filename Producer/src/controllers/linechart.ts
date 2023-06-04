@@ -1,10 +1,5 @@
 import { Request, Response } from "express";
-import { Kafka } from "kafkajs";
-
-const kafka = new Kafka({
-    clientId: "producer",
-    brokers: ["10.31.5.74:9092"], // [env.get("KAFKA_BOOTSTRAP_SERVER").required().asString()],
-});
+import kafka from "../config/kafka";
 
 const producer = kafka.producer();
 
