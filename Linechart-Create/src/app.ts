@@ -1,15 +1,16 @@
-import Express from "express";
+import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./database/connect";
+import run from "./consumer/consumer";
 
-const app = Express();
+const app = express();
 
 dotenv.config();
 
-app.use(Express.static("./public"));
-app.use(Express.json());
-app.use(Express.urlencoded({ extended: true }));
+app.use(express.static("./public"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 const port = 9001;
@@ -20,7 +21,7 @@ const start = async () => {
         if (!mongoURI) {
             throw new Error("MONGO_URI environment variable is not defined.");
         } else {
-            await connectDB(mongoURI);
+            // await connectDB(mongoURI);
             app.listen(port, () =>
                 console.log(`Server is listening on port ${port}...`)
             );
@@ -31,5 +32,6 @@ const start = async () => {
 };
 
 start();
+run();
 
-module.exports = app;
+export default app;
