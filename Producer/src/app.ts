@@ -2,6 +2,7 @@ import Express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./database/connect";
+import create from "./routes/create"
 
 const app = Express();
 
@@ -15,8 +16,7 @@ app.use(cors());
 // routes
 app.use("/api/create", create);
 
-
-const port = 9103;
+const port = 9000;
 
 const start = async () => {
     const mongoURI = process.env.MONGO_URI;
