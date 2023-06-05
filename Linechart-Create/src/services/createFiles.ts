@@ -8,8 +8,6 @@ import ExportingOfflineModule from "highcharts/modules/offline-exporting";
 ExportingModule(Highcharts);
 ExportingCSVModule(Highcharts);
 ExportingOfflineModule(Highcharts);
-// Enable Highcharts exporting module
-ExportingModule(Highcharts);
 
 const create = async (chartData: Highcharts.Options) => {
     try {
