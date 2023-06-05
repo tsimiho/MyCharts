@@ -1,7 +1,6 @@
 import kafka from "../config/kafka";
 import create from "../services/createFiles";
 
-const topic = "create_linechart";
 const consumer = kafka.consumer({ groupId: "my-consumer-group" });
 
 const errorTypes = ["unhandledRejection", "uncaughtException"];
@@ -32,11 +31,12 @@ signalTraps.map((type) => {
 
 const run = async () => {
     await consumer.connect();
-    await consumer.subscribe({ topic: topic });
+    await consumer.subscribe({ topic: "linechart_create" });
     await consumer.run({
         eachMessage: async ({ topic, partition, message }) => {
             if (message.value != null) {
-                await create(JSON.parse(message.value.toString()));
+                const { email, data } = JSON.parse(message.value.toString());
+                await create(data);
             }
         },
     });

@@ -1,8 +1,7 @@
 import LineChartSchema from "../models/linechart";
 import kafka from "../config/kafka";
-import { Message } from "kafkajs"
 
-const storeDiagram = async (username: string, data: object) => {
+const storeDiagram = async (email: string, data: object) => {
     const diagram = await LineChartSchema.create(data);
 
     const producer = kafka.producer();
@@ -10,9 +9,15 @@ const storeDiagram = async (username: string, data: object) => {
     try {
         await producer.connect();
 
+        const id = diagram._id;
+
+        const message = JSON.stringify({
+            email,
+            id,
+        });
         await producer.send({
-            topic: "create_linechart",
-            messages: [{key: }],
+            topic: "diagram_id",
+            messages: [{ key: "0", value: message }],
         });
     } catch (error) {
         console.log(`[kafka-producer] ${(error as Error).message}`, error);
