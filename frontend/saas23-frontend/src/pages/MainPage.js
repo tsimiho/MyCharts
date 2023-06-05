@@ -11,6 +11,8 @@ import {Link,Navigate,useParams} from 'react-router-dom'
 import Chart from "chart.js/auto";
 import LineChart from "../components/LineChart";
 import jwt_decode from "jwt-decode";
+import axios from 'axios'
+
 
 const getOptions = (type) => ({
   chart: {
