@@ -1,6 +1,4 @@
 import kafka from "../config/kafka";
-import adduser from "../services/adduser";
-import addquotas from "../services/addquotas";
 
 const consumer = kafka.consumer({ groupId: "my-consumer-group" });
 
@@ -32,17 +30,13 @@ signalTraps.map((type) => {
 
 const run = async () => {
     await consumer.connect();
-    await consumer.subscribe({ topic: 'login' });
+    await consumer.subscribe({ topic: 'userdata' });
     await consumer.run({
         eachMessage: async ({ topic, partition, message }) => {
             if (message.value != null) {
-                if(topic == 'login') {
+                if(topic == 'userdata') {
                     console.log(message.value.toString())
-                    await adduser(message.value.toString());
-                } else if(topic == 'addquotas') {
-                    console.log(message.value.toString())
-                    await addquotas(message.value.toString(),message.value.toString());
-                }     
+                }   
             }
         },
     });

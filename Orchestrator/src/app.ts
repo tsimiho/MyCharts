@@ -1,9 +1,9 @@
 import Express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import create from "./routes/create";
 import login from "./routes/login";
 import quotas from "./routes/quotas"
+import dotenv from "dotenv";
 
 const app = Express();
 

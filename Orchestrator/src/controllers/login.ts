@@ -10,7 +10,7 @@ const login = async (req: Request, res: Response) => {
 
         await producer.send({
             topic: "login",
-            messages: req.body.email,
+            messages: [{ value: req.body.email }],
         });
     } catch (error) {
         console.log(`[kafka-producer] ${(error as Error).message}`, error);

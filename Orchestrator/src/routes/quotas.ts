@@ -3,6 +3,6 @@ const router = Express.Router();
 
 import quotas from "../controllers/quotas";
 
-router.route("/linechart").post(quotas);
+router.route("/").post(quotas);
 
 export default router;
