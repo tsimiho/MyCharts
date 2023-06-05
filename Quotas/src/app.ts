@@ -1,26 +1,19 @@
-import Express from "express";
+import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./database/connect";
-import create from "./routes/create";
-import login from "./routes/login";
-import quotas from "./routes/quotas"
+import run from "./consumer/consumer";
 
-const app = Express();
+const app = express();
 
 dotenv.config();
 
-app.use(Express.static("./public"));
-app.use(Express.json());
-app.use(Express.urlencoded({ extended: true }));
+app.use(express.static("./public"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-// routes
-app.use("/api/create", create);
-app.use("/api/login", login);
-app.use("/api/quotas", quotas);
-
-const port = 9000;
+const port = 9010;
 
 const start = async () => {
     const mongoURI = process.env.MONGO_URI;
@@ -28,7 +21,7 @@ const start = async () => {
         if (!mongoURI) {
             throw new Error("MONGO_URI environment variable is not defined.");
         } else {
-            await connectDB(mongoURI);
+            // await connectDB(mongoURI);
             app.listen(port, () =>
                 console.log(`Server is listening on port ${port}...`)
             );
@@ -39,5 +32,6 @@ const start = async () => {
 };
 
 start();
+run();
 
-module.exports = app;
+export default app;

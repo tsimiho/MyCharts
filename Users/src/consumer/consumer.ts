@@ -1,7 +1,7 @@
 import kafka from "../config/kafka";
-import create from "../services/createFiles";
+import adduser from "../services/adduser";
 
-const topic = "create_linechart";
+const topic = "login";
 const consumer = kafka.consumer({ groupId: "my-consumer-group" });
 
 const errorTypes = ["unhandledRejection", "uncaughtException"];
@@ -36,7 +36,7 @@ const run = async () => {
     await consumer.run({
         eachMessage: async ({ topic, partition, message }) => {
             if (message.value != null) {
-                await create(JSON.parse(message.value.toString()));
+                await adduser(message.value.toString());
             }
         },
     });

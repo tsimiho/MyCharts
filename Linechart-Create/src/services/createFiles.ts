@@ -11,7 +11,7 @@ ExportingOfflineModule(Highcharts);
 // Enable Highcharts exporting module
 ExportingModule(Highcharts);
 
-async function create(chartData: Highcharts.Options) {
+const create = async (chartData: Highcharts.Options) => {
     try {
         const chartOptions: Highcharts.Options = {
             ...chartData,
