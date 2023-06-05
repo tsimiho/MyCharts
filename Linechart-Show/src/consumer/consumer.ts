@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import kafka from "../config/kafka";
 import storeDiagram from "../services/storeDiagram";
-import returnDiagram from "../services/returnDiagram"; 
+import returnDiagram from "../services/returnDiagram";
 
 const consumer = kafka.consumer({ groupId: "my-consumer-group" });
 
@@ -39,10 +39,14 @@ const run = async () => {
         eachMessage: async ({ topic, partition, message }) => {
             if (message.value != null) {
                 if (topic === "linechart_create") {
-                    const { username, data } = JSON.parse(message.value.toString());
-                    await storeDiagram(username, data);
-                } else if (topic === "linechart_request"){
-                    const id = new mongoose.Schema.Types.ObjectId(message.value.toString())
+                    const { email, data } = JSON.parse(
+                        message.value.toString()
+                    );
+                    await storeDiagram(email, data);
+                } else if (topic === "linechart_request") {
+                    const id = new mongoose.Schema.Types.ObjectId(
+                        message.value.toString()
+                    );
                     await returnDiagram(id);
                 }
             }

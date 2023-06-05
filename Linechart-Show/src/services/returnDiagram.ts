@@ -1,5 +1,6 @@
 import { Schema } from "mongoose";
 import LineChartSchema from "../models/linechart";
+import kafka from "../config/kafka";
 
 const returnDiagram = async (diagram_id: Schema.Types.ObjectId) => {
     const diagram = await LineChartSchema.findOne({
@@ -7,7 +8,20 @@ const returnDiagram = async (diagram_id: Schema.Types.ObjectId) => {
     });
 
     if (diagram) {
-        return diagram;
+        try {
+            const producer = kafka.producer();
+            await producer.connect();
+
+            const message = JSON.stringify({
+                diagram,
+            });
+            await producer.send({
+                topic: "linechart_show",
+                messages: [{ key: "0", value: message }],
+            });
+        } catch (error) {
+            console.log(`[kafka-producer] ${(error as Error).message}`, error);
+        }
     }
 };
 
