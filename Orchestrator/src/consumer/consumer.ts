@@ -31,6 +31,7 @@ signalTraps.map((type) => {
 const run = async () => {
     await consumer.connect();
     await consumer.subscribe({ topic: 'userdata' });
+    await consumer.subscribe({ topic: 'linechart_show' });
     await consumer.run({
         eachMessage: async ({ topic, partition, message }) => {
             if (message.value != null) {
