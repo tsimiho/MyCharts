@@ -34,9 +34,13 @@ const run = async () => {
     await consumer.run({
         eachMessage: async ({ topic, partition, message }) => {
             if (message.value != null) {
-                if(topic == 'userdata') {
+                if(topic === 'userdata') {
                     console.log(message.value.toString())
-                }   
+                }
+                else if (topic === "linechart_show") {
+                    const { diagram } = JSON.parse(message.value.toString())
+                    // send diagram to frontend
+                }  
             }
         },
     });
