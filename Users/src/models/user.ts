@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema({
         unique: true,
         default: undefined,
     },
-    tokens: {
+    quotas: {
         type: Number,
         required: false,
         default: 5,

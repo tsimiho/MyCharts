@@ -4,14 +4,19 @@ import kafka from "../config/kafka";
 const producer = kafka.producer();
 
 const quotas = async (req: Request, res: Response) => {
-    console.log(req.body.email+" "+req.body.email)
     try {
-        await producer.connect();
+        console.log(req.body.email+" "+req.body.quotas)
+        const { email, quotas } = req.body;
 
+        const message = JSON.stringify({
+            email,
+            quotas,
+        });
+
+        await producer.connect();
         await producer.send({
             topic: "addquotas",
-            messages: [{ value: req.body.email },
-                       { value: req.body.quotas }],
+            messages: [{value: message}]
         });
     } catch (error) {
         console.log(`[kafka-producer] ${(error as Error).message}`, error);

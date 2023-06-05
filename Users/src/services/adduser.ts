@@ -7,13 +7,15 @@ const adduser = async (email: string) => {
     let user = await UserSchema.findOne({
         email: email
     })
+    console.log("Here1")
 
     if (!user) {
-        user = await UserSchema.create(email);
+        console.log(email)
+        user = await UserSchema.create({email: email});
     }
     try {
         await producer.connect();
-
+        console.log("adduser: "+JSON.stringify(user))
         await producer.send({
             topic: "userdata",
             messages: [{ value: JSON.stringify(user) }],

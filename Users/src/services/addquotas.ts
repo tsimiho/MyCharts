@@ -7,7 +7,7 @@ const addquotas = async (email: string, quotas: string) => {
     })
     if (user) {
         // Add the quotas value to the existing tokens value
-        if(user.tokens) user.tokens += parseInt(quotas,10);
+        if(user.quotas) user.quotas += parseInt(quotas,10);
   
         // Save the updated user object
         await user.save();

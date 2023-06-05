@@ -36,12 +36,13 @@ const run = async () => {
     await consumer.run({
         eachMessage: async ({ topic, partition, message }) => {
             if (message.value != null) {
-                if(topic == 'login') {
-                    console.log(message.value.toString())
+                if(topic === 'login') {
+                    console.log("user consumer: "+message.value.toString())
                     await adduser(message.value.toString());
-                } else if(topic == 'addquotas') {
-                    console.log(message.value.toString())
-                    await addquotas(message.value.toString(),message.value.toString());
+                } else if(topic === 'addquotas') {
+                    const data = JSON.parse(message.value.toString())
+                    console.log(data)
+                    await addquotas(data[0],data[1]);
                 }     
             }
         },
