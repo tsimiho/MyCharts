@@ -1,0 +1,7 @@
+users login/creation --> login, Pub: Orchestrator, Sub: Users
+return user data --> userdata, Pub: Users, Sub: Orchestrator
+Add quotas --> addquotas, Pub: Orchestrator, Sub: Users
+6 create diagram --> "diagram+create", Pub: Orchestrator, Subs: "diagram"+Create, "diagram"+Show
+diagram id created --> diagramid, Pub: "diagram"+Show, Sub: Users (ενημερωση quotas)
+6 request diagram --> "diagram"+request, Pub: Orchestrator, Sub: "diagram"+Show
+6 show diagram --> "diagram"+show, Pub: "diagram"+Show, Sub: Orchestrator
