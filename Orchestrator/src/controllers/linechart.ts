@@ -5,11 +5,12 @@ const producer = kafka.producer();
 
 const linechart = async (req: Request, res: Response) => {
     try {
-        const { email, data } = req.body;
+        const { email, data, name } = req.body;
 
         const message = JSON.stringify({
             email,
             data,
+            name,
         });
 
         await producer.connect();

@@ -1,16 +1,14 @@
-import UserSchema from "../models/user"
+import UserSchema from "../models/user";
 import kafka from "../config/kafka";
 
 const addquotas = async (email: string, quotas: string) => {
-    let user = await UserSchema.findOne({
-        email: email
-    })
+    const user = await UserSchema.findOne({
+        email: email,
+    });
     if (user) {
-        // Add the quotas value to the existing tokens value
-        if(user.quotas) user.quotas += parseInt(quotas,10);
-  
-        // Save the updated user object
-        await user.save();
+        const q = user.quotas + parseInt(quotas, 10);
+
+        await UserSchema.findOneAndUpdate({ email: email }, { quotas: q });
     }
 };
 

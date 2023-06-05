@@ -39,10 +39,10 @@ const run = async () => {
         eachMessage: async ({ topic, partition, message }) => {
             if (message.value != null) {
                 if (topic === "linechart_create") {
-                    const { email, data } = JSON.parse(
+                    const { email, data, name } = JSON.parse(
                         message.value.toString()
                     );
-                    await storeDiagram(email, data);
+                    await storeDiagram(email, data, name);
                 } else if (topic === "linechart_request") {
                     const id = new mongoose.Schema.Types.ObjectId(
                         message.value.toString()

@@ -12,23 +12,29 @@ const UserSchema = new mongoose.Schema({
         default: 5,
     },
     diagrams: {
-        type: [{
-            Type: {
-                type: String,
-                required: true
+        type: [
+            {
+                DiagramID: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    required: true,
+                },
+                Type: {
+                    type: String,
+                    required: true,
+                },
+                Name: {
+                    type: String,
+                    required: true,
+                },
+                Created_On: {
+                    type: Date,
+                    required: true,
+                },
             },
-            Name: {
-                type: String,
-                required: true
-            },
-            Created_On: {
-                type: Date,
-                required: true
-            }
-        }],
+        ],
         required: false,
-        default: []
-    }
+        default: [],
+    },
 });
 
 export default mongoose.model("UserSchema", UserSchema);

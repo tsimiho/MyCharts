@@ -1,8 +1,8 @@
-import { Schema } from "mongoose";
+import mongoose from "mongoose";
 import LineChartSchema from "../models/linechart";
 import kafka from "../config/kafka";
 
-const returnDiagram = async (diagram_id: Schema.Types.ObjectId) => {
+const returnDiagram = async (diagram_id: mongoose.Types.ObjectId) => {
     const diagram = await LineChartSchema.findOne({
         _id: diagram_id,
     });
