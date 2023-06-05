@@ -138,18 +138,6 @@ function MainPage({user, setUser}) {
     );
   };
 
-  const chartRef = React.createRef();
-
-  const downloadChart = () => {
-    const canvas = chartRef.current.chartInstance.canvas;
-    const dataURL = canvas.toDataURL("image/png");
-    const downloadLink = document.createElement("a");
-    downloadLink.href = dataURL;
-    downloadLink.download = "chart.png";
-    downloadLink.click();
-  };
-
-
   // for Google Login
 
   function handleCallbackResponse(response) {
@@ -207,12 +195,10 @@ function MainPage({user, setUser}) {
           <MyChart /> 
           <LineChart type={Math.round(Math.random())} chartData={{
         labels: ['Red', 'Orange', 'Blue'],
-        // datasets is an array of objects where each object represents a set of data to display corresponding to the labels above. for brevity, we'll keep it at one object
         datasets: [
             {
               label: 'Popularity of colours',
               data: [55, 23, 96],
-              // you can set indiviual colors for each bar
               backgroundColor: [
                 'rgba(255, 255, 255, 0.6)',
                 'rgba(255, 255, 255, 0.6)',
