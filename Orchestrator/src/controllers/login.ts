@@ -4,12 +4,13 @@ import kafka from "../config/kafka";
 const producer = kafka.producer();
 
 const login = async (req: Request, res: Response) => {
+    console.log(req.body.email)
     try {
         await producer.connect();
 
         await producer.send({
             topic: "login",
-            messages: [req.body],
+            messages: req.body.email,
         });
     } catch (error) {
         console.log(`[kafka-producer] ${(error as Error).message}`, error);

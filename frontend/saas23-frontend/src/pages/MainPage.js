@@ -145,8 +145,12 @@ function MainPage({user, setUser}) {
   function handleCallbackResponse(response) {
     console.log("token" + response.credential);
     var userObject = jwt_decode(response.credential);
-    console.log(userObject);
+    console.log(userObject.email);
     setUser(userObject);
+    axios.post("http://localhost:9000/api/login", {email: userObject.email})
+            // .then((response) => {
+            //   console.log(response.data);
+    // })
     document.getElementById("signInDiv").hidden = true;
   }
   useEffect(() => {
