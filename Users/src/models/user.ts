@@ -12,7 +12,20 @@ const UserSchema = new mongoose.Schema({
         default: 5,
     },
     diagrams: {
-        type: [String],
+        type: [{
+            Type: {
+                type: String,
+                required: true
+            },
+            Name: {
+                type: String,
+                required: true
+            },
+            Created_On: {
+                type: Date,
+                required: true
+            }
+        }],
         required: false,
         default: []
     }
