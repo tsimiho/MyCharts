@@ -4,10 +4,10 @@ import ExportingModule from "highcharts/modules/exporting";
 import ExportingCSVModule from "highcharts/modules/export-data";
 import ExportingOfflineModule from "highcharts/modules/offline-exporting";
 
-// Enable Highcharts exporting modules
-ExportingModule(Highcharts);
-ExportingCSVModule(Highcharts);
-ExportingOfflineModule(Highcharts);
+// // Enable Highcharts exporting modules
+// ExportingModule(Highcharts);
+// ExportingCSVModule(Highcharts);
+// ExportingOfflineModule(Highcharts);
 
 const create = async (chartData: Highcharts.Options) => {
     try {
