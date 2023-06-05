@@ -30,14 +30,17 @@ signalTraps.map((type) => {
 
 const run = async () => {
     await consumer.connect();
-    await consumer.subscribe({ topic: 'userdata' });
-    await consumer.subscribe({ topic: 'linechart_show' });
+    await consumer.subscribe({ topic: "userdata" });
+    await consumer.subscribe({ topic: "linechart_show" });
     await consumer.run({
         eachMessage: async ({ topic, partition, message }) => {
             if (message.value != null) {
-                if(topic === 'userdata') {
-                    console.log(message.value.toString())
-                }   
+                if (topic === "userdata") {
+                    console.log(message.value.toString());
+                } else if (topic === "linechart_show") {
+                    const { diagram } = JSON.parse(message.value.toString());
+                    // send diagram to frontend
+                }
             }
         },
     });
