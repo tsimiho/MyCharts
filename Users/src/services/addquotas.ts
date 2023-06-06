@@ -6,9 +6,10 @@ const addquotas = async (email: string, quotas: string) => {
         email: email,
     });
     if (user) {
-        const q = user.quotas + parseInt(quotas, 10);
-
-        await UserSchema.findOneAndUpdate({ email: email }, { quotas: q });
+        if (user.quotas){
+            const q = user.quotas + parseInt(quotas, 10);
+            await UserSchema.findOneAndUpdate({ email: email }, { quotas: q });
+        }
     }
 };
 

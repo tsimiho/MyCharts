@@ -7,6 +7,7 @@ import HighchartsExporting from 'highcharts/modules/exporting';
 import HighchartsAccessibility from 'highcharts/modules/accessibility';
 import HighchartsDependencyWheel from 'highcharts/modules/dependency-wheel';
 import Sankey from 'highcharts/modules/sankey'
+import axios from 'axios'
 
 function NewChart() {
   const [i, setI] = useState(0);
@@ -20,6 +21,30 @@ function NewChart() {
         var n = i - 1;
         setI(n);
     }
+  }
+  const jsonData = [
+    { category: 'A', value: 10 },
+    { category: 'B', value: 20 },
+    { category: 'C', value: 30 },
+  ];
+  
+  const chartConfig = {
+    type: 'bar',
+    data: {
+      labels: ['A', 'B', 'C'],
+      datasets: [
+        {
+          label: 'Value',
+          data: [10, 20, 30],
+          backgroundColor: 'rgba(0, 123, 255, 0.6)',
+        },
+      ],
+    },
+  };
+
+  const upload = () => {
+    console.log("Here")
+    axios.post("http://localhost:9001/api/create/linechart/",{email: "nkbenetos@gmail.com", data: chartConfig, name: "Linechart"})
   }
 
   return (
@@ -69,7 +94,7 @@ function NewChart() {
             <input  id="file" type="file" name="file" />
         </div>
         <div className='buttonsuser'>
-            <button className='mainbutton'>Upload and create chart</button> &nbsp; &nbsp;
+            <button className='mainbutton' onClick={() => upload()}>Upload and create chart</button> &nbsp; &nbsp;
             <button className='mainbutton'>Cancel</button> 
         </div>
       </div>

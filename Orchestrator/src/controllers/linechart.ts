@@ -12,10 +12,11 @@ const linechart = async (req: Request, res: Response) => {
             data,
             name,
         });
+        console.log(message)
 
         await producer.connect();
         await producer.send({
-            topic: "create_linechart",
+            topic: "linechart_create",
             messages: [{ key: "linechart", value: message }],
         });
     } catch (error) {
