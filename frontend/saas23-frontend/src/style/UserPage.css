@@ -125,8 +125,8 @@
     background-repeat: no-repeat;
     cursor: pointer;
     position: absolute;
-    top: 40%;
-    right: -30px;
+    top: 50%;
+    right: -40px;
     transform: translateY(-60%);
     background-color: transparent;
   }
@@ -141,8 +141,8 @@
     background-repeat: no-repeat;
     cursor: pointer;
     position: absolute;
-    top: 40%;
-    left: -20px;
+    top: 50%;
+    left: -30px;
     transform: translateY(-60%);
     background-color: transparent;
   }

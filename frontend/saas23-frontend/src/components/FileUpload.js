@@ -8,11 +8,23 @@ function FileUpload() {
     setSelectedFile(file);
   };
 
+  const handleDragOver = (event) => {
+    event.preventDefault();
+  };
+
+  const handleDrop = (event) => {
+    event.preventDefault();
+    const file = event.dataTransfer.files[0];
+    setSelectedFile(file);
+  };
+
   return (
-    <div className={`upload-box ${selectedFile ? "active" : ""}`}>
+    <div className={`upload-box ${selectedFile ? "active" : ""}`} 
+         onDragOver={handleDragOver}
+         onDrop={handleDrop}>
       <label htmlFor="file" className="upload-label">
         <span className="upload-icon">+</span> Select File
-      </label>
+      </label><br/>
       <input
         id="file"
         type="file"
@@ -21,7 +33,7 @@ function FileUpload() {
         onChange={handleFileChange}
       />
       {selectedFile && (
-        <span className="file-name">   {selectedFile.name}</span>
+        <span className="file-name">Selected File: {selectedFile.name}</span>
       )}
     </div>
   );

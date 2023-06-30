@@ -10,10 +10,10 @@ import HighchartsDependencyWheel from 'highcharts/modules/dependency-wheel';
 import Sankey from 'highcharts/modules/sankey'
 import axios from 'axios'
 
-function NewChart() {
+function ChartPreview() {
   const [i, setI] = useState(0);
   const types = ['bar', 'line'];
-  var quotas = 5;
+
   const changeI = (plus) => {
     if(plus) {
         var n = i + 1;
@@ -45,6 +45,7 @@ function NewChart() {
 
   const upload = () => {
     console.log("Here")
+    axios.post("http://localhost:9001/api/create/linechart/",{email: "nkbenetos@gmail.com", data: chartConfig, name: "Linechart"})
   }
 
   return (
@@ -91,25 +92,16 @@ function NewChart() {
           <button class="arrow-button-left" onClick={() => changeI(false)}></button>
           <button class="arrow-button" onClick={() => changeI(true)}></button>
         </div>
-        <button className='mainbutton'>Description template for {types[i%2]} chart </button>
-        {
-          quotas < 10 ?
-          <h3 className='titleuser'> Not enough quotas to create chart</h3>
-          :
-          <br/>
-        }
+        <button className='mainbutton'>Description template for {types[i%2]} chart </button><br/><br/>
+
         <FileUpload />
         <div className='buttonsuser'>
-            <Link to='/newchart/preview'>
-              <button className='mainbutton' onClick={() => upload()}>Upload and create chart</button> 
-            </Link> &nbsp; &nbsp;
-            <Link to='/newchart'>
-              <button className='mainbutton'>Cancel</button> 
-            </Link> 
+            <button className='mainbutton' onClick={() => upload()}>Upload and create chart</button> &nbsp; &nbsp;
+            <button className='mainbutton'>Cancel</button> 
         </div>
       </div>
     </div>
   );
 }
 
-export default NewChart;
+export default ChartPreview;

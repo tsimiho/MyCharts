@@ -2,7 +2,6 @@ import '../style/UserPage.css';
 import {Link,Navigate,useParams} from 'react-router-dom'
 import React, { useState } from 'react';
 
-
 function LoginPage() {
   const Login = () => {
     const responseGoogle = (response) => {
