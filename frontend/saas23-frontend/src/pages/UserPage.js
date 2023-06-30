@@ -48,8 +48,6 @@ function UserPage({user, setUser}) {
         <h1 className='title'> MyCharts App</h1>
         <button className='logout' onClick={logout}>Log out</button>
       </div>
-      <div className='container1'>
-      </div>
       <div className='container'>
         <h1 className='title'> Hello {user.name}</h1>
         <table className='data'>
@@ -60,10 +58,10 @@ function UserPage({user, setUser}) {
         <div className='buttonsuser'>
             <Link to='/'>
                 <button className='mainbutton'>My charts</button>
-            </Link> &nbsp;
+            </Link> &nbsp;&nbsp;&nbsp;
             <Link to='/newchart'>
                 <button className='mainbutton'>New chart</button>
-            </Link> &nbsp;
+            </Link> &nbsp;&nbsp;&nbsp;
             <Link to='/'>
                 <button className='mainbutton'>Buy credits</button> 
             </Link> 

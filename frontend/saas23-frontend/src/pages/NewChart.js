@@ -2,6 +2,7 @@ import '../style/UserPage.css';
 import {Link,Navigate,useParams} from 'react-router-dom'
 import React, { useState } from 'react';
 import Highcharts from 'highcharts';
+import FileUpload from '../components/FileUpload.js'
 import HighchartsReact from 'highcharts-react-official';
 import HighchartsExporting from 'highcharts/modules/exporting';
 import HighchartsAccessibility from 'highcharts/modules/accessibility';
@@ -88,11 +89,9 @@ function NewChart() {
                 }}
             />
         <button class="arrow-button-left" onClick={() => changeI(false)}></button>
-        <button class="arrow-button" onClick={() => changeI(true)}></button><br/><br/>
-        <div className="letters">
-            <label> Select File </label>
-            <input  id="file" type="file" name="file" />
-        </div>
+        <button class="arrow-button" onClick={() => changeI(true)}></button>
+        <button className='mainbutton'>Description template for {types[i%2]} chart </button><br/><br/>
+        <FileUpload />
         <div className='buttonsuser'>
             <button className='mainbutton' onClick={() => upload()}>Upload and create chart</button> &nbsp; &nbsp;
             <button className='mainbutton'>Cancel</button> 
