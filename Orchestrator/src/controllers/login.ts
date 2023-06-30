@@ -4,7 +4,7 @@ import kafka from "../config/kafka";
 const producer = kafka.producer();
 
 const login = async (req: Request, res: Response) => {
-    console.log(req.body.email)
+    console.log(req.body.email);
     try {
         await producer.connect();
 
@@ -12,6 +12,7 @@ const login = async (req: Request, res: Response) => {
             topic: "login",
             messages: [{ value: req.body.email }],
         });
+
     } catch (error) {
         console.log(`[kafka-producer] ${(error as Error).message}`, error);
     }

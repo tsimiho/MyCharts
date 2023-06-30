@@ -1,5 +1,5 @@
 import kafka from "../config/kafka";
-import create from "../services/createFiles";
+// import create from "../services/createFiles";
 
 const consumer = kafka.consumer({ groupId: "my-consumer-group" });
 
@@ -36,7 +36,7 @@ const run = async () => {
         eachMessage: async ({ topic, partition, message }) => {
             if (message.value != null) {
                 const { email, data } = JSON.parse(message.value.toString());
-                await create(data);
+                // await create(data);
             }
         },
     });
