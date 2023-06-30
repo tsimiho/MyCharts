@@ -13,6 +13,8 @@ import LineChart from "../components/LineChart";
 import jwt_decode from "jwt-decode";
 import axios from 'axios'
 
+// const WebSocket = require('ws');
+// const socket = new WebSocket('ws://localhost:9100');
 
 const getOptions = (type) => ({
   chart: {
@@ -141,13 +143,34 @@ function MainPage({user, setUser}) {
   };
 
   // for Google Login
+  // Handle messages received from the backend
+  // socket.onmessage = (event) => {
+  //   const message = JSON.parse(event.data);
+  //   if (message.status === 'acknowledgment') {
+  //     // Handle acknowledgment response
+  //   } else if (message.status === 'data') {
+  //     // Handle data response
+  //     console.log(message)
+  //   }
+  // };
 
+  // Send user email to the backend
   function handleCallbackResponse(response) {
     console.log("token" + response.credential);
     var userObject = jwt_decode(response.credential);
     console.log(userObject.email);
     setUser(userObject);
-    axios.post("http://localhost:9000/api/login", {email: userObject.email})
+
+    // socket.send(JSON.stringify({ email: userObject.email }));
+
+    document.getElementById("signInDiv").hidden = true;
+  }
+  function handleCallbackResponse(response) {
+    // console.log("token" + response.credential);
+    var userObject = jwt_decode(response.credential);
+    console.log(userObject.email);
+    setUser(userObject);
+    axios.post("http://localhost:9001/api/login", {email: userObject.email})
             // .then((response) => {
             //   console.log(response.data);
     // })
@@ -181,7 +204,7 @@ function MainPage({user, setUser}) {
       <div className="buttonscontainer"> 
         <button className='mainbutton' onClick={() => openModal('bar', 0)}><img src="/barchart.jpg" alt="BarChart"/>BarChart</button> &nbsp;
         <button className='mainbutton' onClick={() => openModal('line',0)}><img src="/linechart.png" alt="LineChart"/>LineChart</button> &nbsp;
-        <button className='mainbutton' onClick={() => openModal('line',1)}><img src="/lineann.png" alt="LineChart with Ann"/>LineChart with annotations</button> 
+        <button className='mainbutton' onClick={() => openModal('line',1)}><img src="/lineann.png" alt="LineChart with Ann"/>LineChart with annotations</button> &nbsp;
         <button className='mainbutton' onClick={() => openModal('dependencywheel',2)}><img src="/dependencywheel.jpg" alt="LineChart with Ann"/>Dependency wheel</button> 
         <Modal
           isOpen={modalIsOpen}
