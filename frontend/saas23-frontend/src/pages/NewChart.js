@@ -1,6 +1,6 @@
 import '../style/UserPage.css';
 import {Link,Navigate,useParams} from 'react-router-dom'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Highcharts from 'highcharts';
 import FileUpload from '../components/FileUpload.js'
 import HighchartsReact from 'highcharts-react-official';
@@ -9,6 +9,10 @@ import HighchartsAccessibility from 'highcharts/modules/accessibility';
 import HighchartsDependencyWheel from 'highcharts/modules/dependency-wheel';
 import Sankey from 'highcharts/modules/sankey'
 import axios from 'axios'
+import { ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function NewChart() {
   const [i, setI] = useState(0);
@@ -46,6 +50,12 @@ function NewChart() {
   const upload = () => {
     console.log("Here")
   }
+
+  useEffect(() => {
+    if (quotas < 10) {
+      toast.error("You don't have enough quotas to create a chart!", { position: "top-left", autoClose: false }) // Display an error toast notification
+    }
+  }, []);
 
   return (
     <div className='background'>
@@ -91,23 +101,24 @@ function NewChart() {
           <button class="arrow-button-left" onClick={() => changeI(false)}></button>
           <button class="arrow-button" onClick={() => changeI(true)}></button>
         </div>
-        <button className='mainbutton'>Description template for {types[i%2]} chart </button>
-        {
-          quotas < 10 ?
-          <h3 className='titleuser'> Not enough quotas to create chart</h3>
-          :
-          <br/>
-        }
+        <button className='mainbutton'>Description template for {types[i%2]} chart </button><br/>
         <FileUpload />
         <div className='buttonsuser'>
-            <Link to='/newchart/preview'>
-              <button className='mainbutton' onClick={() => upload()}>Upload and create chart</button> 
-            </Link> &nbsp; &nbsp;
+            {
+              quotas < 10 ?
+                <br/>
+              :
+              <Link to='/newchart/preview'>
+                <button className='mainbutton' onClick={() => upload()}>Upload and create chart</button> 
+              </Link>
+            }
+             &nbsp; &nbsp;
             <Link to='/newchart'>
               <button className='mainbutton'>Cancel</button> 
             </Link> 
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

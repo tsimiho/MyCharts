@@ -6,6 +6,7 @@ import UserPage from './pages/UserPage'
 import NewChart from './pages/NewChart'
 import LoginPage from './pages/LoginPage'
 import ChartPreview from './pages/ChartPreview'
+import BuyCredits from './pages/BuyCredits'
 
 // ClientID: 919864012907-eihr65v77jminklnqd7j61r2bf6q2pdt.apps.googleusercontent.com
 // ClientSecret: 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
@@ -21,6 +22,7 @@ function App() {
         <Route exact path="/newchart" element={<NewChart />} />
         <Route exact path="/newchart/preview" element={<ChartPreview />} />
         <Route exact path="/login" element={<LoginPage />} />
+        <Route exact path="/purchasecredits" element={<BuyCredits user={user} setUser={setUser}/>} />
       </Routes>
     </BrowserRouter>
   );

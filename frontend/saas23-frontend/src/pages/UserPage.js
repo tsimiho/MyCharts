@@ -62,7 +62,7 @@ function UserPage({user, setUser}) {
             <Link to='/newchart'>
                 <button className='mainbutton'>New chart</button>
             </Link> &nbsp;&nbsp;&nbsp;
-            <Link to='/'>
+            <Link to='/purchasecredits'>
                 <button className='mainbutton'>Buy credits</button> 
             </Link> 
         </div>
