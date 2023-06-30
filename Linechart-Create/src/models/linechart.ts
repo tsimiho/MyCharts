@@ -5,65 +5,46 @@ const LineChartSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         default: undefined,
     },
-    labels: {
-        type: [String],
-        required: true,
+    title: {
+        text: { 
+            type: String, 
+            default: "" 
+        },
     },
-    datasets: {
-        type: [
-            {
-                label: {
-                    type: String,
-                    default: "",
-                },
-                data: {
-                    type: [Number],
-                    required: true,
-                },
-                backgroundColor: {
-                    type: String,
-                    default: "rgba(0, 0, 0, 0.1)",
-                },
-                borderCapStyle: {
-                    type: String,
-                    default: "butt",
-                },
-                borderColor: {
-                    type: String,
-                    default: "rgba(0, 0, 0, 0.1)",
-                },
-                borderWidth: {
-                    type: Number,
-                    default: 1,
-                },
-                hoverBorderCapStyle: {
-                    type: String,
-                    required: false,
-                },
-                hoverBorderColor: {
-                    type: String,
-                    required: false,
-                },
-                pointBackgroundColor: {
-                    type: String,
-                    default: "rgba(0, 0, 0, 0.1)",
-                },
-                pointBorderColor: {
-                    type: String,
-                    default: "rgba(0, 0, 0, 0.1)",
-                },
-                pointBorderWidth: {
-                    type: Number,
-                    default: 1,
-                },
-                tension: {
-                    type: Number,
-                    default: 0,
-                },
-            },
-        ],
-        required: true,
+    subtitle: {
+        text: { 
+            type: String, 
+            default: "" 
+        },
     },
+    yAxis: {
+        title: {
+            text: { 
+                type: String,
+                default: "" 
+            }
+        }
+    },
+    xAxis: {
+        title: {
+            text: { 
+                type: String,
+                default: "" 
+        },
+        categories: [String],
+    },
+    series: [{
+        name: { 
+            type: String, 
+            default: "" 
+        },
+        data: { 
+            type: [Number], 
+            default: [] 
+        }
+    }]
+   
 });
 
 export default mongoose.model("LineChartSchema", LineChartSchema);
+

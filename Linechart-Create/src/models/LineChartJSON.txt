@@ -1,0 +1,36 @@
+/*
+- "categories" in the X title are labels put sequentially in every tick. If added the series / data should be of the same size
+-legend.layout : horizontal or vertical
+-legend.align: left, right or center
+-series is an array, and you can add multiple series inside. Their name will be displayed in the legend
+*/
+
+{
+    "title": {
+        "text": "Add title here"
+    },
+    "subtitle": {
+        "text": "Add sub-title here"
+    },
+    "yAxis": {
+        "title": {
+            "text": "Y Axis Title"
+        }
+    },
+    "xAxis": {
+	"title": {
+            "text": "X Axis Title "
+        }
+        "categories": [],
+    },
+    "legend": {
+        "layout": "vertical",
+        "align": "right",
+        "verticalAlign": "middle"
+    },
+    "series": [
+        {
+            "name": "Series 1",
+            "data": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+        }
+}
