@@ -3,7 +3,7 @@ import kafka from "../config/kafka";
 import storeDiagram from "../services/storeDiagram";
 import returnDiagram from "../services/returnDiagram";
 
-const consumer = kafka.consumer({ groupId: "my-consumer-group" });
+const consumer = kafka.consumer({ groupId: "linechart-show-group" });
 
 const errorTypes = ["unhandledRejection", "uncaughtException"];
 const signalTraps = ["SIGTERM", "SIGINT", "SIGUSR2"];

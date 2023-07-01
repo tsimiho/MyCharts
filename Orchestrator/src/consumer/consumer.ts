@@ -1,6 +1,6 @@
 import kafka from "../config/kafka";
 
-const consumer = kafka.consumer({ groupId: "my-consumer-group" });
+const consumer = kafka.consumer({ groupId: "orchestrator-group" });
 
 const errorTypes = ["unhandledRejection", "uncaughtException"];
 const signalTraps = ["SIGTERM", "SIGINT", "SIGUSR2"];

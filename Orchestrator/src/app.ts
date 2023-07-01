@@ -2,8 +2,9 @@ import Express from "express";
 import cors from "cors";
 import create from "./routes/create";
 import login from "./routes/login";
-import quotas from "./routes/quotas"
+import quotas from "./routes/quotas";
 import dotenv from "dotenv";
+import run from "./consumer/consumer";
 
 const app = Express();
 
@@ -24,7 +25,7 @@ const port = 9001;
 const start = async () => {
     try {
         app.listen(port, () =>
-                console.log(`Server is listening on port ${port}...`)
+            console.log(`Server is listening on port ${port}...`)
         );
     } catch (error) {
         console.log(error);
@@ -32,5 +33,6 @@ const start = async () => {
 };
 
 start();
+run();
 
 module.exports = app;

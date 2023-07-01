@@ -1,25 +1,25 @@
-import UserSchema from "../models/user"
+import UserSchema from "../models/user";
 import kafka from "../config/kafka";
 
 const producer = kafka.producer();
 
 const adduser = async (email: string) => {
     let user = await UserSchema.findOne({
-        email: email
-    })
-    console.log("Here1")
+        email: email,
+    });
 
     if (!user) {
-        console.log(email)
-        user = await UserSchema.create({email: email});
+        console.log(email);
+        user = await UserSchema.create({ email: email });
     }
     try {
         await producer.connect();
-        console.log("adduser: "+JSON.stringify(user))
+        console.log("adduser: " + JSON.stringify(user));
         await producer.send({
             topic: "userdata",
             messages: [{ value: JSON.stringify(user) }],
         });
+        console.log("Here1");
     } catch (error) {
         console.log(`[kafka-producer] ${(error as Error).message}`, error);
     }

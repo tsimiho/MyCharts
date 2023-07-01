@@ -13,6 +13,7 @@ const login = async (req: Request, res: Response) => {
             messages: [{ value: req.body.email }],
         });
 
+        console.log("success");
     } catch (error) {
         console.log(`[kafka-producer] ${(error as Error).message}`, error);
     }
