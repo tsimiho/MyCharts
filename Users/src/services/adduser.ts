@@ -19,7 +19,6 @@ const adduser = async (email: string) => {
             topic: "userdata",
             messages: [{ value: JSON.stringify(user) }],
         });
-        console.log("Here1");
     } catch (error) {
         console.log(`[kafka-producer] ${(error as Error).message}`, error);
     }
