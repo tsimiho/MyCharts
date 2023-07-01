@@ -1,14 +1,12 @@
 import WebSocket from "ws";
 
-function establishWebSocketConnection(tokens: number) {
-    const ws = new WebSocket("localhost:3000");
+function establishWebSocketConnection(tokens: string) {
+    const ws = new WebSocket.Server({ port: 8080 });
 
-    console.log("hey");
-
-    ws.on("open", () => {
+    ws.on("connection", (socket) => {
         console.log("WebSocket connection established");
 
-        ws.send(JSON.stringify(tokens));
+        socket.send(tokens);
     });
 
     ws.on("close", () => {
