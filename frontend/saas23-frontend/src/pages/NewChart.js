@@ -13,9 +13,11 @@ import { ToastContainer } from "react-toastify";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function NewChart() {
+function NewChart({user,setUser}) {
     const [i, setI] = useState(0);
     const types = ["bar", "line"];
+    // var [user, setUser] = useState({});
+
     var quotas = 5;
     const changeI = (plus) => {
         if (plus) {
@@ -57,9 +59,15 @@ function NewChart() {
                 autoClose: false,
             }); // Display an error toast notification
         }
+        const storedUser = localStorage.getItem("user");
+        console.log(user);
+        if (!storedUser) {
+          setUser({})
+        }
     }, [quotas]);
 
-    return (
+    if (Object.keys(user).length === 0) return <Navigate replace to="/" />;
+    else return (
         <div className="background">
             <div className="wrapper2">
                 <img src="/logo.png" alt="Logo" />

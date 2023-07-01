@@ -37,6 +37,7 @@ function UserPage({ user, setUser }) {
 
     function logout() {
         setUser({});
+        localStorage.removeItem("user");
     }
 
     if (Object.keys(user).length === 0) return <Navigate replace to="/" />;

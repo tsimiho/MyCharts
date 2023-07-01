@@ -20,7 +20,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<MainPage user={user} setUser={setUser}/>} />
         <Route exact path="/user" element={<UserPage user={user} setUser={setUser}/>} />
-        <Route exact path="/newchart" element={<NewChart />} />
+        <Route exact path="/newchart" element={<NewChart user={user} setUser={setUser}/>} />
         <Route exact path="/newchart/preview" element={<ChartPreview />} />
         <Route exact path="/login" element={<LoginPage />} />
         <Route exact path="/purchasecredits" element={<BuyCredits user={user} setUser={setUser}/>} />

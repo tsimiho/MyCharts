@@ -200,6 +200,7 @@ function MainPage({ user, setUser }) {
         // .then((response) => {
         //   console.log(response.data);
         // })
+        localStorage.setItem("user", JSON.stringify(userObject)); // Store user object in local storage
         document.getElementById("signInDiv").hidden = true;
     }
     useEffect(() => {
@@ -214,6 +215,12 @@ function MainPage({ user, setUser }) {
             theme: "outline",
             size: "large",
         });
+
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+            const userObject = JSON.parse(storedUser);
+            setUser(userObject);
+        }
     }, []);
 
     function signout() {
