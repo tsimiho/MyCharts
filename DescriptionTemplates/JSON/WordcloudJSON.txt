@@ -1,0 +1,23 @@
+{
+    "title": {
+        "text": "Your Title Here",
+        "align": "left"
+    },
+    "subtitle": {
+        "text": "Your Subtitle Here",
+        "align": "left"
+    },
+    "text": "Your Paragraph text Here",
+
+    "tooltip": {
+        "headerFormat": "Your Tooltip Here: '{point.key}'"
+    },
+    "series": [
+        {
+            "name": "Occurrences",
+            "data": [ ["Word-1",4],["Word-2",1],["Word-3",6],["Word-4",3]
+                
+        }
+    ],
+    
+}

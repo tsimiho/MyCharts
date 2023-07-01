@@ -1,0 +1,35 @@
+{
+    "title": {
+        "text": "Your Chart Title"
+    },
+    "subtitle": {
+        "text": "Your Chart Subtitle"
+    },
+    "xAxis": {
+        "categories": ["Category 1", "Category 2", "Category 3", "..."],
+        "crosshair": true
+    },
+    "yAxis": {
+        "min": 0,
+        "title": {
+            "text": "Your Y-Axis Title"
+        }
+    },
+    "plotOptions": {
+        "column": {
+            "pointPadding": 0.2,
+            "borderWidth": 0
+        }
+    },
+    "series": [
+        {
+            "name": "Series 1 Name",
+            "data": [0, 0, 0, "..."]
+        },
+        {
+            "name": "Series 2 Name",
+            "data": [0, 0, 0, "..."]
+        },
+        "..."
+    ]
+}

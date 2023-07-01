@@ -1,0 +1,69 @@
+{
+    "title": {
+        "text": "Your Title Here",
+        "align": "left"
+    },
+    "caption": {
+        "text": "Your Caption Here"
+    },
+    "annotations": [
+        {
+            "draggable": "Your Value Here",
+            "labelOptions": {
+                "backgroundColor": "Your Color Here",
+                "verticalAlign": "Your Alignment Here",
+                "y": 15
+            },
+            "labels": [
+                {
+                    "point": {
+                        "xAxis": 0,
+                        "yAxis": 0,
+                        "x": 0,
+                        "y": 0
+                    },
+                    "text": "Your Text Here",
+                    "x": 0
+                }
+            ]
+        }
+    ],
+    "xAxis": {
+        "labels": {
+            "format": ""
+        },
+        "minRange": 5,
+        "title": {
+            "text": "Some Title"
+        },
+
+    },
+    "yAxis": {
+        "startOnTick": true,
+        "endOnTick": false,
+        "maxPadding": 0.35,
+        "title": {
+            "text": null
+        },
+        "labels": {
+            "format": ""
+        },
+        "accessibility": {
+            "description": "Elevation",
+            "rangeDescription": "Range: 0 to 1,553 meters"
+        }
+    },
+    "series": [
+        {
+            "data": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+            "lineColor": "#FF0000",
+            "color": "#00FF00",
+            "fillOpacity": 0.5,
+            "name": "Your Series Name",
+            "marker": {
+                "enabled": false
+            },
+            "threshold": null
+        }
+    ]
+}
