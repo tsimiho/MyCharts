@@ -56,7 +56,7 @@ function UserPage({user, setUser}) {
           </tbody>
         </table>
         <div className='buttonsuser'>
-            <Link to='/'>
+            <Link to='/mycharts'>
                 <button className='mainbutton'>My charts</button>
             </Link> &nbsp;&nbsp;&nbsp;
             <Link to='/newchart'>
