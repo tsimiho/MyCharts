@@ -3,7 +3,7 @@ import adduser from "../services/adduser";
 import addquotas from "../services/addquotas";
 import add_diagram from "../services/adddiagram";
 
-const consumer = kafka.consumer({ groupId: "my-consumer-group" });
+const consumer = kafka.consumer({ groupId: "user-group" });
 
 const errorTypes = ["unhandledRejection", "uncaughtException"];
 const signalTraps = ["SIGTERM", "SIGINT", "SIGUSR2"];

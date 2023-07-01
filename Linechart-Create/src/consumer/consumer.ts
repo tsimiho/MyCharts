@@ -1,7 +1,7 @@
 import kafka from "../config/kafka";
 // import create from "../services/createFiles";
 
-const consumer = kafka.consumer({ groupId: "my-consumer-group" });
+const consumer = kafka.consumer({ groupId: "linechart-create-group" });
 
 const errorTypes = ["unhandledRejection", "uncaughtException"];
 const signalTraps = ["SIGTERM", "SIGINT", "SIGUSR2"];
