@@ -48,6 +48,17 @@ function UserPage({ user, setUser }) {
         setUser({});
         localStorage.removeItem("user");
     }
+    
+    useEffect(() => {
+        const storedUser = localStorage.getItem("user");
+        console.log(storedUser)
+        if (storedUser) {
+            const userObject = JSON.parse(storedUser);
+            setUser(userObject);
+        } else {
+            setUser({})
+        }
+    }, []);
 
     if (Object.keys(user).length === 0) return <Navigate replace to="/" />;
     else
@@ -68,11 +79,11 @@ function UserPage({ user, setUser }) {
                     <div className="buttonsuser">
                         <Link to="/mycharts">
                             <button className="mainbutton">My charts</button>
-                        </Link>{" "}
+                        </Link>
                         &nbsp;&nbsp;&nbsp;
                         <Link to="/newchart">
                             <button className="mainbutton">New chart</button>
-                        </Link>{" "}
+                        </Link>
                         &nbsp;&nbsp;&nbsp;
                         <Link to="/purchasecredits">
                             <button className="mainbutton">Buy credits</button>

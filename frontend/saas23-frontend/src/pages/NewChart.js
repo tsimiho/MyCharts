@@ -16,7 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 function NewChart({user,setUser}) {
     const [i, setI] = useState(0);
     const types = ["bar", "line"];
-    // var [user, setUser] = useState({});
+    var [loggedin, setLoggedin] = useState(1);
 
     var quotas = 5;
     const changeI = (plus) => {
@@ -53,20 +53,43 @@ function NewChart({user,setUser}) {
     };
 
     useEffect(() => {
-        if (quotas < 10) {
-            toast.error("You don't have enough quotas to create a chart!", {
-                position: "top-left",
-                autoClose: false,
-            }); // Display an error toast notification
-        }
-        const storedUser = localStorage.getItem("user");
-        console.log(user);
-        if (!storedUser) {
-          setUser({})
-        }
+        
+        // const storedUser = localStorage.getItem("user");
+        // console.log(user);
+        // if (!storedUser) {
+        //   console.log(1);
+        //   setLoggedin(0)
+        // }
     }, [quotas]);
-
-    if (Object.keys(user).length === 0) return <Navigate replace to="/" />;
+    const [selectedFile, setSelectedFile] = useState(null);
+    const handleFileChange = (event) => {
+      const file = event.target.files[0];
+      setSelectedFile(file);
+      if (quotas < 10) {
+        toast.error("You don't have enough quotas to create a chart!", {
+            position: "top-left",
+            autoClose: false,
+        }); // Display an error toast notification
+      }
+    };
+  
+    const handleDragOver = (event) => {
+      event.preventDefault();
+    };
+  
+    const handleDrop = (event) => {
+      event.preventDefault();
+      const file = event.dataTransfer.files[0];
+      setSelectedFile(file);
+      if (quotas < 10) {
+        toast.error("You don't have enough quotas to create a chart!", {
+            position: "top-left",
+            autoClose: false,
+        }); // Display an error toast notification
+      }
+    };
+  
+    if (loggedin === 0) return <Navigate replace to="/" />;
     else return (
         <div className="background">
             <div className="wrapper2">
@@ -124,16 +147,29 @@ function NewChart({user,setUser}) {
                     Description template for {types[i % 2]} chart{" "}
                 </button>
                 <br />
-                <FileUpload />
+                <div className={`upload-box ${selectedFile ? "active" : ""}`} 
+                  onDragOver={handleDragOver}
+                  onDrop={handleDrop}>
+                <label htmlFor="file" className="upload-label">
+                  <span className="upload-icon">+</span> Select File
+                </label><br/>
+                <input
+                  id="file"
+                  type="file"
+                  name="file"
+                  className="file-input"
+                  onChange={handleFileChange}
+                />
+                {selectedFile && (
+                  <span className="file-name">Selected File: {selectedFile.name}</span>
+                )}
+              </div>
                 <div className="buttonsuser">
                     {quotas < 10 ? (
                         <br />
                     ) : (
                         <Link to="/newchart/preview">
-                            <button
-                                className="mainbutton"
-                                onClick={() => upload()}
-                            >
+                            <button className="mainbutton" onClick={() => upload()}>
                                 Upload and create chart
                             </button>
                         </Link>
@@ -144,7 +180,7 @@ function NewChart({user,setUser}) {
                     </Link>
                 </div>
             </div>
-            <ToastContainer />
+          <ToastContainer />
         </div>
     );
 }

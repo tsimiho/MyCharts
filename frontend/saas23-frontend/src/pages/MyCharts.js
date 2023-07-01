@@ -12,10 +12,20 @@ import Highcharts from "highcharts";
 function MyCharts({ user, setUser }) {
     const [i, setI] = useState(0);
     const types = ["bar", "line"];
+    var [loggedin, setLoggedin] = useState(1);
     const data = [
-        ["n. of charts", "10"],
-        ["available credits", "128"],
-        ["last login", "19-07-2022"],
+        ["line", "First","cwc"],
+        ["line", "Second","cwc"],
+        ["line", "Third","cwc"],
+        ["line", "First","cwc"],
+        ["line", "First","cwc"],
+        ["line", "First","cwc"],
+        ["line", "First","cwc"],
+        ["line", "First","cwc"],
+        ["line", "First","cwc"],
+        ["line", "First","cwc"],
+        ["line", "First","cwc"],
+        ["line", "First","cwc"],
     ];
 
     const rows = data.map((row, index) => {
@@ -25,9 +35,16 @@ function MyCharts({ user, setUser }) {
         return <tr key={index}>{cells}</tr>;
     });
 
-    if (Object.keys(user).length === 0) return <Navigate replace to="/" />;
-    else
-        return (
+    useEffect(() => {
+      const storedUser = localStorage.getItem("user");
+      console.log(user);
+      if (!storedUser) {
+        setLoggedin(0)
+      }
+    }, []);
+
+    if (loggedin === 0) return <Navigate replace to="/" />;
+    else return (
             <div className="background">
                 <div className="wrapper">
                     <img src="/logo.png" alt="Logo" />
@@ -52,7 +69,7 @@ function MyCharts({ user, setUser }) {
                 </div>
                 <br />
                 <div className="containermy">
-                    <div className="table">
+                    <div className="table-container">
                         <table className="tablemycharts">
                             <thead>
                                 <tr>
@@ -62,7 +79,25 @@ function MyCharts({ user, setUser }) {
                                     <th>Download</th>
                                 </tr>
                             </thead>
-                            <tbody>{rows}</tbody>
+                            <tbody>
+                              {data.map((rows) => (
+                              <tr key={rows[0]}>
+                                <td>{rows[0]}</td>
+                                <td> {rows[1]}</td>
+                                <td> {rows[2]}</td>
+                                <td>
+                                  <Link to={'/'}>
+                                    <button> View </button>
+                                  </Link>&nbsp;&nbsp;
+                                  <button > Delete </button><br/>
+                                  <Link to={'/'}>
+                                    <button> Stats </button>
+                                  </Link>&nbsp;&nbsp;
+                                  <button > Reset </button>                
+                                </td>
+                              </tr>
+                              ))}
+                          </tbody>
                         </table>
                     </div>
                     <HighchartsReact

@@ -200,11 +200,32 @@
     grid-template-columns: 1fr 1fr; /* Two equal-width columns */
     grid-gap: 20px; /* Gap between columns */
     overflow-x: auto;
-  }
-  
-  .table-container {
+    min-height: 100px; /* Set the desired minimum height */
   }
   .tablemycharts {
     width: 100%;
     table-layout: fixed;
+  }
+  
+  .tablemycharts th,
+  .tablemycharts td {
+    /* Customize the table cell styles */
+    background-color: #a36464;
+    color: #ffffff;
+    padding: 10px;
+    text-align: center;
+    /* Add any other styles you want */
+  }
+  
+  .tablemycharts th {
+    /* Customize the table header cell styles */
+    background-color: #f0f0f0;
+    color: #000000;
+    font-weight: bold;
+    /* Add any other styles you want */
+  }
+
+  .table-container {
+    max-height: 400px; /* Set the desired maximum height */
+    overflow-y: auto;
   }

@@ -215,12 +215,6 @@ function MainPage({ user, setUser }) {
             theme: "outline",
             size: "large",
         });
-
-        const storedUser = localStorage.getItem("user");
-        if (storedUser) {
-            const userObject = JSON.parse(storedUser);
-            setUser(userObject);
-        }
     }, []);
 
     function signout() {
