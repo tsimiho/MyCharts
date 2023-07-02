@@ -10,7 +10,6 @@ const linechart = async (req: Request, res: Response) => {
         const message = JSON.stringify({
             email,
             data,
-            name,
         });
         console.log(message)
 

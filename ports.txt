@@ -2,6 +2,15 @@ kafka: 9092
 frontend: 3000
 Orchestrator: 9000
 Users: 9001
-Linechart-Create: 9010
-
-
+Linechart-Create: 9002
+Linechart-Show: 9003
+LineWithAnnotations-Create: 9004
+LineWithAnnotations-Show: 9005
+DependencyWheel-Create: 9006
+DependencyWheel-Show: 9007
+BasicColumn-Create: 9008
+BasicColumn-Show: 9009
+NetworkChart-Create: 9010
+NetworkChart-Show: 9011
+Polarchart-Create: 9012
+Polarchart-Show: 9013

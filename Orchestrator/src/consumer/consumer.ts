@@ -70,6 +70,11 @@ const run = async () => {
     await consumer.subscribe({ topic: "userdata" });
     await consumer.subscribe({ topic: "quotas_added" });
     await consumer.subscribe({ topic: "linechart_show" });
+    await consumer.subscribe({ topic: "basicColumn_show" });
+    await consumer.subscribe({ topic: "dependencyWheel_show" });
+    await consumer.subscribe({ topic: "lineWithAnnotations_show" });
+    await consumer.subscribe({ topic: "networkGraph_show" });
+    await consumer.subscribe({ topic: "polarchart_show" });
     await consumer.run({
         eachMessage: async ({ topic, partition, message }) => {
             if (message.value != null) {
@@ -77,6 +82,21 @@ const run = async () => {
                     console.log(message.value.toString());
                     broadcastMessage(message.value.toString());
                 } else if (topic === "linechart_show") {
+                    const { diagram } = JSON.parse(message.value.toString());
+                    broadcastMessage(diagram.toString());
+                } else if (topic === "basicColumn_show") {
+                    const { diagram } = JSON.parse(message.value.toString());
+                    broadcastMessage(diagram.toString());
+                } else if (topic === "dependencyWheel_show") {
+                    const { diagram } = JSON.parse(message.value.toString());
+                    broadcastMessage(diagram.toString());
+                } else if (topic === "lineWithAnnotations_show") {
+                    const { diagram } = JSON.parse(message.value.toString());
+                    broadcastMessage(diagram.toString());
+                } else if (topic === "networkGraph_show") {
+                    const { diagram } = JSON.parse(message.value.toString());
+                    broadcastMessage(diagram.toString());
+                } else if (topic === "polarchart_show") {
                     const { diagram } = JSON.parse(message.value.toString());
                     broadcastMessage(diagram.toString());
                 } else if (topic === "quotas_added") {
