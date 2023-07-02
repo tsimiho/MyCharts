@@ -4,8 +4,6 @@ import React, { useState, useEffect } from "react";
 // import WebSocket from "ws";
 
 function UserPage({ user, setUser, userdata, setUserdata }) {
-    
-
     const data = [
         ["n. of charts", userdata.diagrams.length],
         ["available credits", userdata.quotas || ""],

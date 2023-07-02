@@ -2,9 +2,21 @@ import "../style/UserPage.css";
 import { Link, Navigate, useParams } from "react-router-dom";
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import socket from "../components/WebSocket";
 
 function BuyCredits({ user, setUser, userdata, setUserdata }) {
     const [number, setNumber] = useState(0);
+
+    socket.onmessage = ({ data }) => {
+        updateQuotas(data);
+    };
+
+    const updateQuotas = (data) => {
+        userdata.quotas = parseInt(data);
+        console.log(userdata.quotas);
+        setUserdata(userdata);
+        setNumber(0);
+    };
 
     const handleDecrement = () => {
         if (number > 0) setNumber(number - 5);
@@ -25,7 +37,7 @@ function BuyCredits({ user, setUser, userdata, setUserdata }) {
     const AddTokens = () => {
         axios.post("http://localhost:9001/api/quotas", {
             email: user.email,
-            quotas: number,
+            quotas: parseInt(number),
         });
         console.log(number);
     };
@@ -50,7 +62,7 @@ function BuyCredits({ user, setUser, userdata, setUserdata }) {
                         {" "}
                         You have{" "}
                         <span style={{ color: "lightcoral" }}>
-                            {user.quotas}
+                            {userdata.quotas}
                         </span>{" "}
                         tokens
                     </h1>
@@ -94,11 +106,12 @@ function BuyCredits({ user, setUser, userdata, setUserdata }) {
                             onClick={() => AddTokens(number)}
                         >
                             Add Tokens
-                        </button> &nbsp; &nbsp;
+                        </button>{" "}
+                        &nbsp; &nbsp;
                         <Link to="/user">
                             <button className="mainbutton">Cancel</button>
-                        </Link> 
-                   </div>
+                        </Link>
+                    </div>
                 </div>
             </div>
         );

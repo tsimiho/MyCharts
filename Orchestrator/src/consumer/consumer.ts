@@ -68,6 +68,7 @@ const run = async () => {
 
     await consumer.connect();
     await consumer.subscribe({ topic: "userdata" });
+    await consumer.subscribe({ topic: "quotas_added" });
     await consumer.subscribe({ topic: "linechart_show" });
     await consumer.run({
         eachMessage: async ({ topic, partition, message }) => {
@@ -77,8 +78,10 @@ const run = async () => {
                     broadcastMessage(message.value.toString());
                 } else if (topic === "linechart_show") {
                     const { diagram } = JSON.parse(message.value.toString());
-                    // send diagram to frontend
                     broadcastMessage(diagram.toString());
+                } else if (topic === "quotas_added") {
+                    console.log(message.value.toString());
+                    broadcastMessage(message.value.toString());
                 }
             }
         },
