@@ -1,0 +1,37 @@
+{
+    "title": {
+        "text": "Your Chart Title",
+        "align": "left"
+    },
+    "plotOptions": {
+        "pie": {
+            "allowPointSelect": true,
+            "cursor": "pointer",
+            "dataLabels": {
+                "enabled": true,
+                "format": "<b>{point.name}</b>: {point.percentage:.1f} %"
+            }
+        }
+    },
+    "series": [
+        {
+            "name": "Your Series Name",
+            "colorByPoint": true,
+            "data": [
+                {
+                    "name": "Data Point 1",
+                    "y": 0,
+                    "sliced": false,
+                    "selected": false
+                },
+                {
+                    "name": "Data Point 2",
+                    "y": 0,
+                    "sliced": false,
+                    "selected": false
+                },
+                "..."
+            ]
+        }
+    ]
+}

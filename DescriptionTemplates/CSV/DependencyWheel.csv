@@ -1,0 +1,2 @@
+"title","accessibility","series"
+"{""text"":""Your Chart Title""}","{""point"":{""valueDescriptionFormat"":""{index}. From {point.from} to {point.to}: {point.weight}.""}}","[{""keys"":[""From"",""To"",""Weight""],""data"":[[""Object 1"",""Object 2"",0],[""Object 2"",""Object 3"",0],""...""],""type"":""dependencywheel"",""name"":""Your Series Name"",""dataLabels"":{""color"":""#333"",""style"":{""textOutline"":""none""},""textPath"":{""enabled"":true},""distance"":10},""size"":""95%""}]"

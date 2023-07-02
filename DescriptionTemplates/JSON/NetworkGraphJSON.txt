@@ -1,0 +1,53 @@
+{
+    "chart": {
+        "type": "networkgraph",
+        "height": "100%"
+    },
+    "title": {
+        "text": "Your Title Here",
+        "align": "left"
+    },
+    "subtitle": {
+        "text": "Your Subtitle Here",
+        "align": "left"
+    },
+    "plotOptions": {
+        "networkgraph": {
+            "keys": ["from", "to"],
+            "layoutAlgorithm": {
+                "enableSimulation": true,
+                "friction": -0.9
+            }
+        }
+    },
+    "series": [
+        {
+            "accessibility": {
+                "enabled": false
+            },
+            "dataLabels": {
+                "enabled": true,
+                "linkFormat": "",
+                "style": {
+                    "fontSize": "0.8em",
+                    "fontWeight": "normal"
+                }
+            },
+            "id": "Your Series ID Here",
+            "nodes": [
+                {
+                    "id": "Node ID Here",
+                    "marker": {
+                        "radius": 20
+                    },
+                    "color": "Color Here"
+                },
+                // Add more nodes as required
+            ],
+            "data": [
+                ["From", "To"],
+                // Add more data as required
+            ]
+        }
+    ]
+}
