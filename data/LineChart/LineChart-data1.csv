@@ -1,0 +1,2 @@
+title,subtitle,yAxis,xAxis,legend,series
+"{""text"":""Average Annual Salary""}","{""text"":""""}","{""title"":{""text"":""Annual Salary in $ ""}}","{""title"":{""text"":""Year""},""categories"":[2010,2011,2012,2013,2014,2015,2016,2017,2018,2019]}","{""layout"":""vertical"",""align"":""right"",""verticalAlign"":""middle""}","[{""name"":""Computer Engineering"",""data"":[85000,90000,94000,100000,115000,110000,120000,112000,107000,105000]},{""name"":""Mechanical Engineering"",""data"":[95000,98000,105000,117000,120000,115000,110000,107000,103000,99000]}]"

@@ -24,11 +24,13 @@
     "series": [
         {
             "name": "Series 1 Name",
-            "data": [0, 0, 0, "..."]
+            "data": [0, 0, 0, "..."],
+	    "color": "Series 1 Color"
         },
         {
             "name": "Series 2 Name",
-            "data": [0, 0, 0, "..."]
+            "data": [0, 0, 0, "..."],
+	    "color": "Series 2 Color"
         },
         "..."
     ]

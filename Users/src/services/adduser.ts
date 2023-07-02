@@ -9,11 +9,11 @@ const adduser = async (email: string) => {
     });
 
     if (!user) {
-        user = await UserSchema.create({ email: email });
+        user = await UserSchema.create({ email: email, lastLogin: new Date() });
     } else {
         user = await UserSchema.findOneAndUpdate(
             { email: email },
-            { new: false }
+            { new: false, lastLogin: new Date() }
         );
     }
 

@@ -1,0 +1,58 @@
+[
+  {
+    "title": {
+      "text": "Average temperature in Athens"
+    },
+    "subtitle": {
+      "text": "Source: Hellenic National Meteorological Service"
+    },
+    "yAxis": {
+      "title": {
+        "text": "Average temperature in °C "
+      }
+    },
+    "xAxis": {
+      "title": {
+        "text": "Month"
+      },
+      "categories": [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+      ]
+    },
+    "legend": {
+      "layout": "vertical",
+      "align": "right",
+      "verticalAlign": "middle"
+    },
+    "series": [
+      {
+        "name": "Computer Engineering",
+        "data": [
+          12,
+          11,
+          15,
+          20,
+          27,
+          30,
+          33,
+          37,
+          28,
+          25,
+          20,
+          17
+        ]
+      }
+    ]
+  }
+]
