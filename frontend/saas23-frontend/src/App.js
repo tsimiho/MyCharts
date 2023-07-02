@@ -17,13 +17,14 @@ import Confirmation from './pages/ConfirmationPage'
 function App() {
   const [user, setUser] = useState({});
   const [userdata, setUserdata] = useState({});
+  const [newuser, setNewuser] = useState(true);
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route exact path="/" element={<MainPage user={user} setUser={setUser} userdata={userdata} setUserdata={setUserdata}/>} />
-        <Route exact path="/user" element={<UserPage user={user} setUser={setUser} userdata={userdata} setUserdata={setUserdata}/>} />
-        <Route exact path="/confirmation" element={<Confirmation user={user} setUser={setUser} userdata={userdata} setUserdata={setUserdata}/>} />
+        <Route exact path="/" element={<MainPage newuser={newuser} setNewuser={setNewuser} user={user} setUser={setUser} userdata={userdata} setUserdata={setUserdata}/>} />
+        <Route exact path="/user" element={<UserPage newuser={newuser} setNewuser={setNewuser} user={user} setUser={setUser} userdata={userdata} setUserdata={setUserdata}/>} />
+        <Route exact path="/confirmation" element={<Confirmation newuser={newuser} setNewuser={setNewuser} user={user} setUser={setUser} userdata={userdata} setUserdata={setUserdata}/>} />
         <Route exact path="/newchart" element={<NewChart user={user} setUser={setUser} userdata={userdata} setUserdata={setUserdata}/>} />
         <Route exact path="/newchart/preview" element={<ChartPreview />} />
         <Route exact path="/login" element={<LoginPage />} />

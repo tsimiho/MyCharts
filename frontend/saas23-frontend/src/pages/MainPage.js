@@ -49,7 +49,7 @@ const getOptions = (type) => ({
     },
 });
 
-function MainPage({ user, setUser, userdata, setUserdata }) {
+function MainPage({ newuser, setNewuser, user, setUser, userdata, setUserdata }) {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [type, setType] = useState("bar");
     const [ann, setAnn] = useState(0);
@@ -203,6 +203,7 @@ function MainPage({ user, setUser, userdata, setUserdata }) {
         localStorage.setItem("user", JSON.stringify(userObject)); // Store user object in local storage
         document.getElementById("signInDiv").hidden = true;
     }
+
     useEffect(() => {
         /* global google */
         google.accounts.id.initialize({
@@ -217,6 +218,7 @@ function MainPage({ user, setUser, userdata, setUserdata }) {
         });
         const storedUser = localStorage.getItem("user");
         const storedUserdata = localStorage.getItem("userdata");
+    
         if (storedUser) {
             const userObject = JSON.parse(storedUser);
             setUser(userObject);
@@ -230,7 +232,8 @@ function MainPage({ user, setUser, userdata, setUserdata }) {
         document.getElementById("signInDiv").hidden = false;
     }
 
-    if (Object.keys(user).length !== 0) return <Navigate replace to="/confirmation" />;
+    if (newuser === "false") return <Navigate replace to="/user" />;
+    else if (Object.keys(user).length !== 0) return <Navigate replace to="/confirmation" />;
     else
         return (
             <div className="background">

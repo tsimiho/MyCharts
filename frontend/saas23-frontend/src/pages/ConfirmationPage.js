@@ -3,9 +3,8 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import socket from "../components/WebSocket.js";
 
-function Confirmation({ user, setUser, userdata, setUserdata }) {
-    const [newuser, setNewuser] = useState(true);
-
+function Confirmation({ newuser, setNewuser, user, setUser, userdata, setUserdata }) {
+    setNewuser(localStorage.getItem("newuser"));
     const nothanks = () => {
         setUser({});
         setUserdata({});
@@ -16,6 +15,7 @@ function Confirmation({ user, setUser, userdata, setUserdata }) {
         data = JSON.parse(data);
         console.log(data.new);
         setNewuser(data.new);
+        localStorage.setItem("newuser", false);
         setUserdata(data);
         localStorage.setItem("userdata", JSON.stringify(data));
     };

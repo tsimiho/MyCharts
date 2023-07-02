@@ -4,9 +4,7 @@ import React, { useState, useEffect } from "react";
 // import WebSocket from "ws";
 import socket from "../components/WebSocket";
 
-function UserPage({ user, setUser, userdata, setUserdata }) {
-    setUserdata(JSON.parse(localStorage.getItem("userdata")));
-
+function UserPage({ newuser, setNewuser, user, setUser, userdata, setUserdata }) {
     const data = [
         ["n. of charts", userdata.diagrams ? userdata.diagrams.length : ""],
         ["available credits", userdata.quotas || ""],
@@ -22,7 +20,10 @@ function UserPage({ user, setUser, userdata, setUserdata }) {
 
     function logout() {
         setUser({});
+        setNewuser(true);
+        setUserdata({});
         localStorage.removeItem("user");
+        localStorage.removeItem("newuser");
     }
 
     useEffect(() => {
@@ -34,9 +35,11 @@ function UserPage({ user, setUser, userdata, setUserdata }) {
         } else {
             setUser({});
         }
+        setUserdata(JSON.parse(localStorage.getItem("userdata")));
+        setNewuser(localStorage.getItem("newuser"));
     }, [setUser]);
 
-    if (Object.keys(user).length === 0) return <Navigate replace to="/" />;
+    if (newuser ===true) return <Navigate replace to="/" />;
     else
         return (
             <div className="background">
