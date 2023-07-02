@@ -12,23 +12,26 @@ import axios from 'axios'
 import { useLocation } from 'react-router-dom';
 import csvtojson from 'csvtojson';
 
-function ChartPreview() {
+function ChartPreview({ user, setUser, userdata, setUserdata }) {
   const location = useLocation();
   const jsonData = JSON.parse(
     decodeURIComponent(new URLSearchParams(location.search).get("jsonData"))
   );
-  console.log(jsonData[0])
-  const options = {
-    title: JSON.parse(jsonData[0].title),
-    subtitle: JSON.parse(jsonData[0].subtitle),
-    xAxis: JSON.parse(jsonData[0].xAxis),
-    yAxis: JSON.parse(jsonData[0].yAxis),
-    legend: JSON.parse(jsonData[0].legend),
-    series: JSON.parse(jsonData[0].series),
+  const options = {};
+  Object.entries(jsonData[0]).forEach(([key, value]) => {
+    options[key] = JSON.parse(value);
+  });
+
+  const savechart = () => {
+    console.log(userdata.email)
+    axios.post("http://localhost:9001/api/create/linechart", {
+            email: userdata.email,
+            data: options, 
+    });
   };
+
   return (
     <div className="background">
-      {/* Your JSX code for the component */}
       {jsonData.length > 0 && (
         <div>
           <h2>CSV to JSON Conversion Result:</h2>
@@ -36,6 +39,9 @@ function ChartPreview() {
           <HighchartsReact highcharts={Highcharts} options={options} />
         </div>
       )}
+      <Link to="/newchart">
+          <button className="mainbutton" onClick={() => savechart()}>Save chart</button>
+      </Link>
     </div>
   );
 }

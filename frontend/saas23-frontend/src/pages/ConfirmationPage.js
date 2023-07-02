@@ -4,23 +4,27 @@ import React, { useState, useEffect } from "react";
 import socket from "../components/WebSocket.js";
 
 function Confirmation({ newuser, setNewuser, user, setUser, userdata, setUserdata }) {
-    setNewuser(localStorage.getItem("newuser"));
     const nothanks = () => {
         setUser({});
         setUserdata({});
         localStorage.removeItem("user");
     };
 
+    useEffect(() => {
+        const newu = localStorage.getItem("newuser")
+        setNewuser(newu);
+        console.log(newu)
+    }, [setNewuser]);
     socket.onmessage = ({ data }) => {
         data = JSON.parse(data);
         console.log(data.new);
-        setNewuser(data.new);
+        setNewuser(data.new.toString());
         localStorage.setItem("newuser", false);
         setUserdata(data);
         localStorage.setItem("userdata", JSON.stringify(data));
     };
 
-    if (newuser === false) return <Navigate replace to="/user" />;
+    if (newuser === "false") return <Navigate replace to="/user" />;
     else
         return (
             <div className="background">
