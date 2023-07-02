@@ -3,7 +3,7 @@ import kafka from "../config/kafka";
 
 const producer = kafka.producer();
 
-const linechart = async (req: Request, res: Response) => {
+const lineWithAnnotations = async (req: Request, res: Response) => {
     try {
         const { email, data, name } = req.body;
 
@@ -11,11 +11,11 @@ const linechart = async (req: Request, res: Response) => {
             email,
             data,
         });
-        console.log(message)
+        console.log(message);
 
         await producer.connect();
         await producer.send({
-            topic: "linechart_create",
+            topic: "lineWithAnnotations_create",
             messages: [{ key: "linechart", value: message }],
         });
     } catch (error) {
@@ -23,4 +23,4 @@ const linechart = async (req: Request, res: Response) => {
     }
 };
 
-export default linechart;
+export default lineWithAnnotations;
