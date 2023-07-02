@@ -17,6 +17,7 @@ function Confirmation({ user, setUser, userdata, setUserdata }) {
         console.log(data.new);
         setNewuser(data.new)
         setUserdata(data);
+        localStorage.setItem("userdata", JSON.stringify(data)); // Store user object in local storage
     };
 
     if (newuser === false) return <Navigate replace to="/user" />;

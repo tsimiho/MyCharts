@@ -49,7 +49,7 @@ const getOptions = (type) => ({
     },
 });
 
-function MainPage({ user, setUser }) {
+function MainPage({ user, setUser, userdata, setUserdata }) {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [type, setType] = useState("bar");
     const [ann, setAnn] = useState(0);
@@ -215,7 +215,15 @@ function MainPage({ user, setUser }) {
             theme: "outline",
             size: "large",
         });
-    }, []);
+        const storedUser = localStorage.getItem("user");
+        const storedUserdata = localStorage.getItem("userdata");
+        if (storedUser) {
+            const userObject = JSON.parse(storedUser);
+            setUser(userObject);
+            const userdataObject = JSON.parse(storedUserdata);
+            setUserdata(userdataObject);
+        }
+    }, [setUser,setUserdata]);
 
     function signout() {
         setUser({});

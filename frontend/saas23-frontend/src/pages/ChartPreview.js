@@ -1,6 +1,6 @@
 import '../style/UserPage.css';
 import {Link,Navigate,useParams} from 'react-router-dom'
-import React, { useState } from 'react';
+import React, { useEffect,useState } from 'react';
 import Highcharts from 'highcharts';
 import FileUpload from '../components/FileUpload.js'
 import HighchartsReact from 'highcharts-react-official';
@@ -9,58 +9,33 @@ import HighchartsAccessibility from 'highcharts/modules/accessibility';
 import HighchartsDependencyWheel from 'highcharts/modules/dependency-wheel';
 import Sankey from 'highcharts/modules/sankey'
 import axios from 'axios'
+import { useLocation } from 'react-router-dom';
+import csvtojson from 'csvtojson';
 
 function ChartPreview() {
-
+  const location = useLocation();
+  const jsonData = JSON.parse(
+    decodeURIComponent(new URLSearchParams(location.search).get("jsonData"))
+  );
+  console.log(jsonData[0])
+  const options = {
+    title: JSON.parse(jsonData[0].title),
+    subtitle: JSON.parse(jsonData[0].subtitle),
+    xAxis: JSON.parse(jsonData[0].xAxis),
+    yAxis: JSON.parse(jsonData[0].yAxis),
+    legend: JSON.parse(jsonData[0].legend),
+    series: JSON.parse(jsonData[0].series),
+  };
   return (
-    <div className='background'>
-      <div className='wrapper2'>
-        <img src="/logo.png" alt="Logo"/>
-        <h1 className='title'> MyCharts App</h1>
-      </div>
-      <div className='container1'>
-        <Link to='/user'>
-          <button className='logout'>Back</button>
-        </Link> 
-      </div>
-      <div className='containernew'>
-        <h1 className='titleuser'> Let's create your own chart!</h1>
-        <div className='container1'>
-          <HighchartsReact
-                  highcharts={Highcharts}
-                  options={{
-                  chart: {
-                      type: "bar",
-                      height: 250
-                  },
-                  title: {
-                      text: 'My Chart'
-                  },
-                  xAxis: {
-                      categories: ['Apples', 'Bananas', 'Oranges']
-                  },
-                  yAxis: {
-                      title: {
-                      text: 'Fruit Eaten'
-                      }
-                  },
-                  series: [{
-                      name: 'Jane',
-                      data: [1, 0, 4]
-                  }, {
-                      name: 'John',
-                      data: [5, 7, 3]
-                  }],
-                  }}
-              />
+    <div className="background">
+      {/* Your JSX code for the component */}
+      {jsonData.length > 0 && (
+        <div>
+          <h2>CSV to JSON Conversion Result:</h2>
+          <pre>{JSON.stringify(jsonData, null, 2)}</pre>
+          <HighchartsReact highcharts={Highcharts} options={options} />
         </div>
-
-        <div className='buttonsuser'>
-          <Link to="/newchart">
-            <button className="mainbutton">Cancel</button>
-          </Link>       
-        </div>
-      </div>
+      )}
     </div>
   );
 }

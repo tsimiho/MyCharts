@@ -4,13 +4,38 @@ import React, { useState, useEffect } from "react";
 // import WebSocket from "ws";
 
 function UserPage({ user, setUser, userdata, setUserdata }) {
-    
+    useEffect(() => {
+        const storedUser = localStorage.getItem("user");
+        const storedUserdata = localStorage.getItem("userdata");
+        if (storedUser) {
+            const userObject = JSON.parse(storedUser);
+            setUser(userObject);
+            const userdataObject = JSON.parse(storedUserdata);
+            console.log(userdataObject);
+            setUserdata(userdataObject);
+            // Set a timeout to indicate data availability after 1 second
+            // setTimeout(() => {
+            // }, 3000)
+        } else {
+            setUser({});
+        }
+    }, [setUser,setUserdata]);
 
-    const data = [
-        ["n. of charts", userdata.diagrams.length],
-        ["available credits", userdata.quotas || ""],
-        ["last login", "19-07-2022"],
-    ];
+    useEffect(() => {
+        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("userdata", JSON.stringify(userdata));
+      }, [user, userdata]);
+
+      const diagramsCount = userdata.diagrams ? userdata.diagrams.length : 0;
+      const availableCredits = userdata.quotas || "";
+      const lastLogin = userdata.lastLogin ? userdata.lastLogin.split("T")[0] : "";
+    
+      const data = [
+        ["n. of charts", diagramsCount],
+        ["available credits", availableCredits],
+        ["last login", lastLogin],
+      ];
+    
 
     const rows = data.map((row, index) => {
         const cells = row.map((cell, cellIndex) => {
@@ -23,17 +48,6 @@ function UserPage({ user, setUser, userdata, setUserdata }) {
         setUser({});
         localStorage.removeItem("user");
     }
-
-    useEffect(() => {
-        const storedUser = localStorage.getItem("user");
-        console.log(userdata);
-        if (storedUser) {
-            const userObject = JSON.parse(storedUser);
-            setUser(userObject);
-        } else {
-            setUser({});
-        }
-    }, [setUser]);
 
     if (Object.keys(user).length === 0) return <Navigate replace to="/" />;
     else
