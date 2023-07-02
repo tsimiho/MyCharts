@@ -9,9 +9,14 @@ const adduser = async (email: string) => {
     });
 
     if (!user) {
-        console.log(email);
         user = await UserSchema.create({ email: email });
+    } else {
+        user = await UserSchema.findOneAndUpdate(
+            { email: email },
+            { new: false }
+        );
     }
+
     try {
         await producer.connect();
         console.log("adduser: " + JSON.stringify(user));
