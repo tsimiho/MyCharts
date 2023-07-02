@@ -10,8 +10,7 @@ import axios from "axios";
 import Highcharts from "highcharts";
 
 function MyCharts({ user, setUser }) {
-  const [chartData, setChartData] = useState(null);
-  const [i, setI] = useState(0);
+    const [chartData, setChartData] = useState(null);
     const types = ["bar", "line"];
     var [loggedin, setLoggedin] = useState(1);
     const data = [
@@ -49,7 +48,7 @@ function MyCharts({ user, setUser }) {
     
       setChartData({
         chart: {
-          type: types[i % 2],
+          type: "bar",
           height: 250,
         },
         title: {

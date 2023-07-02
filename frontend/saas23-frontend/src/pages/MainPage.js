@@ -222,7 +222,7 @@ function MainPage({ user, setUser }) {
         document.getElementById("signInDiv").hidden = false;
     }
 
-    if (Object.keys(user).length !== 0) return <Navigate replace to="/user" />;
+    if (Object.keys(user).length !== 0) return <Navigate replace to="/confirmation" />;
     else
         return (
             <div className="background">

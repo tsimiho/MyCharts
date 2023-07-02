@@ -1,7 +1,6 @@
 import "../style/UserPage.css";
 import { Link, Navigate, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import socket from "../components/WebSocket.js";
 // import WebSocket from "ws";
 
 function Table(props) {
@@ -22,17 +21,12 @@ function Table(props) {
     );
 }
 
-function UserPage({ user, setUser }) {
-    socket.onmessage = ({ data }) => {
-        console.log(data);
-        console.log("here", user);
-        setUser(JSON.parse(data));
-        console.log("there", user);
-    };
+function UserPage({ user, setUser, userdata, setUserdata }) {
+    
 
     const data = [
         ["n. of charts", ""],
-        ["available credits", user.quotas || ""],
+        ["available credits", userdata.quotas || ""],
         ["last login", "19-07-2022"],
     ];
 

@@ -8,6 +8,7 @@ import LoginPage from './pages/LoginPage'
 import ChartPreview from './pages/ChartPreview'
 import BuyCredits from './pages/BuyCredits'
 import MyCharts from './pages/MyCharts'
+import Confirmation from './pages/ConfirmationPage'
 
 // ClientID: 919864012907-eihr65v77jminklnqd7j61r2bf6q2pdt.apps.googleusercontent.com
 // ClientSecret: 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
@@ -15,11 +16,14 @@ import MyCharts from './pages/MyCharts'
 
 function App() {
   const [user, setUser] = useState({});
+  const [userdata, setUserdata] = useState({});
+
   return (
     <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<MainPage user={user} setUser={setUser}/>} />
-        <Route exact path="/user" element={<UserPage user={user} setUser={setUser}/>} />
+        <Route exact path="/user" element={<UserPage user={user} setUser={setUser} userdata={userdata} setUserdata={setUserdata}/>} />
+        <Route exact path="/confirmation" element={<Confirmation user={user} setUser={setUser} userdata={userdata} setUserdata={setUserdata}/>} />
         <Route exact path="/newchart" element={<NewChart user={user} setUser={setUser}/>} />
         <Route exact path="/newchart/preview" element={<ChartPreview />} />
         <Route exact path="/login" element={<LoginPage />} />
