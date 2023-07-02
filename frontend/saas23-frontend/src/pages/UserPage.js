@@ -8,7 +8,7 @@ function UserPage({ user, setUser, userdata, setUserdata }) {
     setUserdata(JSON.parse(localStorage.getItem("userdata")));
 
     const data = [
-        // ["n. of charts", userdata.diagrams.length],
+        ["n. of charts", userdata.diagrams ? userdata.diagrams.length : ""],
         ["available credits", userdata.quotas || ""],
         ["last login", "19-07-2022"],
     ];
