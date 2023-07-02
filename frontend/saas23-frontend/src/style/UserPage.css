@@ -229,3 +229,22 @@
     max-height: 400px; /* Set the desired maximum height */
     overflow-y: auto;
   }
+
+  .no-chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px; /* Adjust the height as needed */
+}
+
+.no-chart-box {
+  background-color: #ffffff;
+  padding: 20px;
+  border: 1px solid #cccccc;
+  text-align: center;
+  width: 650px; /* Adjust the width as needed */
+  height: 200px; /* Adjust the height as needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

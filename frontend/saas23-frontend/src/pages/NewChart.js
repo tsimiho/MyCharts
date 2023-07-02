@@ -18,7 +18,7 @@ function NewChart({user,setUser}) {
     const types = ["bar", "line"];
     var [loggedin, setLoggedin] = useState(1);
 
-    var quotas = 5;
+    var quotas = 10;
     const changeI = (plus) => {
         if (plus) {
             var n = i + 1;

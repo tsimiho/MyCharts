@@ -10,7 +10,8 @@ import axios from "axios";
 import Highcharts from "highcharts";
 
 function MyCharts({ user, setUser }) {
-    const [i, setI] = useState(0);
+  const [chartData, setChartData] = useState(null);
+  const [i, setI] = useState(0);
     const types = ["bar", "line"];
     var [loggedin, setLoggedin] = useState(1);
     const data = [
@@ -42,6 +43,43 @@ function MyCharts({ user, setUser }) {
         setLoggedin(0)
       }
     }, []);
+
+    function handleRowClick(rows) {
+      // Assuming `rows` contains the chart data for the clicked row
+    
+      setChartData({
+        chart: {
+          type: types[i % 2],
+          height: 250,
+        },
+        title: {
+          text: "My Chart",
+        },
+        xAxis: {
+          categories: ["Apples", "Bananas", "Oranges"],
+        },
+        yAxis: {
+          title: {
+            text: "Fruit Eaten",
+          },
+        },
+        series: [
+          {
+            name: "Jane",
+            data: [1, 0, 4],
+          },
+          {
+            name: "John",
+            data: [5, 7, 3],
+          },
+        ],
+      });
+    
+      // Use the chart data in your application (e.g., set it to state)
+      // Example: setChartData(chartData);
+      // Replace `setChartData` with the appropriate state setter function in your code
+    }
+
 
     if (loggedin === 0) return <Navigate replace to="/" />;
     else return (
@@ -81,7 +119,7 @@ function MyCharts({ user, setUser }) {
                             </thead>
                             <tbody>
                               {data.map((rows) => (
-                              <tr key={rows[0]}>
+                              <tr key={rows[0]} onClick={() => handleRowClick(rows)}>
                                 <td>{rows[0]}</td>
                                 <td> {rows[1]}</td>
                                 <td> {rows[2]}</td>
@@ -100,36 +138,19 @@ function MyCharts({ user, setUser }) {
                           </tbody>
                         </table>
                     </div>
+                    {chartData ? (
                     <HighchartsReact
                         highcharts={Highcharts}
-                        options={{
-                            chart: {
-                                type: types[i % 2],
-                                height: 250,
-                            },
-                            title: {
-                                text: "My Chart",
-                            },
-                            xAxis: {
-                                categories: ["Apples", "Bananas", "Oranges"],
-                            },
-                            yAxis: {
-                                title: {
-                                    text: "Fruit Eaten",
-                                },
-                            },
-                            series: [
-                                {
-                                    name: "Jane",
-                                    data: [1, 0, 4],
-                                },
-                                {
-                                    name: "John",
-                                    data: [5, 7, 3],
-                                },
-                            ],
-                        }}
+                        options={chartData}
                     />
+                    ) : (
+                        <div className="no-chart-container">
+                            <div className="no-chart-box">
+                                Press a chart to view
+                            </div>
+                        </div>
+                    )}
+                    
                 </div>
             </div>
         );

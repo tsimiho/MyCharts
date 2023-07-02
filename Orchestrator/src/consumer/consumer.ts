@@ -78,6 +78,7 @@ const run = async () => {
                 } else if (topic === "linechart_show") {
                     const { diagram } = JSON.parse(message.value.toString());
                     // send diagram to frontend
+                    broadcastMessage(diagram.toString());
                 }
             }
         },
