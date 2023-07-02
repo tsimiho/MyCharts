@@ -46,6 +46,7 @@ const run = async () => {
                     const { email, quotas } = JSON.parse(
                         message.value.toString()
                     );
+                    console.log(email, quotas);
                     await addquotas(email, quotas);
                 } else if (topic === "diagram_id") {
                     const { email, id, name } = JSON.parse(

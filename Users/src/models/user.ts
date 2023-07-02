@@ -11,6 +11,13 @@ const UserSchema = new mongoose.Schema({
         required: false,
         default: 5,
     },
+    new: {
+        type: Boolean,
+        default: true,
+    },
+    lastLogin: {
+        type: Date,
+    },
     diagrams: {
         type: [
             {
