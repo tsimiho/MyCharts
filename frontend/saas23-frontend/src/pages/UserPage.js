@@ -2,12 +2,13 @@ import "../style/UserPage.css";
 import { Link, Navigate, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 // import WebSocket from "ws";
+import socket from "../components/WebSocket";
 
 function UserPage({ user, setUser, userdata, setUserdata }) {
-    
+    setUserdata(JSON.parse(localStorage.getItem("userdata")));
 
     const data = [
-        ["n. of charts", userdata.diagrams.length],
+        ["n. of charts", userdata.diagrams ? userdata.diagrams.length : ""],
         ["available credits", userdata.quotas || ""],
         ["last login", "19-07-2022"],
     ];
@@ -23,6 +24,17 @@ function UserPage({ user, setUser, userdata, setUserdata }) {
         setUser({});
         localStorage.removeItem("user");
     }
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem("user");
+        console.log(userdata);
+        if (storedUser) {
+            const userObject = JSON.parse(storedUser);
+            setUser(userObject);
+        } else {
+            setUser({});
+        }
+    }, [setUser]);
 
     if (Object.keys(user).length === 0) return <Navigate replace to="/" />;
     else

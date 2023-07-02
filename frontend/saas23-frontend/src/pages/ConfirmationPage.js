@@ -7,21 +7,22 @@ function Confirmation({ user, setUser, userdata, setUserdata }) {
     const [newuser, setNewuser] = useState(true);
 
     const nothanks = () => {
-        setUser({})
-        setUserdata({})
+        setUser({});
+        setUserdata({});
         localStorage.removeItem("user");
     };
 
     socket.onmessage = ({ data }) => {
-        data = JSON.parse(data)
+        data = JSON.parse(data);
         console.log(data.new);
-        setNewuser(data.new)
+        setNewuser(data.new);
         setUserdata(data);
-        localStorage.setItem("userdata", JSON.stringify(data)); // Store user object in local storage
+        localStorage.setItem("userdata", JSON.stringify(data));
     };
 
     if (newuser === false) return <Navigate replace to="/user" />;
-    else return (
+    else
+        return (
             <div className="background">
                 <div className="wrapper">
                     <img src="/logo.png" alt="Logo" />
@@ -29,9 +30,21 @@ function Confirmation({ user, setUser, userdata, setUserdata }) {
                 </div>
                 <br />
                 <div className="centered-container">
-                    <h2 className="title"> This is the first time you are logging in with {userdata.email}</h2>
-                    <h2 className="title"> If you continue your email will be stored in our database</h2>
-                    <h2 className="title"> to allow you store your created charts and purchase chart credits</h2>
+                    <h2 className="title">
+                        {" "}
+                        This is the first time you are logging in with{" "}
+                        {userdata.email}
+                    </h2>
+                    <h2 className="title">
+                        {" "}
+                        If you continue your email will be stored in our
+                        database
+                    </h2>
+                    <h2 className="title">
+                        {" "}
+                        to allow you store your created charts and purchase
+                        chart credits
+                    </h2>
                 </div>
                 <div className="buttonsuser">
                     <Link to="/user">
@@ -39,7 +52,12 @@ function Confirmation({ user, setUser, userdata, setUserdata }) {
                     </Link>
                     &nbsp;&nbsp;&nbsp;
                     <Link to="/">
-                        <button onClick={()=> nothanks()} className="mainbutton">No thanks</button>
+                        <button
+                            onClick={() => nothanks()}
+                            className="mainbutton"
+                        >
+                            No thanks
+                        </button>
                     </Link>
                 </div>
             </div>
