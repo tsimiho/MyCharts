@@ -1,0 +1,2 @@
+1. In Show microservices, check services/storeDiagram.ts
+2. Update quotas on create
