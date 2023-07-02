@@ -1,0 +1,2 @@
+title,subtitle,yAxis,xAxis,legend,series
+"{""text"":""Population count in years 2013-2023""}","{""text"":""""}","{""title"":{""text"":""Population ""}}","{""title"":{""text"":""Year""},""categories"":[2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023]}","{""layout"":""vertical"",""align"":""right"",""verticalAlign"":""middle""}","[{""name"":""Greek Population"",""data"":[10914000,10862000,10806000,10749000,10692000,10633000,10574000,10512000,10445000,10384000,10341000]}]"

@@ -1,0 +1,69 @@
+[
+  {
+    "title": {
+      "text": "Average Annual Salary"
+    },
+    "subtitle": {
+      "text": ""
+    },
+    "yAxis": {
+      "title": {
+        "text": "Annual Salary in $ "
+      }
+    },
+    "xAxis": {
+      "title": {
+        "text": "Year"
+      },
+      "categories": [
+        2010,
+        2011,
+        2012,
+        2013,
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019
+      ]
+    },
+    "legend": {
+      "layout": "vertical",
+      "align": "right",
+      "verticalAlign": "middle"
+    },
+    "series": [
+      {
+        "name": "Computer Engineering",
+        "data": [
+          85000,
+          90000,
+          94000,
+          100000,
+          115000,
+          110000,
+          120000,
+          112000,
+          107000,
+          105000
+        ]
+      },
+      {
+        "name": "Mechanical Engineering",
+        "data": [
+          95000,
+          98000,
+          105000,
+          117000,
+          120000,
+          115000,
+          110000,
+          107000,
+          103000,
+          99000
+        ]
+      }
+    ]
+  }
+]
