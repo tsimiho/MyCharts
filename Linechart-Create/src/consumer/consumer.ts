@@ -1,5 +1,5 @@
 import kafka from "../config/kafka";
-// import create from "../services/createFiles";
+import addlinechart from "../services/addLinechart";
 
 const consumer = kafka.consumer({ groupId: "linechart-create-group" });
 
@@ -36,7 +36,7 @@ const run = async () => {
         eachMessage: async ({ topic, partition, message }) => {
             if (message.value != null) {
                 const { email, data } = JSON.parse(message.value.toString());
-                // await create(data);
+                await addlinechart(data);
             }
         },
     });
