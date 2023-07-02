@@ -3,7 +3,7 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
-function BuyCredits({ user, setUser }) {
+function BuyCredits({ user, setUser, userdata, setUserdata }) {
     const [number, setNumber] = useState(0);
 
     const handleDecrement = () => {
@@ -94,8 +94,11 @@ function BuyCredits({ user, setUser }) {
                             onClick={() => AddTokens(number)}
                         >
                             Add Tokens
-                        </button>
-                    </div>
+                        </button> &nbsp; &nbsp;
+                        <Link to="/user">
+                            <button className="mainbutton">Cancel</button>
+                        </Link> 
+                   </div>
                 </div>
             </div>
         );

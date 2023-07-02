@@ -11,42 +11,6 @@ import Sankey from 'highcharts/modules/sankey'
 import axios from 'axios'
 
 function ChartPreview() {
-  const [i, setI] = useState(0);
-  const types = ['bar', 'line'];
-
-  const changeI = (plus) => {
-    if(plus) {
-        var n = i + 1;
-        setI(n); 
-    } else if(!plus) {
-        var n = i - 1;
-        setI(n);
-    }
-  }
-  const jsonData = [
-    { category: 'A', value: 10 },
-    { category: 'B', value: 20 },
-    { category: 'C', value: 30 },
-  ];
-  
-  const chartConfig = {
-    type: 'bar',
-    data: {
-      labels: ['A', 'B', 'C'],
-      datasets: [
-        {
-          label: 'Value',
-          data: [10, 20, 30],
-          backgroundColor: 'rgba(0, 123, 255, 0.6)',
-        },
-      ],
-    },
-  };
-
-  const upload = () => {
-    console.log("Here")
-    axios.post("http://localhost:9001/api/create/linechart/",{email: "nkbenetos@gmail.com", data: chartConfig, name: "Linechart"})
-  }
 
   return (
     <div className='background'>
@@ -66,7 +30,7 @@ function ChartPreview() {
                   highcharts={Highcharts}
                   options={{
                   chart: {
-                      type: types[i%2],
+                      type: "bar",
                       height: 250
                   },
                   title: {
@@ -89,15 +53,12 @@ function ChartPreview() {
                   }],
                   }}
               />
-          <button class="arrow-button-left" onClick={() => changeI(false)}></button>
-          <button class="arrow-button" onClick={() => changeI(true)}></button>
         </div>
-        <button className='mainbutton'>Description template for {types[i%2]} chart </button><br/><br/>
 
-        <FileUpload />
         <div className='buttonsuser'>
-            <button className='mainbutton' onClick={() => upload()}>Upload and create chart</button> &nbsp; &nbsp;
-            <button className='mainbutton'>Cancel</button> 
+          <Link to="/newchart">
+            <button className="mainbutton">Cancel</button>
+          </Link>       
         </div>
       </div>
     </div>

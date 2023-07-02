@@ -13,13 +13,11 @@ import { ToastContainer } from "react-toastify";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function NewChart({ user, setUser }) {
-    console.log(user);
+function NewChart({ user, setUser, userdata, setUserdata }) {
     const [i, setI] = useState(0);
     const types = ["bar", "line"];
     var [loggedin, setLoggedin] = useState(1);
 
-    var quotas = 10;
     const changeI = (plus) => {
         if (plus) {
             var n = i + 1;
@@ -67,13 +65,14 @@ function NewChart({ user, setUser }) {
         //   console.log(1);
         //   setLoggedin(0)
         // }
-    }, [quotas]);
+        console.log(userdata);
+    }, []);
 
     const [selectedFile, setSelectedFile] = useState(null);
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         setSelectedFile(file);
-        if (quotas < 10) {
+        if (userdata.quotas < 10) {
             toast.error("You don't have enough quotas to create a chart!", {
                 position: "top-left",
                 autoClose: false,
@@ -89,7 +88,7 @@ function NewChart({ user, setUser }) {
         event.preventDefault();
         const file = event.dataTransfer.files[0];
         setSelectedFile(file);
-        if (quotas < 10) {
+        if (userdata.quotas < 10) {
             toast.error("You don't have enough quotas to create a chart!", {
                 position: "top-left",
                 autoClose: false,
@@ -186,7 +185,7 @@ function NewChart({ user, setUser }) {
                         )}
                     </div>
                     <div className="buttonsuser">
-                        {quotas < 10 ? (
+                        {userdata.quotas < 10 || selectedFile === null ? (
                             <br />
                         ) : (
                             <Link to="/newchart/preview">

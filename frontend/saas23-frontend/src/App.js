@@ -24,10 +24,10 @@ function App() {
         <Route exact path="/" element={<MainPage user={user} setUser={setUser}/>} />
         <Route exact path="/user" element={<UserPage user={user} setUser={setUser} userdata={userdata} setUserdata={setUserdata}/>} />
         <Route exact path="/confirmation" element={<Confirmation user={user} setUser={setUser} userdata={userdata} setUserdata={setUserdata}/>} />
-        <Route exact path="/newchart" element={<NewChart user={user} setUser={setUser}/>} />
+        <Route exact path="/newchart" element={<NewChart user={user} setUser={setUser} userdata={userdata} setUserdata={setUserdata}/>} />
         <Route exact path="/newchart/preview" element={<ChartPreview />} />
         <Route exact path="/login" element={<LoginPage />} />
-        <Route exact path="/purchasecredits" element={<BuyCredits user={user} setUser={setUser}/>} />
+        <Route exact path="/purchasecredits" element={<BuyCredits user={user} setUser={setUser} userdata={userdata} setUserdata={setUserdata}/>} />
         <Route exact path="/mycharts" element={<MyCharts user={user} setUser={setUser}/>} />
       </Routes>
     </BrowserRouter>

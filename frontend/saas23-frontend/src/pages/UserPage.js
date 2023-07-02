@@ -3,29 +3,11 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 // import WebSocket from "ws";
 
-function Table(props) {
-    const { data } = props;
-
-    // Dynamically generate rows and columns
-    const rows = data.map((row, index) => {
-        const cells = row.map((cell, cellIndex) => {
-            return <td key={cellIndex}>{cell}</td>;
-        });
-        return <tr key={index}>{cells}</tr>;
-    });
-
-    return (
-        <table>
-            <tbody>{rows}</tbody>
-        </table>
-    );
-}
-
 function UserPage({ user, setUser, userdata, setUserdata }) {
     
 
     const data = [
-        ["n. of charts", ""],
+        ["n. of charts", userdata.diagrams.length],
         ["available credits", userdata.quotas || ""],
         ["last login", "19-07-2022"],
     ];
@@ -44,7 +26,7 @@ function UserPage({ user, setUser, userdata, setUserdata }) {
 
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
-        console.log(storedUser);
+        console.log(userdata);
         if (storedUser) {
             const userObject = JSON.parse(storedUser);
             setUser(userObject);
