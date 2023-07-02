@@ -1,6 +1,7 @@
 import "../style/UserPage.css";
 import { Link, Navigate, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+import socket from "../components/WebSocket.js";
 // import WebSocket from "ws";
 
 function Table(props) {
@@ -22,18 +23,16 @@ function Table(props) {
 }
 
 function UserPage({ user, setUser }) {
-    const socket = new WebSocket("ws://localhost:8080");
-
-    var tokens = 10;
-
     socket.onmessage = ({ data }) => {
         console.log(data);
+        console.log("here", user);
         setUser(JSON.parse(data));
+        console.log("there", user);
     };
 
     const data = [
-        ["n. of charts", user.quotas || ""],
-        ["available credits", "128"],
+        ["n. of charts", ""],
+        ["available credits", user.quotas || ""],
         ["last login", "19-07-2022"],
     ];
 
@@ -48,17 +47,17 @@ function UserPage({ user, setUser }) {
         setUser({});
         localStorage.removeItem("user");
     }
-    
+
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
-        console.log(storedUser)
+        console.log(storedUser);
         if (storedUser) {
             const userObject = JSON.parse(storedUser);
             setUser(userObject);
         } else {
-            setUser({})
+            setUser({});
         }
-    }, []);
+    }, [setUser]);
 
     if (Object.keys(user).length === 0) return <Navigate replace to="/" />;
     else

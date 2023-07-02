@@ -7,11 +7,11 @@ function BuyCredits({ user, setUser }) {
     const [number, setNumber] = useState(0);
 
     const handleDecrement = () => {
-        setNumber(number - 1);
+        if (number > 0) setNumber(number - 5);
     };
 
     const handleIncrement = () => {
-        setNumber(number + 1);
+        setNumber(number + 5);
     };
 
     const handleInputChange = (event) => {

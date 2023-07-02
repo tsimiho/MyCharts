@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function NewChart({ user, setUser }) {
+    console.log(user);
     const [i, setI] = useState(0);
     const types = ["bar", "line"];
     var [loggedin, setLoggedin] = useState(1);
@@ -147,11 +148,11 @@ function NewChart({ user, setUser }) {
                             }}
                         />
                         <button
-                            class="arrow-button-left"
+                            className="arrow-button-left"
                             onClick={() => changeI(false)}
                         ></button>
                         <button
-                            class="arrow-button"
+                            className="arrow-button"
                             onClick={() => changeI(true)}
                         ></button>
                     </div>
