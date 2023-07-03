@@ -38,7 +38,7 @@ const run = async () => {
         eachMessage: async ({ topic, partition, message }) => {
             if (message.value != null) {
                 const { email, data } = JSON.parse(message.value.toString());
-                await addlineWithAnnotations(data);
+                await addlineWithAnnotations(email, data);
             }
         },
     });
