@@ -2,11 +2,11 @@ import React from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
-const LineChartWithAnnotations = () => {
+const LineChartWithAnnotations = ({height}) => {
     const options = {
         chart: {
           type: 'line',
-          height: 300,
+          height: height,
         },
         title: {
           text: 'Line Chart with Annotations',

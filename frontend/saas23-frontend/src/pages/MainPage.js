@@ -19,17 +19,17 @@ function MainPage({ newuser, setNewuser, user, setUser, userdata, setUserdata })
 
     const openModal = (i) => {
         if (i % 6 === 0) {
-            setChartComponent(<LineChart />);
+            setChartComponent(<LineChart height={'350'} />);
         } else if (i % 6 === 1) {
-            setChartComponent(<LineChartWithAnnotations />);
+            setChartComponent(<LineChartWithAnnotations height={'350'} />);
         } else if (i % 6 === 2) {
-            setChartComponent(<BarChart />);
+            setChartComponent(<BarChart height={'350'} />);
         } else if (i % 6 === 3) {
-            setChartComponent(<DependencyWheelChart />);
+            setChartComponent(<DependencyWheelChart height={'350'} />);
         } else if (i % 6 === 4) {
-            setChartComponent(<NetworkGraph />);
+            setChartComponent(<NetworkGraph height={'350'} />);
         } else if (i % 6 === 5) {
-            setChartComponent(<PolarChart />);
+            setChartComponent(<PolarChart height={'350'} />);
         }
         setModalIsOpen(true);
     };

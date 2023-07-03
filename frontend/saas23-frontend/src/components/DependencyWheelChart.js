@@ -7,7 +7,7 @@ import HighchartsDependencyWheel from "highcharts/modules/dependency-wheel";
 import Sankey from "highcharts/modules/sankey";
 
 
-const DependencyWheelChart = () => {
+const DependencyWheelChart = ({height}) => {
   HighchartsExporting(Highcharts);
   HighchartsAccessibility(Highcharts);
   Sankey(Highcharts);
@@ -16,7 +16,7 @@ const DependencyWheelChart = () => {
   const options = {
     chart: {
       type: "dependencywheel",
-      height: 300, // Set the desired height for the chart
+      height: height, // Set the desired height for the chart
     },
     title: {
         text:"Dependency wheel chart",

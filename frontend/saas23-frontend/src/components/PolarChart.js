@@ -1,14 +1,14 @@
 import React, { useEffect, useRef } from 'react';
 import Highcharts from 'highcharts';
 
-const PolarChart = () => {
+const PolarChart = ({height}) => {
   const chartRef = useRef(null);
 
   useEffect(() => {
     const options = {
       chart: {
         polar: true,
-        height: 300,
+        height: height,
       },
       title: {
         text: 'Highcharts Polar Chart',

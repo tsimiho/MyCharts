@@ -2,11 +2,11 @@ import React from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
-const BarChart = () => {
+const BarChart = ({height}) => {
   const options = {
     chart: {
       type: 'column',
-      height: 250,
+      height: height,
     },
     title: {
       text: 'My Chart',

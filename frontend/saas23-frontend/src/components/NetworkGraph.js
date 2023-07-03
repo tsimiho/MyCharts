@@ -3,50 +3,57 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import HighchartsNetworkgraph from 'highcharts/modules/networkgraph';
 
-const NetworkGraph = () => {
+const NetworkGraph = ({ height }) => {
   HighchartsNetworkgraph(Highcharts);
+
   const options = {
     chart: {
       type: 'networkgraph',
-      height: 300,
+      height: height,
     },
     title: {
       text: 'Network Graph',
     },
     plotOptions: {
-        networkgraph: {
-          keys: ['from', 'to'],
-          layoutAlgorithm: {
-            enableSimulation: true,
-            integration: 'verlet',
-            linkLength: 80,
-          },
+      networkgraph: {
+        keys: ['from', 'to'],
+        layoutAlgorithm: {
+          enableSimulation: true,
+          integration: 'verlet',
+          linkLength: 80,
+        },
+        dataLabels: {
+          enabled: true, // Enable data labels
+          format: '{point.name}', // Display the name of each point
         },
       },
-      series: [{
+    },
+    series: [
+      {
         data: [
-          { from: 'A', to: 'B' },
-          { from: 'B', to: 'C' },
-          { from: 'C', to: 'D' },
-          { from: 'D', to: 'E' },
-          { from: 'E', to: 'F' },
-          { from: 'F', to: 'G' },
-          { from: 'G', to: 'A' },
-          { from: 'D', to: 'G' },
+          { from: 'A', to: 'B', name: 'Link AB' },
+          { from: 'B', to: 'C', name: 'Link BC' },
+          { from: 'C', to: 'D', name: 'Link CD' },
+          { from: 'D', to: 'E', name: 'Link DE' },
+          { from: 'E', to: 'F', name: 'Link EF' },
+          { from: 'F', to: 'G', name: 'Link FG' },
+          { from: 'G', to: 'A', name: 'Link GA' },
+          { from: 'D', to: 'G', name: 'Link DG' },
         ],
-      }],
-      tooltip: {
-        formatter: function () {
-          return `From: ${this.point.from}<br>To: ${this.point.to}`;
-        },
       },
-      credits: {
-        enabled: false,
+    ],
+    tooltip: {
+      formatter: function () {
+        return `From: ${this.point.from}<br>To: ${this.point.to}`;
       },
-      exporting: {
-        enabled: false,
-      },
-    };
+    },
+    credits: {
+      enabled: false,
+    },
+    exporting: {
+      enabled: false,
+    },
+  };
 
   return <HighchartsReact highcharts={Highcharts} options={options} />;
 };

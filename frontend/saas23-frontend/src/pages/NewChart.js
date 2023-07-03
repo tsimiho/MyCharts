@@ -34,17 +34,17 @@ function NewChart({ user, setUser, userdata, setUserdata }) {
     let chartComponent;
 
     if (i % 6 === 0) {
-        chartComponent = <LineChart />;
+        chartComponent = <LineChart height={'250'} />;
     } else if (i % 6 === 1) {
-        chartComponent = <LineChartWithAnnotations />;
+        chartComponent = <LineChartWithAnnotations height={'250'}/>;
     } else if (i % 6 === 2) {
-        chartComponent = <BarChart />;
+        chartComponent = <BarChart height={'250'}/>;
     } else if (i % 6 === 3) {
-        chartComponent = <DependencyWheelChart />;
+        chartComponent = <DependencyWheelChart height={'250'}/>;
     } else if (i % 6 === 4) {
-        chartComponent = <NetworkGraph />;
+        chartComponent = <NetworkGraph height={'250'}/>;
     } else if (i % 6 === 5) {
-        chartComponent = <PolarChart />;
+        chartComponent = <PolarChart height={'250'}/>;
     }
       
     const convertCSVToJson = async (csvData) => {
@@ -188,8 +188,8 @@ function NewChart({ user, setUser, userdata, setUserdata }) {
                     </div>
                     <div className="buttonsuser">
                         {userdata.quotas < 10 || selectedFile === null ? (
-                            <br />
-                        ) : (
+                            <h1 className="titleuser"> </h1>
+                    ) : (
                             <Link
                                 to={`/newchart/preview?jsonData=${encodeURIComponent(
                                     JSON.stringify(jsonData)
