@@ -1,13 +1,7 @@
 import "../style/UserPage.css";
 import { Link, Navigate, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import Highcharts from "highcharts";
 import FileUpload from "../components/FileUpload.js";
-import HighchartsReact from "highcharts-react-official";
-import HighchartsExporting from "highcharts/modules/exporting";
-import HighchartsAccessibility from "highcharts/modules/accessibility";
-import HighchartsDependencyWheel from "highcharts/modules/dependency-wheel";
-import Sankey from "highcharts/modules/sankey";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import { toast } from "react-toastify";
@@ -40,18 +34,18 @@ function NewChart({ user, setUser, userdata, setUserdata }) {
     let chartComponent;
 
     if (i % 6 === 0) {
-        chartComponent = <LineChart />;;
-      } else if (i % 6 === 1) {
+        chartComponent = <LineChart />;
+    } else if (i % 6 === 1) {
         chartComponent = <LineChartWithAnnotations />;
-      } else if (i % 6 === 2) {
+    } else if (i % 6 === 2) {
         chartComponent = <BarChart />;
-      } else if (i % 6 === 3) {
+    } else if (i % 6 === 3) {
         chartComponent = <DependencyWheelChart />;
-      } else if (i % 6 === 4) {
+    } else if (i % 6 === 4) {
         chartComponent = <NetworkGraph />;
-      } else if (i % 6 === 5) {
+    } else if (i % 6 === 5) {
         chartComponent = <PolarChart />;
-      }
+    }
       
     const convertCSVToJson = async (csvData) => {
         try {

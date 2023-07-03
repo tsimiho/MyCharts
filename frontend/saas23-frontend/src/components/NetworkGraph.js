@@ -8,7 +8,7 @@ const NetworkGraph = () => {
   const options = {
     chart: {
       type: 'networkgraph',
-      height: 250,
+      height: 300,
     },
     title: {
       text: 'Network Graph',
@@ -41,6 +41,9 @@ const NetworkGraph = () => {
         },
       },
       credits: {
+        enabled: false,
+      },
+      exporting: {
         enabled: false,
       },
     };

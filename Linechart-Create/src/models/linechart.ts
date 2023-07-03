@@ -1,13 +1,11 @@
 import mongoose from "mongoose";
 
 const LineChartSchema = new mongoose.Schema({
-    _id: {
-        type: mongoose.Schema.Types.ObjectId,
-        default: undefined,
-    },
     chart: {
-        type: String,
-        default: "line" 
+        type: {
+            type: String,
+            default: "line" 
+        },
     },
     title: {
         text: { 

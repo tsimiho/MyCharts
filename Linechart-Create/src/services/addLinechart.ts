@@ -2,7 +2,9 @@ import LineChartSchema from "../models/linechart";
 import kafka from "../config/kafka";
 
 const addlinechart = async (email: string, data: object) => {
+    
     const diagram = await LineChartSchema.create(data);
+    console.log(data)
 
     const producer = kafka.producer();
 

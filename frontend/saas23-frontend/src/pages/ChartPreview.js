@@ -14,6 +14,7 @@ import csvtojson from 'csvtojson';
 
 function ChartPreview({ user, setUser, userdata, setUserdata }) {
   const location = useLocation();
+  const [type,setType] = useState(0);
   const jsonData = JSON.parse(
     decodeURIComponent(new URLSearchParams(location.search).get("jsonData"))
   );
@@ -23,11 +24,39 @@ function ChartPreview({ user, setUser, userdata, setUserdata }) {
   });
 
   const savechart = () => {
-    console.log(userdata.email)
-    axios.post("http://localhost:9001/api/create/linechart", {
+    if(options.chart.hasOwnProperty('type')){
+      console.log(options.chart.type)
+      if(options.chart.type === "bar"){
+        axios.post("http://localhost:9001/api/create/basicColumn", {
             email: userdata.email,
             data: options, 
-    });
+        });
+      } else if(options.chart.type === "networkgraph"){
+        axios.post("http://localhost:9001/api/create/networkGraph", {
+            email: userdata.email,
+            data: options, 
+        });
+      } else if(options.chart.type === "dependencywheel"){
+        axios.post("http://localhost:9001/api/create/dependencyWheel", {
+            email: userdata.email,
+            data: options, 
+        });
+      } else if(options.chart.type === "dependencywheel"){
+        if(options.hasOwnProperty('annotations')) {
+          axios.post("http://localhost:9001/api/create/lineWithAnnotations", {
+            email: userdata.email,
+            data: options, 
+          });
+        } else {
+          axios.post("http://localhost:9001/api/create/linechart", {
+            email: userdata.email,
+            data: options, 
+          });
+        }
+        
+      }
+    }
+    
   };
 
   return (
