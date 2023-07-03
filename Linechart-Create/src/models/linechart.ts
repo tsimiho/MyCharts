@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const LineChartSchema = new mongoose.Schema({
     chart: {
-        type: String,
+        type: Object,
         default: "line" 
     },
     title: {
