@@ -173,7 +173,7 @@ function MyCharts({ user, setUser }) {
                                             <button
                                                 class="download"
                                                 onClick={() =>
-                                                    requestChart(rows[0], "pdf")
+                                                    requestChart(rows[0], "png")
                                                 }
                                             >
                                                 {" "}
@@ -183,7 +183,7 @@ function MyCharts({ user, setUser }) {
                                             <button
                                                 class="download"
                                                 onClick={() =>
-                                                    requestChart(rows[0], "pdf")
+                                                    requestChart(rows[0], "svg")
                                                 }
                                             >
                                                 {" "}
@@ -192,7 +192,10 @@ function MyCharts({ user, setUser }) {
                                             <button
                                                 class="download"
                                                 onClick={() =>
-                                                    requestChart(rows[0], "pdf")
+                                                    requestChart(
+                                                        rows[0],
+                                                        "html"
+                                                    )
                                                 }
                                             >
                                                 {" "}
