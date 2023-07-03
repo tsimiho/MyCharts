@@ -15,8 +15,8 @@ const DependencyWheelChart = () => {
 
   const options = {
     chart: {
-        type: "dependencywheel",
-      height: 250, // Set the desired height for the chart
+      type: "dependencywheel",
+      height: 300, // Set the desired height for the chart
     },
     title: {
         text:"Dependency wheel chart",
@@ -44,6 +44,9 @@ const DependencyWheelChart = () => {
     ],
     credits: {
         enabled: false,
+    },
+    exporting: {
+      enabled: false,
     },
 };
 

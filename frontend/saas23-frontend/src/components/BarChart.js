@@ -29,6 +29,9 @@ const BarChart = () => {
         data: [5, 7, 3],
       },
     ],
+    exporting: {
+      enabled: false,
+    },
   };
 
   return <HighchartsReact highcharts={Highcharts} options={options} />;

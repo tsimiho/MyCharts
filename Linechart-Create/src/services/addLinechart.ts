@@ -4,7 +4,6 @@ import kafka from "../config/kafka";
 const addlinechart = async (email: string, data: object) => {
     console.log("before");
     const diagram = await LineChartSchema.create(data);
-    console.log("after");
 
     const producer = kafka.producer();
 

@@ -6,7 +6,7 @@ const LineChartWithAnnotations = () => {
     const options = {
         chart: {
           type: 'line',
-          height: 250,
+          height: 300,
         },
         title: {
           text: 'Line Chart with Annotations',
@@ -29,6 +29,9 @@ const LineChartWithAnnotations = () => {
             data: [5, 7, 3],
           },
         ],
+        exporting: {
+          enabled: false,
+        },
         annotations: [{
           labelOptions: {
             shape: 'connector',

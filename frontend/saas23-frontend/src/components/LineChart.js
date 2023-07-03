@@ -6,7 +6,7 @@ const LineChart = () => {
   const options = {
     chart: {
       type: 'line',
-      height: 250,
+      height: 300,
     },
     title: {
       text: 'My Chart',
@@ -29,6 +29,9 @@ const LineChart = () => {
         data: [5, 7, 3],
       },
     ],
+    exporting: {
+      enabled: false,
+    },
   };
 
   return <HighchartsReact highcharts={Highcharts} options={options} />;
