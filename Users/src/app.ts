@@ -32,6 +32,6 @@ const start = async () => {
 };
 
 start();
-run();
+// run();
 
 export default app;
