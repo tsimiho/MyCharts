@@ -41,13 +41,14 @@ function ChartPreview({ user, setUser, userdata, setUserdata }) {
             email: userdata.email,
             data: options, 
         });
-      } else if(options.chart.type === "dependencywheel"){
+      } else if(options.chart.type === "line"){
         if(options.hasOwnProperty('annotations')) {
           axios.post("http://localhost:9001/api/create/lineWithAnnotations", {
             email: userdata.email,
             data: options, 
           });
         } else {
+          console.log("Here")
           axios.post("http://localhost:9001/api/create/linechart", {
             email: userdata.email,
             data: options, 
