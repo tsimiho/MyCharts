@@ -128,7 +128,7 @@ function MainPage({ newuser, setNewuser, user, setUser, userdata, setUserdata })
                     &nbsp;&nbsp;
                     <button className="mainbutton" onClick={() => openModal(2)}>
                         <img src="/barchart.jpg" alt="BarChart" />
-                        BarChart
+                        Column Chart
                     </button>{" "}
                     &nbsp;&nbsp;
                     <button className="mainbutton" onClick={() => openModal(3)}>

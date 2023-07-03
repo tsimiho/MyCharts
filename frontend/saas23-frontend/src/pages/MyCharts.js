@@ -10,6 +10,8 @@ import axios from "axios";
 import Highcharts from "highcharts";
 import socket from "../components/WebSocket";
 
+HighchartsExporting(Highcharts); // Initialize the exporting module
+
 function MyCharts({ user, setUser }) {
     socket.onmessage = ({ data }) => {
         const { chart, action } = JSON.parse(data);
@@ -18,13 +20,33 @@ function MyCharts({ user, setUser }) {
             handleRowClick(chart);
         } else if (action === "pdf") {
             // download pdf
+            downloadChart(chart, "application/pdf");
         } else if (action === "png") {
             // download png
+            downloadChart(chart, "image/png");
         } else if (action === "svg") {
             // download svg
+            downloadChart(chart, "image/svg+xml");
         } else if (action === "html") {
             // download html
+            downloadChart(chart, "text/html");
         }
+    };
+
+    const downloadChart = (chartopt, type) => {
+        const chartConfig = {
+            type,
+            options: chartopt,
+        };
+
+        HighchartsExporting(Highcharts); // Initialize the exporting module
+
+        Highcharts.chart("export-container", chartConfig, function (chart) {
+            chart.exportChart({
+                type,
+                filename: "my_chart",
+            });
+        });
     };
 
     const [chartData, setChartData] = useState(null);
@@ -165,7 +187,7 @@ function MyCharts({ user, setUser }) {
                                             <button
                                                 class="download"
                                                 onClick={() =>
-                                                    requestChart(rows[0], "pdf")
+                                                    /*requestChart(rows[0], "pdf")*/downloadChart(chartData,"application/pdf")
                                                 }
                                             >
                                                 pdf

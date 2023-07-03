@@ -8,7 +8,7 @@ const PolarChart = () => {
     const options = {
       chart: {
         polar: true,
-        height: 350,
+        height: 300,
       },
       title: {
         text: 'Highcharts Polar Chart',
@@ -59,6 +59,9 @@ const PolarChart = () => {
           data: [1, 8, 2, 7, 3, 6, 4, 5],
         },
       ],
+      exporting: {
+        enabled: false,
+      },
     };
 
     chartRef.current = Highcharts.chart('container', options);

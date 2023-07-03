@@ -15,9 +15,10 @@ function Confirmation({ newuser, setNewuser, user, setUser, userdata, setUserdat
         setNewuser(newu);
         console.log(newu)
     }, [setNewuser]);
+
     socket.onmessage = ({ data }) => {
         data = JSON.parse(data);
-        console.log(data.new);
+        console.log(data);
         setNewuser(data.new.toString());
         localStorage.setItem("newuser", false);
         setUserdata(data);

@@ -5,7 +5,7 @@ import HighchartsReact from 'highcharts-react-official';
 const BarChart = () => {
   const options = {
     chart: {
-      type: 'bar',
+      type: 'column',
       height: 250,
     },
     title: {

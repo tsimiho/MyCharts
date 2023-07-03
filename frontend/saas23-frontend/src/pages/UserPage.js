@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import socket from "../components/WebSocket";
 
 function UserPage({ newuser, setNewuser, user, setUser, userdata, setUserdata }) {
-    const data = [
+    var data = [
         ["n. of charts", userdata.diagrams ? userdata.diagrams.length : ""],
         ["available credits", userdata.quotas || ""],
         ["last login", "19-07-2022"],

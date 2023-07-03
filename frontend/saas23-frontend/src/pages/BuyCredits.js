@@ -15,6 +15,8 @@ function BuyCredits({ user, setUser, userdata, setUserdata }) {
         userdata.quotas = parseInt(data);
         console.log(userdata.quotas);
         setUserdata(userdata);
+        localStorage.removeItem("userdata");
+        localStorage.setItem("userdata", JSON.stringify(userdata));
         setNumber(0);
     };
 

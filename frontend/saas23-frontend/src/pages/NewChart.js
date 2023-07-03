@@ -17,7 +17,7 @@ import PolarChart from '../components/PolarChart';
 function NewChart({ user, setUser, userdata, setUserdata }) {
     const [i, setI] = useState(0);
     const [jsonData, setJsonData] = useState([]);
-    const types = ["bar", "line"];
+    const types = ["line","bar"];
     var [loggedin, setLoggedin] = useState(1);
 
     const changeI = (plus) => {
