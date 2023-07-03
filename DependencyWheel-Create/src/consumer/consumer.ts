@@ -36,7 +36,7 @@ const run = async () => {
         eachMessage: async ({ topic, partition, message }) => {
             if (message.value != null) {
                 const { email, data } = JSON.parse(message.value.toString());
-                await adddependencyWheel(data);
+                await adddependencyWheel(email, data);
             }
         },
     });

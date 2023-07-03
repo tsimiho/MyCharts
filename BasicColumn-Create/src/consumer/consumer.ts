@@ -31,12 +31,12 @@ signalTraps.map((type) => {
 
 const run = async () => {
     await consumer.connect();
-    await consumer.subscribe({ topic: "linechart_create" });
+    await consumer.subscribe({ topic: "basicColumn_create" });
     await consumer.run({
         eachMessage: async ({ topic, partition, message }) => {
             if (message.value != null) {
                 const { email, data } = JSON.parse(message.value.toString());
-                await addbasicColumn(data);
+                await addbasicColumn(email, data);
             }
         },
     });

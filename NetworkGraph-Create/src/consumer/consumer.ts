@@ -36,7 +36,7 @@ const run = async () => {
         eachMessage: async ({ topic, partition, message }) => {
             if (message.value != null) {
                 const { email, data } = JSON.parse(message.value.toString());
-                await addnetworkGraph(data);
+                await addnetworkGraph(email, data);
             }
         },
     });

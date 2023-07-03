@@ -33,17 +33,18 @@ signalTraps.map((type) => {
 
 const run = async () => {
     await consumer.connect();
-    await consumer.subscribe({ topic: "lineWithAnnotations_create" });
+    // await consumer.subscribe({ topic: "lineWithAnnotations_create" });
     await consumer.subscribe({ topic: "lineWithAnnotations_request" });
     await consumer.run({
         eachMessage: async ({ topic, partition, message }) => {
             if (message.value != null) {
-                if (topic === "lineWithAnnotations_create") {
-                    const { email, data, name } = JSON.parse(
-                        message.value.toString()
-                    );
-                    await storeDiagram(email, data, name);
-                } else if (topic === "lineWithAnnotations_request") {
+                // if (topic === "lineWithAnnotations_create") {
+                //     const { email, data, name } = JSON.parse(
+                //         message.value.toString()
+                //     );
+                //     await storeDiagram(email, data, name);
+                // } else
+                if (topic === "lineWithAnnotations_request") {
                     const id = new mongoose.Schema.Types.ObjectId(
                         message.value.toString()
                     );
