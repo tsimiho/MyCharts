@@ -14,7 +14,7 @@ function FileUpload() {
           position: "top-left",
           autoClose: false,
       }); // Display an error toast notification
-  }
+    }
   };
 
   const handleDragOver = (event) => {
@@ -44,7 +44,6 @@ function FileUpload() {
       {selectedFile && (
         <span className="file-name">Selected File: {selectedFile.name}</span>
       )}
-      <ToastContainer />
     </div>
   );
 }

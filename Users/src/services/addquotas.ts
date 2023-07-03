@@ -1,4 +1,7 @@
 import UserSchema from "../models/user";
+import kafka from "../config/kafka";
+
+const producer = kafka.producer();
 
 const addquotas = async (email: string, quotas: string) => {
     const user = await UserSchema.findOne({
@@ -8,6 +11,21 @@ const addquotas = async (email: string, quotas: string) => {
         if (user.quotas) {
             const q = user.quotas + quotas;
             await UserSchema.findOneAndUpdate({ email: email }, { quotas: q });
+
+            try {
+                await producer.connect();
+                await producer.send({
+                    topic: "quotas_added",
+                    messages: [{ value: q.toString() }],
+                });
+
+                console.log("ok");
+            } catch (error) {
+                console.log(
+                    `[kafka-producer] ${(error as Error).message}`,
+                    error
+                );
+            }
         }
     }
 };

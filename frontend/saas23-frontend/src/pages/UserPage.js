@@ -1,38 +1,13 @@
 import "../style/UserPage.css";
 import { Link, Navigate, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import socket from "../components/WebSocket.js";
 // import WebSocket from "ws";
+import socket from "../components/WebSocket";
 
-function Table(props) {
-    const { data } = props;
-
-    // Dynamically generate rows and columns
-    const rows = data.map((row, index) => {
-        const cells = row.map((cell, cellIndex) => {
-            return <td key={cellIndex}>{cell}</td>;
-        });
-        return <tr key={index}>{cells}</tr>;
-    });
-
-    return (
-        <table>
-            <tbody>{rows}</tbody>
-        </table>
-    );
-}
-
-function UserPage({ user, setUser }) {
-    socket.onmessage = ({ data }) => {
-        console.log(data);
-        console.log("here", user);
-        setUser(JSON.parse(data));
-        console.log("there", user);
-    };
-
+function UserPage({ newuser, setNewuser, user, setUser, userdata, setUserdata }) {
     const data = [
-        ["n. of charts", ""],
-        ["available credits", user.quotas || ""],
+        ["n. of charts", userdata.diagrams ? userdata.diagrams.length : ""],
+        ["available credits", userdata.quotas || ""],
         ["last login", "19-07-2022"],
     ];
 
@@ -45,21 +20,26 @@ function UserPage({ user, setUser }) {
 
     function logout() {
         setUser({});
+        setNewuser(true);
+        setUserdata({});
         localStorage.removeItem("user");
+        localStorage.removeItem("newuser");
     }
 
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
-        console.log(storedUser);
+        console.log(userdata);
         if (storedUser) {
             const userObject = JSON.parse(storedUser);
             setUser(userObject);
         } else {
             setUser({});
         }
+        setUserdata(JSON.parse(localStorage.getItem("userdata")));
+        setNewuser(localStorage.getItem("newuser"));
     }, [setUser]);
 
-    if (Object.keys(user).length === 0) return <Navigate replace to="/" />;
+    if (newuser ===true) return <Navigate replace to="/" />;
     else
         return (
             <div className="background">

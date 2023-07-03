@@ -12,14 +12,14 @@ import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import csvtojson from 'csvtojson';
 
-function NewChart({ user, setUser }) {
-    console.log(user);
+function NewChart({ user, setUser, userdata, setUserdata }) {
     const [i, setI] = useState(0);
+    const [jsonData, setJsonData] = useState([]);
     const types = ["bar", "line"];
     var [loggedin, setLoggedin] = useState(1);
 
-    var quotas = 5;
     const changeI = (plus) => {
         if (plus) {
             var n = i + 1;
@@ -29,11 +29,11 @@ function NewChart({ user, setUser }) {
             setI(n);
         }
     };
-    const jsonData = [
-        { category: "A", value: 10 },
-        { category: "B", value: 20 },
-        { category: "C", value: 30 },
-    ];
+    // const jsonData = [
+    //     { category: "A", value: 10 },
+    //     { category: "B", value: 20 },
+    //     { category: "C", value: 30 },
+    // ];
 
     const chartConfig = {
         type: "bar",
@@ -48,10 +48,17 @@ function NewChart({ user, setUser }) {
             ],
         },
     };
-
-    const upload = () => {
-        console.log("Here");
+      
+    const convertCSVToJson = async (csvData) => {
+        try {
+            const jsonArray = await csvtojson().fromString(csvData);
+            return jsonArray;
+        } catch (error) {
+            console.error('Error converting CSV to JSON:', error);
+            return [];
+        }
     };
+      
 
     const download_csv = (diagram_type) => {
         const url = `http://localhost:9011/api/download_csv?param=${encodeURIComponent(
@@ -67,13 +74,42 @@ function NewChart({ user, setUser }) {
         //   console.log(1);
         //   setLoggedin(0)
         // }
-    }, [quotas]);
+        console.log(userdata);
+    }, []);
 
     const [selectedFile, setSelectedFile] = useState(null);
     const handleFileChange = (event) => {
         const file = event.target.files[0];
+
+        // Check if the file name or file type indicates it is a CSV file
+        const fileName = file.name;
+        const fileType = file.type;
+        const isCSV = fileName.endsWith(".csv") || fileType === "text/csv";
+        
+        if (!isCSV) {
+            toast.error("Please select a CSV file according to the description templates!", {
+                position: "top-left",
+                autoClose: 3000,
+            });
+            return; // Stop further processing
+        }
         setSelectedFile(file);
-        if (quotas < 10) {
+        
+        const reader = new FileReader();
+    
+        reader.onload = async (event) => {
+            const contents = event.target.result;
+            const json = await convertCSVToJson(contents);
+            console.log(json)
+            setJsonData(json)
+        };
+    
+        reader.onerror = (event) => {
+            console.error('Error reading the file:', event.target.error);
+        };
+    
+        reader.readAsText(file);
+        if (userdata.quotas < 10) {
             toast.error("You don't have enough quotas to create a chart!", {
                 position: "top-left",
                 autoClose: false,
@@ -88,8 +124,8 @@ function NewChart({ user, setUser }) {
     const handleDrop = (event) => {
         event.preventDefault();
         const file = event.dataTransfer.files[0];
-        setSelectedFile(file);
-        if (quotas < 10) {
+        handleFileChange(event);
+        if (userdata.quotas < 10) {
             toast.error("You don't have enough quotas to create a chart!", {
                 position: "top-left",
                 autoClose: false,
@@ -186,20 +222,19 @@ function NewChart({ user, setUser }) {
                         )}
                     </div>
                     <div className="buttonsuser">
-                        {quotas < 10 ? (
+                        {userdata.quotas < 10 || selectedFile === null ? (
                             <br />
                         ) : (
-                            <Link to="/newchart/preview">
-                                <button
-                                    className="mainbutton"
-                                    onClick={() => upload()}
-                                >
-                                    Upload and create chart
-                                </button>
+                            <Link
+                                to={`/newchart/preview?jsonData=${encodeURIComponent(
+                                    JSON.stringify(jsonData)
+                                )}`}
+                            >
+                                <button className="mainbutton" >Upload and create chart</button>
                             </Link>
                         )}
                         &nbsp; &nbsp;
-                        <Link to="/newchart">
+                        <Link to="/user">
                             <button className="mainbutton">Cancel</button>
                         </Link>
                     </div>
