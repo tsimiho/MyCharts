@@ -1,47 +1,71 @@
 import mongoose from "mongoose";
 
 const LineChartSchema = new mongoose.Schema({
+    _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        default: undefined,
+    },
+    chart: {
+        type: String,
+        default: "line" 
+    },
     title: {
-        text: {
-            type: String,
-            default: "",
+        text: { 
+            type: String, 
+            default: "" 
         },
     },
     subtitle: {
-        text: {
-            type: String,
-            default: "",
+        text: { 
+            type: String, 
+            default: "" 
         },
     },
     yAxis: {
         title: {
-            text: {
+            text: { 
                 type: String,
-                default: "",
-            },
-        },
+                default: "" 
+            }
+        }
     },
     xAxis: {
         title: {
-            text: {
+            text: { 
                 type: String,
-                default: "",
+                default: "" 
             },
-            categories: [String],
         },
-        series: [
-            {
-                name: {
-                    type: String,
-                    default: "",
-                },
-                data: {
-                    type: [Number],
-                    default: [],
-                },
-            },
-        ],
+        categories: { 
+            type: [String],
+            default: null 
+        }
     },
+    legend: {
+        layout: { 
+            type: String, 
+            default: 'vertical' 
+        },
+        align: { 
+            type: String, 
+            default: 'right' 
+        },
+        verticalAlign: { 
+            type: String, 
+            default: 'middle' 
+        },
+    series: [{
+        name: { 
+            type: String, 
+            default: "" 
+        },
+        data: { 
+            type: [Number], 
+            default: [] 
+        }
+    }]
+   
 });
 
 export default mongoose.model("LineChartSchema", LineChartSchema);
+
