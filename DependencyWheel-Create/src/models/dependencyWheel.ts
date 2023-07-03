@@ -1,51 +1,75 @@
 import mongoose from "mongoose";
 
 const DependencyWheelSchema = new mongoose.Schema({
-    _id: {
-        type: mongoose.Schema.Types.ObjectId,
-        default: undefined,
+    chart: {
+        type: String, 
+	default: "dependencywheel"
     },
     title: {
-        text: {
-            type: String,
-            default: "",
-        },
+        text: { 
+		type: String, 
+		default: "Title" 
+	}
     },
     subtitle: {
-        text: {
-            type: String,
-            default: "",
-        },
+        text: { 
+		type: String, 
+		default: "Subtitle" 
+	}
     },
-    yAxis: {
-        title: {
-            text: {
-                type: String,
-                default: "",
-            },
-        },
+    accessibility: {
+        point: {
+            valueDescriptionFormat: { 
+		type: String, 
+		default: "" 	
+	    }
+        }
     },
-    xAxis: {
-        title: {
-            text: {
-                type: String,
-                default: "",
+    series: [{
+        keys: { 
+		type: [String], 
+		default: [] 
+	},
+        data: { 
+		type: [[String, String, Number]], 
+		default: [] 
+	},
+        type: { 
+		type: String, 
+		default: "" 
+	},
+        name: { 
+		type: String, 
+		default: "" 
+	},
+        dataLabels: {
+            color: { 
+		type: String, 
+		default: "" 
+	    },
+            style: {
+                textOutline: { 
+			type: String, 
+			default: "" 
+		}
             },
-            categories: [String],
+            textPath: {
+                enabled: { 
+			type: Boolean, 
+			default: true 
+		}
+            },
+            distance: { 
+		type: Number, 
+		default: 0 
+	    }
         },
-        series: [
-            {
-                name: {
-                    type: String,
-                    default: "",
-                },
-                data: {
-                    type: [Number],
-                    default: [],
-                },
-            },
-        ],
-    },
+        size: { 
+		type: String, 
+		default: "" 
+	}
+    }]
 });
+
 
 export default mongoose.model("DependencyWheelSchema", DependencyWheelSchema);

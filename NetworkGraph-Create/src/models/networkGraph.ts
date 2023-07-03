@@ -1,51 +1,94 @@
 import mongoose from "mongoose";
 
 const NetworkGraphSchema = new mongoose.Schema({
-    _id: {
-        type: mongoose.Schema.Types.ObjectId,
-        default: undefined,
+    chart: {
+        type: { 
+		type: String, 
+		default: 'networkgraph' 
+	},
+        height: { 
+		type: String, 
+		default: '100%' 
+	}
     },
     title: {
-        text: {
-            type: String,
-            default: "",
-        },
+        text: { 
+		type: String, 
+		default: "" 
+	},
+        align: { 
+		type: String, 
+		default: 'left' 
+	}
     },
     subtitle: {
-        text: {
-            type: String,
-            default: "",
-        },
+        text: { 
+		type: String, 
+		default: "" 
+	},
+        align: { 
+		type: String, 
+		default: 'left' 
+	}
     },
-    yAxis: {
-        title: {
-            text: {
-                type: String,
-                default: "",
-            },
-        },
+    plotOptions: {
+        networkgraph: {
+            keys: { 
+		type: [String], 
+		default: ['from', 'to'] 
+	    },
+            layoutAlgorithm: {
+                enableSimulation: { 
+			type: Boolean, 
+			default: true 
+		},
+                friction: { 
+			type: Number, 
+			default: -0.9 
+		}
+            }
+        }
     },
-    xAxis: {
-        title: {
-            text: {
-                type: String,
-                default: "",
-            },
-            categories: [String],
+    series: [{
+        accessibility: {
+            enabled: { 
+		type: Boolean, 
+		default: false 
+		}
         },
-        series: [
-            {
-                name: {
-                    type: String,
-                    default: "",
-                },
-                data: {
-                    type: [Number],
-                    default: [],
-                },
+        dataLabels: {
+            enabled: { 
+		type: Boolean, 
+		default: true 
+		},
+            linkFormat: { 
+		type: String, 
+		default: '' 
+		},
+            style: {
+                fontSize: { 
+			type: String, 
+			default: '0.8em' 
+		},
+                fontWeight: { 
+			type: String, 
+			default: 'normal' 
+		}
+            }
+        },
+        id: { 
+		type: String, 
+		default: '' 
+	},
+        nodes: [{
+            id: String,
+            marker: {
+                radius: Number
             },
-        ],
-    },
+            color: String
+        }],
+        data: [[String]]
+    }]
 });
 
 export default mongoose.model("NetworkGraphSchema", NetworkGraphSchema);
