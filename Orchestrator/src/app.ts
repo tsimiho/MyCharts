@@ -3,7 +3,7 @@ import cors from "cors";
 import create from "./routes/create";
 import login from "./routes/login";
 import quotas from "./routes/quotas";
-simport dotenv from "dotenv";
+import dotenv from "dotenv";
 import run from "./consumer/consumer";
 
 const app = Express();
