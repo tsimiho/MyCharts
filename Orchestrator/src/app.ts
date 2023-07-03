@@ -3,6 +3,7 @@ import cors from "cors";
 import create from "./routes/create";
 import login from "./routes/login";
 import quotas from "./routes/quotas";
+import request from "./routes/request";
 import dotenv from "dotenv";
 import run from "./consumer/consumer";
 
@@ -19,6 +20,7 @@ app.use(cors());
 app.use("/api/create", create);
 app.use("/api/login", login);
 app.use("/api/quotas", quotas);
+app.use("/api/request", request);
 
 const port = 9001;
 
