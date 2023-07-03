@@ -5,9 +5,11 @@ const LineChartSchema = new mongoose.Schema({
         type: { type: String, default: "line" },
     },
     title: {
-        text: {
-            type: String,
-            default: "",
+        type: {
+            text: {
+                type: String,
+                default: "",
+            },
         },
     },
     subtitle: {
