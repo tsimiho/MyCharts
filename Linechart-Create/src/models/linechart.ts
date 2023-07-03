@@ -53,7 +53,7 @@ const LineChartSchema = new mongoose.Schema({
         verticalAlign: { 
             type: String, 
             default: 'middle' 
-        },
+        }},
     series: [{
         name: { 
             type: String, 
