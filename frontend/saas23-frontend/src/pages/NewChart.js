@@ -13,6 +13,12 @@ import { ToastContainer } from "react-toastify";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import csvtojson from 'csvtojson';
+import DependencyWheelChart from '../components/DependencyWheelChart';
+import LineChart from '../components/LineChart';
+import LineChartWithAnnotations from '../components/LineChartwithAnnotations';
+import BarChart from '../components/BarChart';
+import NetworkGraph from '../components/NetworkGraph';
+import PolarChart from '../components/PolarChart';
 
 function NewChart({ user, setUser, userdata, setUserdata }) {
     const [i, setI] = useState(0);
@@ -26,28 +32,26 @@ function NewChart({ user, setUser, userdata, setUserdata }) {
             setI(n);
         } else if (!plus) {
             var n = i - 1;
+            if (n<0) n = n + 6
             setI(n);
         }
     };
-    // const jsonData = [
-    //     { category: "A", value: 10 },
-    //     { category: "B", value: 20 },
-    //     { category: "C", value: 30 },
-    // ];
+    
+    let chartComponent;
 
-    const chartConfig = {
-        type: "bar",
-        data: {
-            labels: ["A", "B", "C"],
-            datasets: [
-                {
-                    label: "Value",
-                    data: [10, 20, 30],
-                    backgroundColor: "rgba(0, 123, 255, 0.6)",
-                },
-            ],
-        },
-    };
+    if (i % 6 === 0) {
+        chartComponent = <LineChart />;;
+      } else if (i % 6 === 1) {
+        chartComponent = <LineChartWithAnnotations />;
+      } else if (i % 6 === 2) {
+        chartComponent = <BarChart />;
+      } else if (i % 6 === 3) {
+        chartComponent = <DependencyWheelChart />;
+      } else if (i % 6 === 4) {
+        chartComponent = <NetworkGraph />;
+      } else if (i % 6 === 5) {
+        chartComponent = <PolarChart />;
+      }
       
     const convertCSVToJson = async (csvData) => {
         try {
@@ -149,40 +153,7 @@ function NewChart({ user, setUser, userdata, setUserdata }) {
                 <div className="containernew">
                     <h1 className="titleuser"> Let's create your own chart!</h1>
                     <div className="container1">
-                        <HighchartsReact
-                            highcharts={Highcharts}
-                            options={{
-                                chart: {
-                                    type: types[i % 2],
-                                    height: 250,
-                                },
-                                title: {
-                                    text: "My Chart",
-                                },
-                                xAxis: {
-                                    categories: [
-                                        "Apples",
-                                        "Bananas",
-                                        "Oranges",
-                                    ],
-                                },
-                                yAxis: {
-                                    title: {
-                                        text: "Fruit Eaten",
-                                    },
-                                },
-                                series: [
-                                    {
-                                        name: "Jane",
-                                        data: [1, 0, 4],
-                                    },
-                                    {
-                                        name: "John",
-                                        data: [5, 7, 3],
-                                    },
-                                ],
-                            }}
-                        />
+                        {chartComponent}
                         <button
                             className="arrow-button-left"
                             onClick={() => changeI(false)}
@@ -191,14 +162,14 @@ function NewChart({ user, setUser, userdata, setUserdata }) {
                             className="arrow-button"
                             onClick={() => changeI(true)}
                         ></button>
-                    </div>
+                    </div><br />
                     <button
                         className="mainbutton"
                         onClick={() => download_csv(types[i % 2])}
                     >
                         Description template for {types[i % 2]} chart{" "}
                     </button>
-                    <br />
+                    <br /><br />
                     <div
                         className={`upload-box ${selectedFile ? "active" : ""}`}
                         onDragOver={handleDragOver}

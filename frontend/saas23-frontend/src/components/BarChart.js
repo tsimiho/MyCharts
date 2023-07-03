@@ -2,10 +2,10 @@ import React from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
-const LineChart = () => {
+const BarChart = () => {
   const options = {
     chart: {
-      type: 'line',
+      type: 'bar',
       height: 250,
     },
     title: {
@@ -34,4 +34,4 @@ const LineChart = () => {
   return <HighchartsReact highcharts={Highcharts} options={options} />;
 };
 
-export default LineChart;
+export default BarChart;

@@ -2,36 +2,29 @@ import React from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
-const LineChart = () => {
+const PolarChart = () => {
   const options = {
     chart: {
+      polar: true,
       type: 'line',
       height: 250,
     },
     title: {
-      text: 'My Chart',
+      text: 'Polar Chart',
     },
     xAxis: {
-      categories: ['Apples', 'Bananas', 'Oranges'],
+      categories: ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5'],
     },
     yAxis: {
-      title: {
-        text: 'Fruit Eaten',
-      },
+      gridLineInterpolation: 'polygon',
     },
-    series: [
-      {
-        name: 'Jane',
-        data: [1, 0, 4],
-      },
-      {
-        name: 'John',
-        data: [5, 7, 3],
-      },
-    ],
+    series: [{
+      name: 'Series 1',
+      data: [5, 10, 6, 7, 8],
+    }],
   };
 
   return <HighchartsReact highcharts={Highcharts} options={options} />;
 };
 
-export default LineChart;
+export default PolarChart;
