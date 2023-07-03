@@ -1,5 +1,5 @@
 import kafka from "../config/kafka";
-import establishWebSocketConnection from "../controllers/websocket";
+// import establishWebSocketConnection from "../controllers/websocket";
 import WebSocket from "ws";
 
 const consumer = kafka.consumer({ groupId: "orchestrator-group" });
@@ -31,7 +31,7 @@ signalTraps.map((type) => {
 });
 
 const run = async () => {
-    const wss = new WebSocket.Server({ port: 8080 });
+    const wss = new WebSocket.Server({ port: 8090 });
 
     const connections: WebSocket[] = [];
 
@@ -46,7 +46,7 @@ const run = async () => {
     });
 
     wss.on("listening", () => {
-        console.log("WebSocket server is listening on port 8080");
+        console.log("WebSocket server is listening on port 8090");
     });
 
     wss.on("error", (error) => {
