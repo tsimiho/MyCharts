@@ -6,6 +6,26 @@ import socket from "../components/WebSocket";
 
 function BuyCredits({ user, setUser, userdata, setUserdata }) {
     const [number, setNumber] = useState(0);
+    var [loggedin, setLoggedin] = useState(1);
+    const [loading, setLoading] = useState(true); // New loading state
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem("user");
+        const storedUserdata = localStorage.getItem("userdata");
+
+        try {
+            setUser(JSON.parse(storedUser));
+            setUserdata(JSON.parse(storedUserdata));
+        } catch (error) {
+            setUser(null);
+            setUserdata(null);
+        }
+        if (!storedUser) {
+            setLoggedin(0);
+        }
+
+        setLoading(false); // Set loading to false after data fetching completes
+    }, []);
 
     socket.onmessage = ({ data }) => {
         updateQuotas(data);
@@ -44,7 +64,7 @@ function BuyCredits({ user, setUser, userdata, setUserdata }) {
         console.log(number);
     };
 
-    if (Object.keys(user).length === 0) return <Navigate replace to="/" />;
+    if (loggedin === 0) return <Navigate replace to="/" />;
     else
         return (
             <div className="background">

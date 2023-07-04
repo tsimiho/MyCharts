@@ -2,14 +2,8 @@ import "../style/UserPage.css";
 import { Link, Navigate, useParams } from "react-router-dom";
 import React, { useState, useEffect, useRef } from "react";
 import HighchartsReact from "highcharts-react-official";
-import HighchartsExporting from "highcharts/modules/exporting";
-import HighchartsAccessibility from "highcharts/modules/accessibility";
-import HighchartsDependencyWheel from "highcharts/modules/dependency-wheel";
-import Sankey from "highcharts/modules/sankey";
 import axios from "axios";
 import Highcharts from "highcharts";
-import exportModules from "highcharts/modules/exporting";
-import exportDataModules from "highcharts/modules/export-data";
 import offlineExporting from "highcharts/modules/offline-exporting";
 import socket from "../components/WebSocket";
 import ExportingModule from "highcharts/modules/exporting";
@@ -18,6 +12,7 @@ import ExportDataModule from "highcharts/modules/export-data";
 function MyCharts({ user, setUser, userdata, setUserdata }) {
     const [chartData, setChartData] = useState(null);
     var [loggedin, setLoggedin] = useState(1);
+    const [loading, setLoading] = useState(true); // New loading state
     ExportingModule(Highcharts);
     ExportDataModule(Highcharts);
     offlineExporting(Highcharts);
@@ -25,16 +20,27 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
         const storedUserdata = localStorage.getItem("userdata");
-        setUser(JSON.parse(storedUser));
-        setUserdata(JSON.parse(storedUserdata));
-        console.log(user);
-        console.log(userdata);
+
+        try {
+            setUser(JSON.parse(storedUser));
+            setUserdata(JSON.parse(storedUserdata));
+        } catch (error) {
+            setUser(null);
+            setUserdata(null);
+        }
+
         if (!storedUser) {
             setLoggedin(0);
         }
 
-        console.log(userdata.diagrams);
-    }, [user, userdata, setUser, setUserdata]);
+        setLoading(false); // Set loading to false after data fetching completes
+    }, []);
+
+    // ...
+
+    if (loading) {
+        return <div></div>; // Render a loading indicator while data is being fetched
+    }
 
     socket.onmessage = ({ data }) => {
         const { diagram, action } = JSON.parse(data);
@@ -147,14 +153,6 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
     }
 
     const requestChart = async (type, id, action) => {
-        console.log(
-            "http://localhost:9001/api/request/" +
-                type +
-                "/" +
-                id +
-                "/" +
-                action
-        );
         await axios.get(
             "http://localhost:9001/api/request/" +
                 type +
