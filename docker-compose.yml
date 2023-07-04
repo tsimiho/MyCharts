@@ -98,7 +98,7 @@ services:
             - BASE_URL=192.168.1.227
         restart: always
 
-    lineWithAnnotations_create_service:
+    linewithannotations_create_service:
         build:
             context: ./LineWithAnnotations-Create
             dockerfile: dockerfile
@@ -109,7 +109,7 @@ services:
             - BASE_URL=192.168.1.227
         restart: always
 
-    lineWithAnnotations_show_service:
+    linewithannotations_show_service:
         build:
             context: ./LineWithAnnotations-Show
             dockerfile: dockerfile
@@ -120,7 +120,7 @@ services:
             - BASE_URL=192.168.1.227
         restart: always
 
-    dependencyWheel_create_service:
+    dependencywheel_create_service:
         build:
             context: ./DependencyWheel-Create
             dockerfile: dockerfile
@@ -131,7 +131,7 @@ services:
             - BASE_URL=192.168.1.227
         restart: always
 
-    dependencyWheel_show_service:
+    dependencywheel_show_service:
         build:
             context: ./DependencyWheel-Show
             dockerfile: dockerfile
@@ -142,7 +142,7 @@ services:
             - BASE_URL=192.168.1.227
         restart: always
 
-    basicColumn_create_service:
+    basiccolumn_create_service:
         build:
             context: ./BasicColumn-Create
             dockerfile: dockerfile
@@ -153,7 +153,7 @@ services:
             - BASE_URL=192.168.1.227
         restart: always
 
-    basicColumn_show_service:
+    basiccolumn_show_service:
         build:
             context: ./BasicColumn-Show
             dockerfile: dockerfile
@@ -164,7 +164,7 @@ services:
             - BASE_URL=192.168.1.227
         restart: always
 
-    networkGraph_create_service:
+    networkgraph_create_service:
         build:
             context: ./NetworkGraph-Create
             dockerfile: dockerfile
@@ -175,7 +175,7 @@ services:
             - BASE_URL=192.168.1.227
         restart: always
 
-    networkGraph_show_service:
+    networkgraph_show_service:
         build:
             context: ./NetworkGraph-Show
             dockerfile: dockerfile
