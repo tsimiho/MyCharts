@@ -23,7 +23,7 @@ const addlinechart = async (email: string, data: object) => {
 
         await producer.send({
             topic: "diagram_id",
-            messages: [{ key: "0", value: message }],
+            messages: [{ value: message }],
         });
     } catch (error) {
         console.log(`[kafka-producer] ${(error as Error).message}`, error);
