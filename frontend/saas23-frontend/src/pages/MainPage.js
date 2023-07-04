@@ -10,12 +10,17 @@ import LineChartWithAnnotations from '../components/LineChartwithAnnotations';
 import BarChart from '../components/BarChart';
 import NetworkGraph from '../components/NetworkGraph';
 import PolarChart from '../components/PolarChart';
+import socket from "../components/WebSocket.js";
 
 function MainPage({ newuser, setNewuser, user, setUser, userdata, setUserdata }) {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [type, setType] = useState("bar");
     const [ann, setAnn] = useState(0);
     const [chartComponent,setChartComponent] = useState(null);
+
+    socket.onmessage = ({ data }) => {
+        
+    };
 
     const openModal = (i) => {
         if (i % 6 === 0) {

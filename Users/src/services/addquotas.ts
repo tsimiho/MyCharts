@@ -8,7 +8,7 @@ const addquotas = async (email: string, quotas: string) => {
         email: email,
     });
     if (user) {
-        if (user.quotas) {
+        if (user.quotas>=0) {
             const q = user.quotas + quotas;
             await UserSchema.findOneAndUpdate({ email: email }, { quotas: q });
 

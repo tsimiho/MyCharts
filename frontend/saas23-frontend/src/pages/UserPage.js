@@ -7,8 +7,8 @@ import socket from "../components/WebSocket";
 function UserPage({ newuser, setNewuser, user, setUser, userdata, setUserdata }) {
     var data = [
         ["n. of charts", userdata.diagrams ? userdata.diagrams.length : ""],
-        ["available credits", userdata.quotas || ""],
-        ["last login", userdata.lastLogin.slice(0, 10)],
+        ["available credits", userdata.quotas],
+        ["last login", userdata.lastLogin ? userdata.lastLogin.slice(0, 10) : ""],
     ];
 
     const rows = data.map((row, index) => {

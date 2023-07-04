@@ -24,6 +24,7 @@ function ChartPreview({ user, setUser, userdata, setUserdata }) {
   });
 
   const savechart = () => {
+    // Create the chart on the according microservice
     if(options.chart.hasOwnProperty('type')){
       console.log(options.chart.type)
       if(options.chart.type === "bar"){
@@ -54,10 +55,8 @@ function ChartPreview({ user, setUser, userdata, setUserdata }) {
             data: options, 
           });
         }
-        
       }
     }
-    
   };
 
   return (

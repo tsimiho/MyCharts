@@ -13,6 +13,7 @@ import LineChartWithAnnotations from '../components/LineChartwithAnnotations';
 import BarChart from '../components/BarChart';
 import NetworkGraph from '../components/NetworkGraph';
 import PolarChart from '../components/PolarChart';
+import socket from "../components/WebSocket.js";
 
 function NewChart({ user, setUser, userdata, setUserdata }) {
     const [i, setI] = useState(0);
@@ -31,6 +32,20 @@ function NewChart({ user, setUser, userdata, setUserdata }) {
         }
     };
     
+    socket.onmessage = ({ data }) => {
+        data = JSON.parse(data);
+        console.log(data);
+        if(data.quotas !== userdata.quotas){
+            setUserdata(data);
+            localStorage.removeItem("userdata");
+            localStorage.setItem("userdata", JSON.stringify(data));
+            toast.success("Your diagram has been successfully added!", {
+                position: "top-left",
+                autoClose: 5000,
+            });
+        }  
+    };
+
     let chartComponent;
 
     if (i % 6 === 0) {
@@ -66,13 +81,17 @@ function NewChart({ user, setUser, userdata, setUserdata }) {
     };
 
     useEffect(() => {
-        // const storedUser = localStorage.getItem("user");
-        // console.log(user);
-        // if (!storedUser) {
-        //   console.log(1);
-        //   setLoggedin(0)
-        // }
-        console.log(userdata);
+        const storedUser = JSON.parse(localStorage.getItem("user"));
+        setUser(storedUser)
+        console.log(storedUser);
+        const storedUserdata = JSON.parse(localStorage.getItem("userdata"));
+        setUserdata(storedUserdata)
+        console.log(storedUserdata);
+        
+        // get the new user data
+        axios.post("http://localhost:9001/api/login", {
+            email: userdata.email,
+        });
     }, []);
 
     const [selectedFile, setSelectedFile] = useState(null);
@@ -107,7 +126,7 @@ function NewChart({ user, setUser, userdata, setUserdata }) {
         };
     
         reader.readAsText(file);
-        if (userdata.quotas < 10) {
+        if (userdata.quotas < 1) {
             toast.error("You don't have enough quotas to create a chart!", {
                 position: "top-left",
                 autoClose: false,
@@ -215,7 +234,7 @@ function NewChart({ user, setUser, userdata, setUserdata }) {
                         )}
                     </div>
                     <div className="buttonsuser">
-                        {userdata.quotas < 10 || selectedFile === null ? (
+                        {userdata.quotas < 1 || selectedFile === null ? (
                             <h1 className="titleuser"> </h1>
                     ) : (
                             <Link
