@@ -8,7 +8,7 @@ function UserPage({ newuser, setNewuser, user, setUser, userdata, setUserdata })
     var data = [
         ["n. of charts", userdata.diagrams ? userdata.diagrams.length : ""],
         ["available credits", userdata.quotas || ""],
-        ["last login", "19-07-2022"],
+        ["last login", userdata.lastLogin.slice(0, 10)],
     ];
 
     const rows = data.map((row, index) => {
@@ -23,6 +23,7 @@ function UserPage({ newuser, setNewuser, user, setUser, userdata, setUserdata })
         setNewuser(true);
         setUserdata({});
         localStorage.removeItem("user");
+        localStorage.removeItem("userdata");
         localStorage.removeItem("newuser");
     }
 

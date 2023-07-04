@@ -17,7 +17,7 @@ import PolarChart from '../components/PolarChart';
 function NewChart({ user, setUser, userdata, setUserdata }) {
     const [i, setI] = useState(0);
     const [jsonData, setJsonData] = useState([]);
-    const types = ["line","bar"];
+    const types = ["LineChart","LineAnnotationChart", "BasicColumn","DependencyWheel","NetworkGraph","PolarChart"];
     var [loggedin, setLoggedin] = useState(1);
 
     const changeI = (plus) => {
@@ -122,8 +122,36 @@ function NewChart({ user, setUser, userdata, setUserdata }) {
     const handleDrop = (event) => {
         event.preventDefault();
         const file = event.dataTransfer.files[0];
-        handleFileChange(event);
-        if (userdata.quotas < 10) {
+        console.log(file)
+        // Check if the file name or file type indicates it is a CSV file
+        const fileName = file.name;
+        const fileType = file.type;
+        const isCSV = fileName.endsWith(".csv") || fileType === "text/csv";
+        
+        if (!isCSV) {
+            toast.error("Please select a CSV file according to the description templates!", {
+                position: "top-left",
+                autoClose: 3000,
+            });
+            return; // Stop further processing
+        }
+        setSelectedFile(file);
+        
+        const reader = new FileReader();
+    
+        reader.onload = async (event) => {
+            const contents = event.target.result;
+            const json = await convertCSVToJson(contents);
+            console.log(json)
+            setJsonData(json)
+        };
+    
+        reader.onerror = (event) => {
+            console.error('Error reading the file:', event.target.error);
+        };
+    
+        reader.readAsText(file);
+        if (userdata.quotas < 1) {
             toast.error("You don't have enough quotas to create a chart!", {
                 position: "top-left",
                 autoClose: false,
@@ -159,9 +187,9 @@ function NewChart({ user, setUser, userdata, setUserdata }) {
                     </div><br />
                     <button
                         className="mainbutton"
-                        onClick={() => download_csv(types[i % 2])}
+                        onClick={() => download_csv(types[i % 6])}
                     >
-                        Description template for {types[i % 2]} chart{" "}
+                        Description template for {types[i % 6]}{" "}
                     </button>
                     <br /><br />
                     <div
