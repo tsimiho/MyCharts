@@ -2,14 +2,14 @@ import mongoose from "mongoose";
 
 const LineChartSchema = new mongoose.Schema({
     chart: {
-        type: { 
-            type: String, 
-            default: "line" 
+        type: {
+            type: String,
+            default: "line",
         },
-        height: { 
-            type: String, 
-            default: '100%' 
-        }
+        height: {
+            type: String,
+            default: "100%",
+        },
     },
     title: {
         type: {

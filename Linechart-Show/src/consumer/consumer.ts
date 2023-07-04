@@ -39,9 +39,9 @@ const run = async () => {
             if (message.value != null) {
                 if (topic === "linechart_request") {
                     const { id, action } = JSON.parse(message.value.toString());
-                    const mongoose_id = new mongoose.Schema.Types.ObjectId(id);
-                    await returnDiagram(mongoose_id, action);
-                    console.log(mongoose_id, action);
+                    // const mongoose_id = mongoose.Types.ObjectId(id);
+                    console.log(id, action);
+                    await returnDiagram(id, action);
                 }
             }
         },

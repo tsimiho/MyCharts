@@ -2,15 +2,11 @@ import mongoose from "mongoose";
 import LineChartSchema from "../models/linechart";
 import kafka from "../config/kafka";
 
-const returnDiagram = async (
-    diagram_id: mongoose.Schema.Types.ObjectId,
-    action: string
-) => {
-    const diagram = await LineChartSchema.findOne({
-        _id: diagram_id,
-    });
+const returnDiagram = async (diagram_id: string, action: string) => {
+    const diagram = await LineChartSchema.findById(diagram_id);
 
     if (diagram) {
+        console.log("here");
         try {
             const producer = kafka.producer();
             await producer.connect();

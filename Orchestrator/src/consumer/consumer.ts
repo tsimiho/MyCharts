@@ -82,8 +82,9 @@ const run = async () => {
                     console.log(message.value.toString());
                     broadcastMessage(message.value.toString());
                 } else if (topic === "linechart_show") {
-                    const { diagram } = JSON.parse(message.value.toString());
-                    broadcastMessage(diagram.toString());
+                    // const { diagram } = JSON.parse(message.value.toString());
+                    broadcastMessage(message.value.toString());
+                    console.log("done");
                 } else if (topic === "basicColumn_show") {
                     const { diagram } = JSON.parse(message.value.toString());
                     broadcastMessage(diagram.toString());

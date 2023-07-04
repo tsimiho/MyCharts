@@ -14,24 +14,25 @@ HighchartsExporting(Highcharts); // Initialize the exporting module
 
 function MyCharts({ user, setUser, userdata, setUserdata }) {
     socket.onmessage = ({ data }) => {
-        const { chart, action } = JSON.parse(data);
+        const { diagram, action } = JSON.parse(data);
 
-        console.log(action, chart);
+        console.log(action, diagram);
 
         if (action === "display") {
-            handleRowClick(chart);
+            handleRowClick(diagram);
         } else if (action === "pdf") {
             // download pdf
-            downloadChart(chart, "application/pdf");
+            // downloadChart(chart, "application/pdf");
+            console.log("data", data);
         } else if (action === "png") {
             // download png
-            downloadChart(chart, "image/png");
+            downloadChart(diagram, "image/png");
         } else if (action === "svg") {
             // download svg
-            downloadChart(chart, "image/svg+xml");
+            downloadChart(diagram, "image/svg+xml");
         } else if (action === "html") {
             // download html
-            downloadChart(chart, "text/html");
+            downloadChart(diagram, "text/html");
         }
     };
 
@@ -168,7 +169,13 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
                                 {userdata.diagrams.map((rows) => (
                                     <tr
                                         key={rows["DiagramID"]}
-                                        onClick={() => handleRowClick(rows)}
+                                        onClick={() =>
+                                            requestChart(
+                                                rows["Type"],
+                                                rows["DiagramID"],
+                                                "display"
+                                            )
+                                        }
                                     >
                                         <td>{rows["Type"]}</td>
                                         <td>{rows["Name"]}</td>
