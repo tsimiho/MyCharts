@@ -4,37 +4,42 @@ import React, { useState, useEffect } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import DependencyWheelChart from '../components/DependencyWheelChart';
-import LineChart from '../components/LineChart';
-import LineChartWithAnnotations from '../components/LineChartwithAnnotations';
-import BarChart from '../components/BarChart';
-import NetworkGraph from '../components/NetworkGraph';
-import PolarChart from '../components/PolarChart';
+import DependencyWheelChart from "../components/DependencyWheelChart";
+import LineChart from "../components/LineChart";
+import LineChartWithAnnotations from "../components/LineChartwithAnnotations";
+import BarChart from "../components/BarChart";
+import NetworkGraph from "../components/NetworkGraph";
+import PolarChart from "../components/PolarChart";
 import socket from "../components/WebSocket.js";
 
-function MainPage({ newuser, setNewuser, user, setUser, userdata, setUserdata }) {
+function MainPage({
+    newuser,
+    setNewuser,
+    user,
+    setUser,
+    userdata,
+    setUserdata,
+}) {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [type, setType] = useState("bar");
     const [ann, setAnn] = useState(0);
-    const [chartComponent,setChartComponent] = useState(null);
+    const [chartComponent, setChartComponent] = useState(null);
 
-    socket.onmessage = ({ data }) => {
-        
-    };
+    socket.onmessage = ({ data }) => {};
 
     const openModal = (i) => {
         if (i % 6 === 0) {
-            setChartComponent(<LineChart height={'350'} />);
+            setChartComponent(<LineChart height={"350"} />);
         } else if (i % 6 === 1) {
-            setChartComponent(<LineChartWithAnnotations height={'350'} />);
+            setChartComponent(<LineChartWithAnnotations height={"350"} />);
         } else if (i % 6 === 2) {
-            setChartComponent(<BarChart height={'350'} />);
+            setChartComponent(<BarChart height={"350"} />);
         } else if (i % 6 === 3) {
-            setChartComponent(<DependencyWheelChart height={'350'} />);
+            setChartComponent(<DependencyWheelChart height={"350"} />);
         } else if (i % 6 === 4) {
-            setChartComponent(<NetworkGraph height={'350'} />);
+            setChartComponent(<NetworkGraph height={"350"} />);
         } else if (i % 6 === 5) {
-            setChartComponent(<PolarChart height={'350'} />);
+            setChartComponent(<PolarChart height={"350"} />);
         }
         setModalIsOpen(true);
     };
@@ -44,7 +49,6 @@ function MainPage({ newuser, setNewuser, user, setUser, userdata, setUserdata })
         //window.history.back();
     };
 
-    
     // for Google Login
     // Handle messages received from the backend
     // socket.onmessage = (event) => {
@@ -98,14 +102,14 @@ function MainPage({ newuser, setNewuser, user, setUser, userdata, setUserdata })
         // localStorage.removeItem("user");
         const storedUser = localStorage.getItem("user");
         const storedUserdata = localStorage.getItem("userdata");
-    
+
         if (storedUser) {
             const userObject = JSON.parse(storedUser);
             setUser(userObject);
             const userdataObject = JSON.parse(storedUserdata);
             setUserdata(userdataObject);
         }
-    }, [setUser,setUserdata]);
+    }, [setUser, setUserdata]);
 
     function signout() {
         setUser({});
@@ -113,7 +117,8 @@ function MainPage({ newuser, setNewuser, user, setUser, userdata, setUserdata })
     }
 
     if (newuser === "false") return <Navigate replace to="/user" />;
-    else if (Object.keys(user).length !== 0) return <Navigate replace to="/confirmation" />;
+    else if (Object.keys(user).length !== 0)
+        return <Navigate replace to="/confirmation" />;
     else
         return (
             <div className="background">
@@ -128,7 +133,7 @@ function MainPage({ newuser, setNewuser, user, setUser, userdata, setUserdata })
                     </button>{" "}
                     &nbsp;&nbsp;
                     <button className="mainbutton" onClick={() => openModal(1)}>
-                        <img src="/lineann.png" alt="LineChart with Ann"/>
+                        <img src="/lineann.png" alt="LineChart with Ann" />
                         LineChart with annotations
                     </button>{" "}
                     &nbsp;&nbsp;
@@ -138,17 +143,20 @@ function MainPage({ newuser, setNewuser, user, setUser, userdata, setUserdata })
                     </button>{" "}
                     &nbsp;&nbsp;
                     <button className="mainbutton" onClick={() => openModal(3)}>
-                        <img src="/dependencywheel.jpg" alt="LineChart with Ann"/>
+                        <img
+                            src="/dependencywheel.jpg"
+                            alt="LineChart with Ann"
+                        />
                         Dependency wheel
                     </button>
                     &nbsp;&nbsp;
                     <button className="mainbutton" onClick={() => openModal(4)}>
-                        <img src="/networkgraph.png" alt="LineChart with Ann"/>
+                        <img src="/networkgraph.png" alt="LineChart with Ann" />
                         Network Graph
                     </button>
                     &nbsp;&nbsp;
                     <button className="mainbutton" onClick={() => openModal(5)}>
-                        <img src="/polarchart.png" alt="LineChart with Ann"/>
+                        <img src="/polarchart.png" alt="LineChart with Ann" />
                         Polar chart
                     </button>
                     <Modal
@@ -164,7 +172,8 @@ function MainPage({ newuser, setNewuser, user, setUser, userdata, setUserdata })
                                 height: "55%",
                                 margin: "auto",
                             },
-                        }}>
+                        }}
+                    >
                         {chartComponent}
                         <button className="mainbutton" onClick={closeModal}>
                             Back

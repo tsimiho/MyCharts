@@ -60,6 +60,7 @@ services:
             dockerfile: dockerfile
         ports:
             - "9000:9000"
+            - "8090:8090"
         environment:
             - MONGO_URI=mongodb+srv://user:user@cluster0.pt64z19.mongodb.net/
             - BASE_URL=192.168.1.227
@@ -223,5 +224,7 @@ services:
             context: ./frontend/saas23-frontend
             dockerfile: dockerfile
         ports:
-            - "3000:3000"
+            - "4007:3000"
+        environment:
+            - BASE_URL=192.168.1.227
         restart: always

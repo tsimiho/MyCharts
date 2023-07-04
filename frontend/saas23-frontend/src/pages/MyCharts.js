@@ -1,6 +1,6 @@
 import "../style/UserPage.css";
 import { Link, Navigate, useParams } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import HighchartsReact from "highcharts-react-official";
 import HighchartsExporting from "highcharts/modules/exporting";
 import HighchartsAccessibility from "highcharts/modules/accessibility";
@@ -8,50 +8,19 @@ import HighchartsDependencyWheel from "highcharts/modules/dependency-wheel";
 import Sankey from "highcharts/modules/sankey";
 import axios from "axios";
 import Highcharts from "highcharts";
+import exportModules from "highcharts/modules/exporting";
+import exportDataModules from "highcharts/modules/export-data";
+import offlineExporting from "highcharts/modules/offline-exporting";
 import socket from "../components/WebSocket";
-
-HighchartsExporting(Highcharts); // Initialize the exporting module
+import ExportingModule from "highcharts/modules/exporting";
+import ExportDataModule from "highcharts/modules/export-data";
 
 function MyCharts({ user, setUser, userdata, setUserdata }) {
-    socket.onmessage = ({ data }) => {
-        const { diagram, action } = JSON.parse(data);
-
-        console.log(action, diagram);
-
-        if (action === "display") {
-            handleRowClick(diagram);
-        } else if (action === "pdf") {
-            // download pdf
-            // downloadChart(chart, "application/pdf");
-            console.log("data", data);
-        } else if (action === "png") {
-            // download png
-            downloadChart(diagram, "image/png");
-        } else if (action === "svg") {
-            // download svg
-            downloadChart(diagram, "image/svg+xml");
-        } else if (action === "html") {
-            // download html
-            downloadChart(diagram, "text/html");
-        }
-    };
-
-    const downloadChart = (chartopt, type) => {
-        const chartConfig = {
-            type,
-            options: chartopt,
-        };
-        HighchartsExporting(Highcharts); // Initialize the exporting module
-        Highcharts.chart("export-container", chartConfig, function (chart) {
-            chart.exportChart({
-                type,
-                filename: "my_chart",
-            });
-        });
-    };
-
     const [chartData, setChartData] = useState(null);
     var [loggedin, setLoggedin] = useState(1);
+    ExportingModule(Highcharts);
+    ExportDataModule(Highcharts);
+    offlineExporting(Highcharts);
 
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
@@ -65,7 +34,81 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
         }
 
         console.log(userdata.diagrams);
-    }, []);
+    }, [user, userdata, setUser, setUserdata]);
+
+    socket.onmessage = ({ data }) => {
+        const { diagram, action } = JSON.parse(data);
+
+        if (action === "display") {
+            handleRowClick(diagram);
+        } else if (action === "pdf") {
+            // download pdf
+            downloadChart(diagram, "application/pdf");
+        } else if (action === "png") {
+            // download png
+            downloadChart(diagram, "image/png");
+        } else if (action === "svg") {
+            // download svg
+            downloadChart(diagram, "image/svg+xml");
+        } else if (action === "html") {
+            // download html
+            downloadChart(diagram, "html");
+        }
+    };
+
+    const downloadChart = (chartOptions, fileType) => {
+        const container = document.createElement("div");
+        container.id = "chart-container";
+        container.style.display = "none";
+        document.body.appendChild(container);
+
+        const filename = chartOptions.title.text.replace(/\s/g, "");
+
+        const chart = Highcharts.chart(container, chartOptions);
+
+        if (fileType === "html") {
+            try {
+                const svgMarkup = chart.getSVG();
+
+                const htmlContent = `
+              <html>
+                <head>
+                  <title>Chart</title>
+                </head>
+                <body>
+                  ${svgMarkup}
+                </body>
+              </html>
+            `;
+
+                const blob = new Blob([htmlContent], { type: "text/html" });
+                const url = URL.createObjectURL(blob);
+
+                const link = document.createElement("a");
+                link.href = url;
+                link.download = filename;
+                link.click();
+
+                // Clean up the URL object
+                URL.revokeObjectURL(url);
+            } catch (error) {
+                console.error("Error exporting chart:", error);
+            }
+        } else {
+            // Export the chart in other file formats
+            chart.exportChartLocal({
+                type: fileType,
+                // filename: `chart.${fileType}`,
+                filename: filename,
+                sourceWidth: chartOptions.chart.width,
+                sourceHeight: chartOptions.chart.height,
+            });
+        }
+
+        // Destroy the chart
+        chart.destroy();
+        container.remove();
+    };
 
     function handleRowClick(rows) {
         // Assuming `rows` contains the chart data for the clicked row
@@ -254,6 +297,7 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
                         </div>
                     )}
                 </div>
+                <div id="chart-container"></div>
             </div>
         );
 }
