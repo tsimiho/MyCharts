@@ -2,13 +2,8 @@ import mongoose from "mongoose";
 import NetworkGraphSchema from "../models/networkGraph";
 import kafka from "../config/kafka";
 
-const returnDiagram = async (
-    diagram_id: mongoose.Schema.Types.ObjectId,
-    action: string
-) => {
-    const diagram = await NetworkGraphSchema.findOne({
-        _id: diagram_id,
-    });
+const returnDiagram = async (diagram_id: string, action: string) => {
+    const diagram = await NetworkGraphSchema.findById(diagram_id);
 
     if (diagram) {
         try {

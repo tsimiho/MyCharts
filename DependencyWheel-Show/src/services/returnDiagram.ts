@@ -2,13 +2,8 @@ import mongoose from "mongoose";
 import DependencyWheelSchema from "../models/dependencyWheel";
 import kafka from "../config/kafka";
 
-const returnDiagram = async (
-    diagram_id: mongoose.Schema.Types.ObjectId,
-    action: string
-) => {
-    const diagram = await DependencyWheelSchema.findOne({
-        _id: diagram_id,
-    });
+const returnDiagram = async (diagram_id: string, action: string) => {
+    const diagram = await DependencyWheelSchema.findById(diagram_id);
 
     if (diagram) {
         try {

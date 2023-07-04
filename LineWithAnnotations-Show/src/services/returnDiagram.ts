@@ -2,13 +2,8 @@ import mongoose from "mongoose";
 import LineWithAnnotationsSchema from "../models/lineWithAnnotations";
 import kafka from "../config/kafka";
 
-const returnDiagram = async (
-    diagram_id: mongoose.Schema.Types.ObjectId,
-    action: string
-) => {
-    const diagram = await LineWithAnnotationsSchema.findOne({
-        _id: diagram_id,
-    });
+const returnDiagram = async (diagram_id: string, action: string) => {
+    const diagram = await LineWithAnnotationsSchema.findById(diagram_id);
 
     if (diagram) {
         try {

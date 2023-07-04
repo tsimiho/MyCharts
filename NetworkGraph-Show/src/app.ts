@@ -21,7 +21,7 @@ const start = async () => {
         if (!mongoURI) {
             throw new Error("MONGO_URI environment variable is not defined.");
         } else {
-            // await connectDB(mongoURI);
+            await connectDB(mongoURI);
             app.listen(port, () =>
                 console.log(`Server is listening on port ${port}...`)
             );
