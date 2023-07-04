@@ -1,0 +1,2 @@
+chart,title,subtitle,xAxis,yAxis,plotOptions,series
+"{""type"":""column""}","{""text"":""Your Chart Title""}","{""text"":""Your Chart Subtitle""}","{""categories"":[""Category 1"",""Category 2"",""Category 3"",""...""],""crosshair"":true}","{""min"":0,""title"":{""text"":""Your Y-Axis Title""}}","{""column"":{""pointPadding"":0.2,""borderWidth"":0}}","[{""name"":""Series 1 Name"",""data"":[0,0,0,""...""],""color"":""Series 1 color""},{""name"":""Series 2 Name"",""data"":[0,0,0,""...""],""color"":""Series 1 color""},""...""]"
