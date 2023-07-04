@@ -34,19 +34,21 @@ function MyCharts({ user, setUser }) {
     };
 
     const downloadChart = (chartopt, type) => {
-        const chartConfig = {
-            type,
-            options: chartopt,
-        };
+        // const chartConfig = {
+        //     type,
+        //     options: chartopt,
+        // };
 
-        HighchartsExporting(Highcharts); // Initialize the exporting module
+        // HighchartsExporting(Highcharts); // Initialize the exporting module
 
-        Highcharts.chart("export-container", chartConfig, function (chart) {
-            chart.exportChart({
-                type,
-                filename: "my_chart",
-            });
-        });
+        // Highcharts.chart("export-container", chartConfig, function (chart) {
+        //     chart.exportChart({
+        //         type,
+        //         filename: "my_chart",
+        //     });
+        // });
+
+        console.log(chartopt);
     };
 
     const [chartData, setChartData] = useState(null);
