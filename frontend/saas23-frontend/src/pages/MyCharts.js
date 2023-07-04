@@ -12,7 +12,7 @@ import ExportDataModule from "highcharts/modules/export-data";
 function MyCharts({ user, setUser, userdata, setUserdata }) {
     const [chartData, setChartData] = useState(null);
     var [loggedin, setLoggedin] = useState(1);
-    const [loading, setLoading] = useState(true); // New loading state
+    const [loading, setLoading] = useState(true);
     ExportingModule(Highcharts);
     ExportDataModule(Highcharts);
     offlineExporting(Highcharts);
@@ -33,13 +33,11 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
             setLoggedin(0);
         }
 
-        setLoading(false); // Set loading to false after data fetching completes
+        setLoading(false);
     }, []);
 
-    // ...
-
     if (loading) {
-        return <div></div>; // Render a loading indicator while data is being fetched
+        return <div></div>;
     }
 
     socket.onmessage = ({ data }) => {
@@ -226,25 +224,27 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
                                         <td class="button-cell">
                                             <button
                                                 class="download"
-                                                onClick={() =>
+                                                onClick={(event) => {
+                                                    event.stopPropagation();
                                                     requestChart(
                                                         rows["Type"],
                                                         rows["DiagramID"],
                                                         "pdf"
-                                                    )
-                                                }
+                                                    );
+                                                }}
                                             >
                                                 pdf
                                             </button>
                                             <button
                                                 class="download"
-                                                onClick={() =>
+                                                onClick={(event) => {
+                                                    event.stopPropagation();
                                                     requestChart(
                                                         rows["Type"],
                                                         rows["DiagramID"],
                                                         "png"
-                                                    )
-                                                }
+                                                    );
+                                                }}
                                             >
                                                 {" "}
                                                 png{" "}
@@ -252,26 +252,28 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
                                             <br />
                                             <button
                                                 class="download"
-                                                onClick={() =>
+                                                onClick={(event) => {
+                                                    event.stopPropagation();
                                                     requestChart(
                                                         rows["Type"],
                                                         rows["DiagramID"],
                                                         "svg"
-                                                    )
-                                                }
+                                                    );
+                                                }}
                                             >
                                                 {" "}
                                                 svg{" "}
                                             </button>
                                             <button
                                                 class="download"
-                                                onClick={() =>
+                                                onClick={(event) => {
+                                                    event.stopPropagation();
                                                     requestChart(
                                                         rows["Type"],
                                                         rows["DiagramID"],
                                                         "html"
-                                                    )
-                                                }
+                                                    );
+                                                }}
                                             >
                                                 {" "}
                                                 html{" "}
