@@ -1,0 +1,227 @@
+# Each service has:
+#  1. its own section specifying the build context
+#  2. Dockerfile
+#  3. ports
+#  4. dependencies
+#  5. environment variables
+#  6. and restart policy.
+
+# The environment variables include:
+#  1. the database connection details
+#  2. secret values
+#  3. schema name
+#  4. and base URL
+
+# The ports define the mapping between the host and container ports for each service.
+
+# [IMPORTANT] Make sure to adjust the values of the environment variables, such as:
+# 1. DB_HOST
+# 2. DB_PORT
+# 3. DB_USER
+# 4. DB_PASS
+# 5. SECRET_JWT
+# 6. SECRET_STRING_SERVICES
+# etc, according to your specific configuration.
+
+# The deliverable you should push to your GitHub repository MUST:
+#  1. Have the IP (that you give to every DB, Microservice, FrontEnd) equal to [IP]
+#  2. The frontend should run through port 4007
+
+version: "3"
+services:
+    zookeeper:
+        image: confluentinc/cp-zookeeper:7.3.2
+        container_name: zookeeper
+        environment:
+            ZOOKEEPER_CLIENT_PORT: 2181
+            ZOOKEEPER_TICK_TIME: 2000
+
+    broker:
+        image: confluentinc/cp-kafka:7.3.2
+        container_name: broker
+        ports:
+            # To learn about configuring Kafka for access across networks see
+            # https://www.confluent.io/blog/kafka-client-cannot-connect-to-broker-on-aws-on-docker-etc/
+            - "9092:9092"
+        depends_on:
+            - zookeeper
+        environment:
+            KAFKA_BROKER_ID: 1
+            KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+            KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://broker:29092
+            KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+            KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+            KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+
+    orchestrator_service:
+        build:
+            context: ./Orchestrator
+            dockerfile: dockerfile
+        ports:
+            - "9000:9000"
+        environment:
+            - MONGO_URI=mongodb+srv://user:user@cluster0.pt64z19.mongodb.net/
+            - BASE_URL=192.168.1.227
+        restart: always
+
+    users_service:
+        build:
+            context: ./Users
+            dockerfile: dockerfile
+        ports:
+            - "9001:9001"
+        environment:
+            - MONGO_URI=mongodb+srv://user:user@cluster0.pt64z19.mongodb.net/
+            - BASE_URL=192.168.1.227
+        restart: always
+
+    linechart_create_service:
+        build:
+            context: ./Linechart-Create
+            dockerfile: dockerfile
+        ports:
+            - "9002:9002"
+        environment:
+            - MONGO_URI=mongodb+srv://user:user@cluster0.moa9dz2.mongodb.net/
+            - BASE_URL=192.168.1.227
+        restart: always
+
+    linechart_show_service:
+        build:
+            context: ./Linechart-Show
+            dockerfile: dockerfile
+        ports:
+            - "9003:9003"
+        environment:
+            - MONGO_URI=mongodb+srv://user:user@cluster0.moa9dz2.mongodb.net/
+            - BASE_URL=192.168.1.227
+        restart: always
+
+    lineWithAnnotations_create_service:
+        build:
+            context: ./LineWithAnnotations-Create
+            dockerfile: dockerfile
+        ports:
+            - "9004:9004"
+        environment:
+            - MONGO_URI=mongodb+srv://user:user@cluster0.r25s0uy.mongodb.net/
+            - BASE_URL=192.168.1.227
+        restart: always
+
+    lineWithAnnotations_show_service:
+        build:
+            context: ./LineWithAnnotations-Show
+            dockerfile: dockerfile
+        ports:
+            - "9005:9005"
+        environment:
+            - MONGO_URI=mongodb+srv://user:user@cluster0.r25s0uy.mongodb.net/
+            - BASE_URL=192.168.1.227
+        restart: always
+
+    dependencyWheel_create_service:
+        build:
+            context: ./DependencyWheel-Create
+            dockerfile: dockerfile
+        ports:
+            - "9006:9006"
+        environment:
+            - MONGO_URI=mongodb+srv://user:user@cluster0.ouceens.mongodb.net/
+            - BASE_URL=192.168.1.227
+        restart: always
+
+    dependencyWheel_show_service:
+        build:
+            context: ./DependencyWheel-Show
+            dockerfile: dockerfile
+        ports:
+            - "9007:9007"
+        environment:
+            - MONGO_URI=mongodb+srv://user:user@cluster0.ouceens.mongodb.net/
+            - BASE_URL=192.168.1.227
+        restart: always
+
+    basicColumn_create_service:
+        build:
+            context: ./BasicColumn-Create
+            dockerfile: dockerfile
+        ports:
+            - "9008:9008"
+        environment:
+            - MONGO_URI=mongodb+srv://user:user@cluster0.y2sphyl.mongodb.net/
+            - BASE_URL=192.168.1.227
+        restart: always
+
+    basicColumn_show_service:
+        build:
+            context: ./BasicColumn-Show
+            dockerfile: dockerfile
+        ports:
+            - "9009:9009"
+        environment:
+            - MONGO_URI=mongodb+srv://user:user@cluster0.y2sphyl.mongodb.net/
+            - BASE_URL=192.168.1.227
+        restart: always
+
+    networkGraph_create_service:
+        build:
+            context: ./NetworkGraph-Create
+            dockerfile: dockerfile
+        ports:
+            - "9010:9010"
+        environment:
+            - MONGO_URI=mongodb+srv://user:user@cluster0.svdqmsb.mongodb.net/
+            - BASE_URL=192.168.1.227
+        restart: always
+
+    networkGraph_show_service:
+        build:
+            context: ./NetworkGraph-Show
+            dockerfile: dockerfile
+        ports:
+            - "9011:9011"
+        environment:
+            - MONGO_URI=mongodb+srv://user:user@cluster0.svdqmsb.mongodb.net/
+            - BASE_URL=192.168.1.227
+        restart: always
+
+    polarchart_create_service:
+        build:
+            context: ./Polarchart-Create
+            dockerfile: dockerfile
+        ports:
+            - "9012:9012"
+        environment:
+            - MONGO_URI=mongodb+srv://user:user@cluster0.zhha7md.mongodb.net/
+            - BASE_URL=192.168.1.227
+        restart: always
+
+    polarchart_show_service:
+        build:
+            context: ./Polarchart-Show
+            dockerfile: dockerfile
+        ports:
+            - "9013:9013"
+        environment:
+            - MONGO_URI=mongodb+srv://user:user@cluster0.zhha7md.mongodb.net/
+            - BASE_URL=192.168.1.227
+        restart: always
+
+    csv_downloader_service:
+        build:
+            context: ./CSV-Downloader
+            dockerfile: dockerfile
+        ports:
+            - "9014:9014"
+        environment:
+            - BASE_URL=192.168.1.227
+        restart: always
+
+    frontend_service:
+        build:
+            context: ./frontend/saas23-frontend
+            dockerfile: dockerfile
+        ports:
+            - "3000:3000"
+        restart: always
