@@ -16,6 +16,8 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
     socket.onmessage = ({ data }) => {
         const { chart, action } = JSON.parse(data);
 
+        console.log(action, chart);
+
         if (action === "display") {
             handleRowClick(chart);
         } else if (action === "pdf") {
@@ -48,33 +50,7 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
     };
 
     const [chartData, setChartData] = useState(null);
-    // const types = ["", "line", ];
     var [loggedin, setLoggedin] = useState(1);
-    const data = [
-        ["line", "First", "cwc"],
-        ["line", "Second", "cwc"],
-        ["line", "Third", "cwc"],
-        ["line", "First", "cwc"],
-        ["line", "First", "cwc"],
-        ["line", "First", "cwc"],
-        ["line", "First", "cwc"],
-        ["line", "First", "cwc"],
-        ["line", "First", "cwc"],
-        ["line", "First", "cwc"],
-        ["line", "First", "cwc"],
-        ["line", "First", "cwc"],
-    ];
-
-    // const data_dict = {
-    //     line: "linechart",
-    // };
-
-    // const rows = data.map((row, index) => {
-    //     const cells = row.map((cell, cellIndex) => {
-    //         return <td key={cellIndex}>{cell}</td>;
-    //     });
-    //     return <tr key={index}>{cells}</tr>;
-    // });
 
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
@@ -126,13 +102,23 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
         // Replace `setChartData` with the appropriate state setter function in your code
     }
 
-    const requestChart = async (type, action) => {
-        // await axios.get(
-        //     "http://localhost:9001/api/request/" +
-        //         data_dict[type] +
-        //         "/123/" +
-        //         action
-        // );
+    const requestChart = async (type, id, action) => {
+        console.log(
+            "http://localhost:9001/api/request/" +
+                type +
+                "/" +
+                id +
+                "/" +
+                action
+        );
+        await axios.get(
+            "http://localhost:9001/api/request/" +
+                type +
+                "/" +
+                id +
+                "/" +
+                action
+        );
     };
 
     if (loggedin === 0) return <Navigate replace to="/" />;
@@ -173,8 +159,8 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
                             >
                                 <tr>
                                     <th>Type</th>
-                                    <th>Chart name</th>
-                                    <th>Created on</th>
+                                    <th>Chart Name</th>
+                                    <th>Created On</th>
                                     <th>Download</th>
                                 </tr>
                             </thead>
@@ -185,29 +171,31 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
                                         onClick={() => handleRowClick(rows)}
                                     >
                                         <td>{rows["Type"]}</td>
-                                        <td>{"title"}</td>
+                                        <td>{rows["Name"]}</td>
                                         <td>
                                             {rows["Created_On"].slice(0, 10)}
                                         </td>
                                         <td class="button-cell">
                                             <button
                                                 class="download"
-                                                // onClick={
-                                                //     // () =>
-                                                //     /*requestChart(rows[0], "pdf")*/
-                                                //     // downloadChart(
-                                                //     //     chartData,
-                                                //     //     "application/pdf"
-                                                //     // )
-
-                                                // }
+                                                onClick={() =>
+                                                    requestChart(
+                                                        rows["Type"],
+                                                        rows["DiagramID"],
+                                                        "pdf"
+                                                    )
+                                                }
                                             >
                                                 pdf
                                             </button>
                                             <button
                                                 class="download"
                                                 onClick={() =>
-                                                    requestChart(rows[0], "png")
+                                                    requestChart(
+                                                        rows["Type"],
+                                                        rows["DiagramID"],
+                                                        "png"
+                                                    )
                                                 }
                                             >
                                                 {" "}
@@ -217,7 +205,11 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
                                             <button
                                                 class="download"
                                                 onClick={() =>
-                                                    requestChart(rows[0], "svg")
+                                                    requestChart(
+                                                        rows["Type"],
+                                                        rows["DiagramID"],
+                                                        "svg"
+                                                    )
                                                 }
                                             >
                                                 {" "}
@@ -227,7 +219,8 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
                                                 class="download"
                                                 onClick={() =>
                                                     requestChart(
-                                                        rows[0],
+                                                        rows["Type"],
+                                                        rows["DiagramID"],
                                                         "html"
                                                     )
                                                 }

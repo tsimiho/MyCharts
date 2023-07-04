@@ -5,7 +5,7 @@ const producer = kafka.producer();
 
 const request = async (req: Request, res: Response) => {
     const { type, id, action } = req.params;
-
+    console.log(type + "_request");
     console.log(type, id, action);
 
     try {

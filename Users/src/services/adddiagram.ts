@@ -4,7 +4,8 @@ import UserSchema from "../models/user";
 const add_diagram = async (
     email: string,
     id: mongoose.Types.ObjectId,
-    name: string
+    name: string,
+    type: string
 ) => {
     const user = await UserSchema.findOne({
         email: email,
@@ -19,7 +20,7 @@ const add_diagram = async (
         if (quotas && diagrams) {
             diagrams.push({
                 DiagramID: id,
-                Type: "Linechart",
+                Type: type,
                 Name: name,
                 Created_On: new Date(),
             });
@@ -34,7 +35,7 @@ const add_diagram = async (
             email: email,
             diagrams: {
                 DiagramID: id,
-                Type: "Linechart",
+                Type: type,
                 Name: name,
                 Created_On: new Date(),
             },
