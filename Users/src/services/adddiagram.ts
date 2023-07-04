@@ -10,21 +10,25 @@ const add_diagram = async (
         email: email,
     });
 
+    console.log(name);
+
     if (user) {
         const quotas = user.quotas;
         const diagrams = user.diagrams;
 
-        diagrams.push({
-            DiagramID: id,
-            Type: "Linechart",
-            Name: name,
-            Created_On: new Date(),
-        });
+        if (quotas && diagrams) {
+            diagrams.push({
+                DiagramID: id,
+                Type: "Linechart",
+                Name: name,
+                Created_On: new Date(),
+            });
 
-        await UserSchema.findOneAndUpdate(
-            { email: email },
-            { quotas: quotas - 1, diagrams: diagrams }
-        );
+            await UserSchema.findOneAndUpdate(
+                { email: email },
+                { quotas: quotas - 1, diagrams: diagrams }
+            );
+        }
     } else {
         await UserSchema.create({
             email: email,

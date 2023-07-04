@@ -12,7 +12,7 @@ import socket from "../components/WebSocket";
 
 HighchartsExporting(Highcharts); // Initialize the exporting module
 
-function MyCharts({ user, setUser }) {
+function MyCharts({ user, setUser, userdata, setUserdata }) {
     socket.onmessage = ({ data }) => {
         const { chart, action } = JSON.parse(data);
 
@@ -34,25 +34,21 @@ function MyCharts({ user, setUser }) {
     };
 
     const downloadChart = (chartopt, type) => {
-        // const chartConfig = {
-        //     type,
-        //     options: chartopt,
-        // };
-
-        // HighchartsExporting(Highcharts); // Initialize the exporting module
-
-        // Highcharts.chart("export-container", chartConfig, function (chart) {
-        //     chart.exportChart({
-        //         type,
-        //         filename: "my_chart",
-        //     });
-        // });
-
-        console.log(chartopt);
+        const chartConfig = {
+            type,
+            options: chartopt,
+        };
+        HighchartsExporting(Highcharts); // Initialize the exporting module
+        Highcharts.chart("export-container", chartConfig, function (chart) {
+            chart.exportChart({
+                type,
+                filename: "my_chart",
+            });
+        });
     };
 
     const [chartData, setChartData] = useState(null);
-    const types = ["bar", "line"];
+    // const types = ["", "line", ];
     var [loggedin, setLoggedin] = useState(1);
     const data = [
         ["line", "First", "cwc"],
@@ -69,24 +65,30 @@ function MyCharts({ user, setUser }) {
         ["line", "First", "cwc"],
     ];
 
-    const data_dict = {
-        line: "linechart",
-    };
+    // const data_dict = {
+    //     line: "linechart",
+    // };
 
-    const rows = data.map((row, index) => {
-        const cells = row.map((cell, cellIndex) => {
-            return <td key={cellIndex}>{cell}</td>;
-        });
-        return <tr key={index}>{cells}</tr>;
-    });
+    // const rows = data.map((row, index) => {
+    //     const cells = row.map((cell, cellIndex) => {
+    //         return <td key={cellIndex}>{cell}</td>;
+    //     });
+    //     return <tr key={index}>{cells}</tr>;
+    // });
 
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
+        const storedUserdata = localStorage.getItem("userdata");
+        setUser(JSON.parse(storedUser));
+        setUserdata(JSON.parse(storedUserdata));
         console.log(user);
+        console.log(userdata);
         if (!storedUser) {
             setLoggedin(0);
         }
-    }, [user]);
+
+        console.log(userdata.diagrams);
+    }, []);
 
     function handleRowClick(rows) {
         // Assuming `rows` contains the chart data for the clicked row
@@ -125,12 +127,12 @@ function MyCharts({ user, setUser }) {
     }
 
     const requestChart = async (type, action) => {
-        await axios.get(
-            "http://localhost:9001/api/request/" +
-                data_dict[type] +
-                "/123/" +
-                action
-        );
+        // await axios.get(
+        //     "http://localhost:9001/api/request/" +
+        //         data_dict[type] +
+        //         "/123/" +
+        //         action
+        // );
     };
 
     if (loggedin === 0) return <Navigate replace to="/" />;
@@ -177,20 +179,28 @@ function MyCharts({ user, setUser }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {data.map((rows) => (
+                                {userdata.diagrams.map((rows) => (
                                     <tr
-                                        key={rows[0]}
+                                        key={rows["DiagramID"]}
                                         onClick={() => handleRowClick(rows)}
                                     >
-                                        <td>{rows[0]}</td>
-                                        <td>{rows[1]}</td>
-                                        <td>{rows[2]}</td>
+                                        <td>{rows["Type"]}</td>
+                                        <td>{"title"}</td>
+                                        <td>
+                                            {rows["Created_On"].slice(0, 10)}
+                                        </td>
                                         <td class="button-cell">
                                             <button
                                                 class="download"
-                                                onClick={() =>
-                                                    /*requestChart(rows[0], "pdf")*/downloadChart(chartData,"application/pdf")
-                                                }
+                                                // onClick={
+                                                //     // () =>
+                                                //     /*requestChart(rows[0], "pdf")*/
+                                                //     // downloadChart(
+                                                //     //     chartData,
+                                                //     //     "application/pdf"
+                                                //     // )
+
+                                                // }
                                             >
                                                 pdf
                                             </button>
