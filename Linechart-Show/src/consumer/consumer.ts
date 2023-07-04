@@ -38,10 +38,11 @@ const run = async () => {
         eachMessage: async ({ topic, partition, message }) => {
             if (message.value != null) {
                 if (topic === "linechart_request") {
-                    const { id, action } = JSON.parse(message.value.toString());
-                    const mongoose_id = new mongoose.Schema.Types.ObjectId(id);
-                    await returnDiagram(mongoose_id, action);
-                    console.log(mongoose_id, action);
+                    // const { id, action } = JSON.parse(message.value.toString());
+                    // const mongoose_id = new mongoose.Schema.Types.ObjectId(id);
+                    // await returnDiagram(mongoose_id, action);
+                    // console.log(mongoose_id, action);
+                    console.log("what");
                 }
             }
         },

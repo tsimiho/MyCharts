@@ -10,7 +10,7 @@ const adddependencyWheel = async (email: string, data: object) => {
         await producer.connect();
 
         const id = diagram._id;
-        const title = diagram.title;
+        const title = diagram.title ? diagram.title["text"] : "";
         const type = "depenencyWheel";
 
         const message = JSON.stringify({
@@ -22,7 +22,7 @@ const adddependencyWheel = async (email: string, data: object) => {
 
         await producer.send({
             topic: "diagram_id",
-            messages: [{ value: message }],
+            messages: [{ key: "0", value: message }],
         });
     } catch (error) {
         console.log(`[kafka-producer] ${(error as Error).message}`, error);

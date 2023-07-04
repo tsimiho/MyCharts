@@ -11,7 +11,7 @@ const addlinechart = async (email: string, data: object) => {
         await producer.connect();
 
         const id = diagram._id;
-        const title = diagram.title;
+        const title = diagram.title ? diagram.title["text"] : "";
         const type = "linechart";
 
         const message = JSON.stringify({

@@ -10,7 +10,7 @@ const addpolarchart = async (email: string, data: object) => {
         await producer.connect();
 
         const id = diagram._id;
-        const title = diagram.title;
+        const title = diagram.title ? diagram.title["text"] : "";
         const type = "polarchart";
 
         const message = JSON.stringify({
