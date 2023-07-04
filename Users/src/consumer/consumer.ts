@@ -49,10 +49,10 @@ const run = async () => {
                     console.log(email, quotas);
                     await addquotas(email, quotas);
                 } else if (topic === "diagram_id") {
-                    const { email, id, title } = JSON.parse(
+                    const { email, id, title, type } = JSON.parse(
                         message.value.toString()
                     );
-                    await add_diagram(email, id, title);
+                    await add_diagram(email, id, title, type);
                 }
             }
         },
