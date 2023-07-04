@@ -95,6 +95,7 @@ function MainPage({ newuser, setNewuser, user, setUser, userdata, setUserdata })
             theme: "outline",
             size: "large",
         });
+        // localStorage.removeItem("user");
         const storedUser = localStorage.getItem("user");
         const storedUserdata = localStorage.getItem("userdata");
     

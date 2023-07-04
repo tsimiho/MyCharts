@@ -279,3 +279,19 @@
     background-color: #e0e0e0;
     color: #bb5a5a;
 }
+
+
+.containerpreview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    margin: 0 auto;
+  }
+  
+.highcharts-container {
+    width: 100%;
+    height: 370px;
+    max-width: 900px; /* Adjust the max-width value as needed */
+}

@@ -13,7 +13,6 @@ import LineChartWithAnnotations from '../components/LineChartwithAnnotations';
 import BarChart from '../components/BarChart';
 import NetworkGraph from '../components/NetworkGraph';
 import PolarChart from '../components/PolarChart';
-import socket from "../components/WebSocket.js";
 
 function NewChart({ user, setUser, userdata, setUserdata }) {
     const [i, setI] = useState(0);
@@ -32,20 +31,6 @@ function NewChart({ user, setUser, userdata, setUserdata }) {
         }
     };
     
-    socket.onmessage = ({ data }) => {
-        data = JSON.parse(data);
-        console.log(data);
-        if(data.quotas !== userdata.quotas){
-            setUserdata(data);
-            localStorage.removeItem("userdata");
-            localStorage.setItem("userdata", JSON.stringify(data));
-            toast.success("Your diagram has been successfully added!", {
-                position: "top-left",
-                autoClose: 5000,
-            });
-        }  
-    };
-
     let chartComponent;
 
     if (i % 6 === 0) {
@@ -87,11 +72,6 @@ function NewChart({ user, setUser, userdata, setUserdata }) {
         const storedUserdata = JSON.parse(localStorage.getItem("userdata"));
         setUserdata(storedUserdata)
         console.log(storedUserdata);
-        
-        // get the new user data
-        axios.post("http://localhost:9001/api/login", {
-            email: userdata.email,
-        });
     }, []);
 
     const [selectedFile, setSelectedFile] = useState(null);

@@ -1,8 +1,8 @@
 import "../style/UserPage.css";
 import { Link, Navigate, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-// import WebSocket from "ws";
-import socket from "../components/WebSocket";
+import socket from "../components/WebSocket.js";
+import axios from "axios";
 
 function UserPage({ newuser, setNewuser, user, setUser, userdata, setUserdata }) {
     var data = [
@@ -27,7 +27,22 @@ function UserPage({ newuser, setNewuser, user, setUser, userdata, setUserdata })
         localStorage.removeItem("newuser");
     }
 
+    socket.onmessage = ({ data }) => {
+        updateuserdata(data)
+    };
+
+    const updateuserdata = (data) => {
+        data = JSON.parse(data);
+        console.log(data);
+        setUserdata(data);
+        localStorage.removeItem("userdata");
+        localStorage.setItem("userdata", JSON.stringify(data));
+    };
+
     useEffect(() => {
+        axios.post("http://localhost:9001/api/login", {
+            email: userdata.email,
+        });
         const storedUser = localStorage.getItem("user");
         console.log(userdata);
         if (storedUser) {
