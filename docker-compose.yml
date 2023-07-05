@@ -224,7 +224,7 @@ services:
             context: ./frontend/saas23-frontend
             dockerfile: dockerfile
         ports:
-            - "4007:3000"
+            - "4007:4007"
         environment:
             - BASE_URL=192.168.1.227
         restart: always
