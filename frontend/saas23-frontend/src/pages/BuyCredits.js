@@ -46,21 +46,15 @@ function BuyCredits({ user, setUser, userdata, setUserdata }) {
             updateQuotas(data);
         };
 
-        // const storedUser = localStorage.getItem("user");
         const storedUserdata = localStorage.getItem("userdata");
 
         try {
-            // setUser(JSON.parse(storedUser));
             setUserdata(JSON.parse(storedUserdata));
         } catch (error) {
-            // setUser(null);
             setUserdata(null);
         }
-        // if (!storedUser) {
-        //     setLoggedin(0);
-        // }
 
-        setLoading(false); // Set loading to false after data fetching completes
+        setLoading(false);
     }, []);
 
     if (loading) {
@@ -117,15 +111,6 @@ function BuyCredits({ user, setUser, userdata, setUserdata }) {
                             +
                         </button>
                     </div>
-                    {/* <div className="buttonsuser">
-                        <button className="mainbutton">5 credits</button>
-                        &nbsp;&nbsp;&nbsp;
-                        <button className="mainbutton">10 credits</button>
-                        &nbsp;&nbsp;&nbsp;
-                        <button className="mainbutton">20 credits</button>
-                        &nbsp;&nbsp;&nbsp;
-                        <button className="mainbutton">50 credits</button>
-                    </div> */}
                     <div className="buttonsuser">
                         <button
                             className="mainbutton"

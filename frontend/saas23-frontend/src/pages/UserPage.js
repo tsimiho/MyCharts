@@ -32,12 +32,8 @@ function UserPage({
     });
 
     function logout() {
-        // setUser({});
-        // setNewuser(true);
         setUserdata({});
-        // localStorage.removeItem("user");
         localStorage.removeItem("userdata");
-        // localStorage.removeItem("newuser");
         setLoggedOut(true);
     }
 
@@ -58,29 +54,15 @@ function UserPage({
             email: userdata.email,
         });
 
-        // const storedUser = localStorage.getItem("user");
         const storedUserdata = localStorage.getItem("userdata");
 
         try {
-            // setUser(JSON.parse(storedUser));
             setUserdata(JSON.parse(storedUserdata));
-            // setNewuser(localStorage.getItem("newuser"));
         } catch (error) {
-            // setUser(null);
             setUserdata(null);
         }
-        // const storedUser = localStorage.getItem("user");
-        // if (storedUser) {
-        //     const userObject = JSON.parse(storedUser);
-        //     setUser(userObject);
-        // } else {
-        //     console.log("here");
-        //     setUser({});
-        // }
-        // setUserdata(JSON.parse(localStorage.getItem("userdata")));
-        // setNewuser(localStorage.getItem("newuser"));
 
-        setLoading(false); // Set loading to false after data fetching completes
+        setLoading(false);
     }, []);
 
     if (loggedOut === true) {
@@ -91,8 +73,6 @@ function UserPage({
         return <div></div>;
     }
 
-    // if (newuser === true) return <Navigate replace to="/" />;
-    // else
     return (
         <div className="background">
             <div className="wrapper">

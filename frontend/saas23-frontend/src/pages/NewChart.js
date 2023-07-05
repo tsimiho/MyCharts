@@ -6,18 +6,25 @@ import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import csvtojson from 'csvtojson';
-import DependencyWheelChart from '../components/DependencyWheelChart';
-import LineChart from '../components/LineChart';
-import LineChartWithAnnotations from '../components/LineChartwithAnnotations';
-import BarChart from '../components/BarChart';
-import NetworkGraph from '../components/NetworkGraph';
-import PolarChart from '../components/PolarChart';
+import csvtojson from "csvtojson";
+import DependencyWheelChart from "../components/DependencyWheelChart";
+import LineChart from "../components/LineChart";
+import LineChartWithAnnotations from "../components/LineChartwithAnnotations";
+import BarChart from "../components/BarChart";
+import NetworkGraph from "../components/NetworkGraph";
+import PolarChart from "../components/PolarChart";
 
 function NewChart({ user, setUser, userdata, setUserdata }) {
     const [i, setI] = useState(0);
     const [jsonData, setJsonData] = useState([]);
-    const types = ["LineChart","LineAnnotationChart", "BasicColumn","DependencyWheel","NetworkGraph","PolarChart"];
+    const types = [
+        "LineChart",
+        "LineAnnotationChart",
+        "BasicColumn",
+        "DependencyWheel",
+        "NetworkGraph",
+        "PolarChart",
+    ];
     var [loggedin, setLoggedin] = useState(1);
 
     const changeI = (plus) => {
@@ -26,37 +33,36 @@ function NewChart({ user, setUser, userdata, setUserdata }) {
             setI(n);
         } else if (!plus) {
             var n = i - 1;
-            if (n<0) n = n + 6
+            if (n < 0) n = n + 6;
             setI(n);
         }
     };
-    
+
     let chartComponent;
 
     if (i % 6 === 0) {
-        chartComponent = <LineChart height={'250'} />;
+        chartComponent = <LineChart height={"250"} />;
     } else if (i % 6 === 1) {
-        chartComponent = <LineChartWithAnnotations height={'250'}/>;
+        chartComponent = <LineChartWithAnnotations height={"250"} />;
     } else if (i % 6 === 2) {
-        chartComponent = <BarChart height={'250'}/>;
+        chartComponent = <BarChart height={"250"} />;
     } else if (i % 6 === 3) {
-        chartComponent = <DependencyWheelChart height={'250'}/>;
+        chartComponent = <DependencyWheelChart height={"250"} />;
     } else if (i % 6 === 4) {
-        chartComponent = <NetworkGraph height={'250'}/>;
+        chartComponent = <NetworkGraph height={"250"} />;
     } else if (i % 6 === 5) {
-        chartComponent = <PolarChart height={'250'}/>;
+        chartComponent = <PolarChart height={"250"} />;
     }
-      
+
     const convertCSVToJson = async (csvData) => {
         try {
             const jsonArray = await csvtojson().fromString(csvData);
             return jsonArray;
         } catch (error) {
-            console.error('Error converting CSV to JSON:', error);
+            console.error("Error converting CSV to JSON:", error);
             return [];
         }
     };
-      
 
     const download_csv = (diagram_type) => {
         const url = `http://localhost:9011/api/download_csv?param=${encodeURIComponent(
@@ -65,48 +71,39 @@ function NewChart({ user, setUser, userdata, setUserdata }) {
         window.location.href = url;
     };
 
-    // useEffect(() => {
-    //     const storedUser = JSON.parse(localStorage.getItem("user"));
-    //     localStorage.removeItem("user");
-    //     localStorage.setItem("user", JSON.stringify(storedUser));
-    //     setUser(storedUser)
-    //     console.log(storedUser);
-    //     const storedUserdata = JSON.parse(localStorage.getItem("userdata"));
-    //     setUserdata(storedUserdata)
-    //     console.log(storedUserdata);
-    // }, []);
-
     const [selectedFile, setSelectedFile] = useState(null);
     const handleFileChange = (event) => {
         const file = event.target.files[0];
 
-        // Check if the file name or file type indicates it is a CSV file
         const fileName = file.name;
         const fileType = file.type;
         const isCSV = fileName.endsWith(".csv") || fileType === "text/csv";
-        
+
         if (!isCSV) {
-            toast.error("Please select a CSV file according to the description templates!", {
-                position: "top-left",
-                autoClose: 3000,
-            });
-            return; // Stop further processing
+            toast.error(
+                "Please select a CSV file according to the description templates!",
+                {
+                    position: "top-left",
+                    autoClose: 3000,
+                }
+            );
+            return;
         }
         setSelectedFile(file);
-        
+
         const reader = new FileReader();
-    
+
         reader.onload = async (event) => {
             const contents = event.target.result;
             const json = await convertCSVToJson(contents);
-            console.log(json)
-            setJsonData(json)
+            console.log(json);
+            setJsonData(json);
         };
-    
+
         reader.onerror = (event) => {
-            console.error('Error reading the file:', event.target.error);
+            console.error("Error reading the file:", event.target.error);
         };
-    
+
         reader.readAsText(file);
         if (userdata.quotas < 1) {
             toast.error("You don't have enough quotas to create a chart!", {
@@ -123,34 +120,37 @@ function NewChart({ user, setUser, userdata, setUserdata }) {
     const handleDrop = (event) => {
         event.preventDefault();
         const file = event.dataTransfer.files[0];
-        console.log(file)
+        console.log(file);
         // Check if the file name or file type indicates it is a CSV file
         const fileName = file.name;
         const fileType = file.type;
         const isCSV = fileName.endsWith(".csv") || fileType === "text/csv";
-        
+
         if (!isCSV) {
-            toast.error("Please select a CSV file according to the description templates!", {
-                position: "top-left",
-                autoClose: 3000,
-            });
+            toast.error(
+                "Please select a CSV file according to the description templates!",
+                {
+                    position: "top-left",
+                    autoClose: 3000,
+                }
+            );
             return; // Stop further processing
         }
         setSelectedFile(file);
-        
+
         const reader = new FileReader();
-    
+
         reader.onload = async (event) => {
             const contents = event.target.result;
             const json = await convertCSVToJson(contents);
-            console.log(json)
-            setJsonData(json)
+            console.log(json);
+            setJsonData(json);
         };
-    
+
         reader.onerror = (event) => {
-            console.error('Error reading the file:', event.target.error);
+            console.error("Error reading the file:", event.target.error);
         };
-    
+
         reader.readAsText(file);
         if (userdata.quotas < 1) {
             toast.error("You don't have enough quotas to create a chart!", {
@@ -185,14 +185,16 @@ function NewChart({ user, setUser, userdata, setUserdata }) {
                             className="arrow-button"
                             onClick={() => changeI(true)}
                         ></button>
-                    </div><br />
+                    </div>
+                    <br />
                     <button
                         className="mainbutton"
                         onClick={() => download_csv(types[i % 6])}
                     >
                         Description template for {types[i % 6]}{" "}
                     </button>
-                    <br /><br />
+                    <br />
+                    <br />
                     <div
                         className={`upload-box ${selectedFile ? "active" : ""}`}
                         onDragOver={handleDragOver}
@@ -218,13 +220,15 @@ function NewChart({ user, setUser, userdata, setUserdata }) {
                     <div className="buttonsuser">
                         {userdata.quotas < 1 || selectedFile === null ? (
                             <h1 className="titleuser"> </h1>
-                    ) : (
+                        ) : (
                             <Link
                                 to={`/newchart/preview?jsonData=${encodeURIComponent(
                                     JSON.stringify(jsonData)
                                 )}`}
                             >
-                                <button className="mainbutton" >Upload and create chart</button>
+                                <button className="mainbutton">
+                                    Upload and create chart
+                                </button>
                             </Link>
                         )}
                         &nbsp; &nbsp;
