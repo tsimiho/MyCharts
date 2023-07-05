@@ -38,6 +38,7 @@ const run = async () => {
         eachMessage: async ({ topic, partition, message }) => {
             if (message.value != null) {
                 if (topic === "dependencyWheel_request") {
+                    console.log("Here")
                     const { id, action } = JSON.parse(message.value.toString());
                     console.log(id, action);
                     await returnDiagram(id, action);

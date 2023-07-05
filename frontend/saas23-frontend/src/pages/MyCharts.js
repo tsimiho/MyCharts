@@ -1,13 +1,18 @@
 import "../style/UserPage.css";
 import { Link, Navigate, useParams } from "react-router-dom";
 import React, { useState, useEffect, useRef } from "react";
-import HighchartsReact from "highcharts-react-official";
 import axios from "axios";
-import Highcharts from "highcharts";
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+import HighchartsExporting from "highcharts/modules/exporting";
+import HighchartsAccessibility from "highcharts/modules/accessibility";
+import HighchartsDependencyWheel from "highcharts/modules/dependency-wheel";
+import Sankey from "highcharts/modules/sankey";
 import offlineExporting from "highcharts/modules/offline-exporting";
 import socket from "../components/WebSocket";
 import ExportingModule from "highcharts/modules/exporting";
 import ExportDataModule from "highcharts/modules/export-data";
+import HighchartsNetworkgraph from 'highcharts/modules/networkgraph';
 
 function MyCharts({ user, setUser, userdata, setUserdata }) {
     const [chartData, setChartData] = useState(null);
@@ -16,22 +21,40 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
     ExportingModule(Highcharts);
     ExportDataModule(Highcharts);
     offlineExporting(Highcharts);
+    const [i, setI] = useState(0);
+    let chartComponent;
+
+    if (i % 6 === 0) {
+        chartComponent = <HighchartsReact highcharts={Highcharts} options={chartData}/>;
+    } else if (i % 6 === 1) {
+        chartComponent = <HighchartsReact highcharts={Highcharts} options={chartData}/>;
+    } else if (i % 6 === 2) {
+        chartComponent = <HighchartsReact highcharts={Highcharts} options={chartData}/>;
+    } else if (i % 6 === 3) {
+        chartComponent = <HighchartsReact highcharts={Highcharts} options={chartData}/>;
+    } else if (i % 6 === 4) {
+        chartComponent = <HighchartsReact highcharts={Highcharts} options={chartData}/>;
+    } else if (i % 6 === 5) {
+        chartComponent = <HighchartsReact highcharts={Highcharts} options={chartData}/>;
+    }
 
     useEffect(() => {
-        const storedUser = localStorage.getItem("user");
-        const storedUserdata = localStorage.getItem("userdata");
+        // const storedUser = localStorage.getItem("user");
+        // const storedUserdata = localStorage.getItem("userdata");
 
-        try {
-            setUser(JSON.parse(storedUser));
-            setUserdata(JSON.parse(storedUserdata));
-        } catch (error) {
-            setUser(null);
-            setUserdata(null);
-        }
+        // try {
+        //     setUser(JSON.parse(storedUser));
+        //     setUserdata(JSON.parse(storedUserdata));
+        // } catch (error) {
+        //     setUser(null);
+        //     setUserdata(null);
+        // }
 
-        if (!storedUser) {
-            setLoggedin(0);
-        }
+        // if (!storedUser) {
+        //     setLoggedin(0);
+        // }
+
+        setUserdata(JSON.parse(localStorage.getItem("userdata")));
 
         setLoading(false);
     }, []);
@@ -41,8 +64,15 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
     }
 
     socket.onmessage = ({ data }) => {
+        console.log(data)
         const { diagram, action } = JSON.parse(data);
-
+        console.log(diagram)
+        HighchartsExporting(Highcharts);
+        HighchartsAccessibility(Highcharts);
+        Sankey(Highcharts);
+        HighchartsDependencyWheel(Highcharts);
+        HighchartsNetworkgraph(Highcharts);
+        console.log(userdata)
         if (action === "display") {
             setChartData(diagram);
         } else if (action === "pdf") {
@@ -254,12 +284,9 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
                             </tbody>
                         </table>
                     </div>
-                    {chartData ? (
-                        <HighchartsReact
-                            highcharts={Highcharts}
-                            options={chartData}
-                        />
-                    ) : (
+                    {chartData ? 
+                        chartComponent
+                    : (
                         <div className="no-chart-container">
                             <div className="no-chart-box">
                                 Press a chart to preview

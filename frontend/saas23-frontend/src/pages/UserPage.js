@@ -28,6 +28,7 @@ function UserPage({ newuser, setNewuser, user, setUser, userdata, setUserdata })
     }
 
     socket.onmessage = ({ data }) => {
+        console.log("message")
         updateuserdata(data)
     };
 
@@ -44,11 +45,11 @@ function UserPage({ newuser, setNewuser, user, setUser, userdata, setUserdata })
             email: userdata.email,
         });
         const storedUser = localStorage.getItem("user");
-        console.log(userdata);
         if (storedUser) {
             const userObject = JSON.parse(storedUser);
             setUser(userObject);
         } else {
+            console.log("here")
             setUser({});
         }
         setUserdata(JSON.parse(localStorage.getItem("userdata")));
@@ -67,7 +68,7 @@ function UserPage({ newuser, setNewuser, user, setUser, userdata, setUserdata })
                     </button>
                 </div>
                 <div className="container">
-                    <h1 className="title"> Hello {user.name}</h1>
+                    <h1 className="title"> Hello {userdata.email}</h1>
                     <table className="data">
                         <tbody>{rows}</tbody>
                     </table>

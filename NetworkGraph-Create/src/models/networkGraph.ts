@@ -6,10 +6,6 @@ const NetworkGraphSchema = new mongoose.Schema({
             type: String,
             default: "networkgraph",
         },
-        height: {
-            type: String,
-            default: "100%",
-        },
     },
     title: {
         text: {

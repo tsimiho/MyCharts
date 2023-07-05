@@ -88,6 +88,8 @@ function MainPage({
     }
 
     useEffect(() => {
+        // localStorage.clear();
+
         /* global google */
         google.accounts.id.initialize({
             client_id:

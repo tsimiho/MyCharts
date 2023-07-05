@@ -12,8 +12,9 @@ function Confirmation({ newuser, setNewuser, user, setUser, userdata, setUserdat
 
     useEffect(() => {
         const newu = localStorage.getItem("newuser")
+        const user = localStorage.getItem("user")
         setNewuser(newu);
-        console.log(newu)
+        console.log(user)
     }, [setNewuser]);
 
     socket.onmessage = ({ data }) => {

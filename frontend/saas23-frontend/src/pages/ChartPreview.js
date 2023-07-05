@@ -25,19 +25,23 @@ function ChartPreview({ user, setUser, userdata, setUserdata }) {
     const location = useLocation();
     const [save,setSave] = useState(true);
     var jsonData=[];
-    try {
-        jsonData = JSON.parse(
-        decodeURIComponent(new URLSearchParams(location.search).get("jsonData"))
-        );
-    } catch (error) {
-        console.error("Error decoding jsonData:", error);
-        jsonData = [[]];
-    }
     const options = {};
-    Object.entries(jsonData[0]).forEach(([key, value]) => {
-        options[key] = JSON.parse(value);
-    });
-    console.log(options);
+
+
+    useEffect(() => {
+        try {
+            jsonData = JSON.parse(
+            decodeURIComponent(new URLSearchParams(location.search).get("jsonData"))
+            );
+        } catch (error) {
+            console.error("Error decoding jsonData:", error);
+            jsonData = [[]];
+        }
+        Object.entries(jsonData[0]).forEach(([key, value]) => {
+            options[key] = JSON.parse(value);
+        });
+        console.log(options);
+    }, []);
 
     const savechart = () => {
         // Create the chart on the according microservice

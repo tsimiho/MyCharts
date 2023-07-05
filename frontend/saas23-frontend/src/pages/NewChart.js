@@ -65,14 +65,16 @@ function NewChart({ user, setUser, userdata, setUserdata }) {
         window.location.href = url;
     };
 
-    useEffect(() => {
-        const storedUser = JSON.parse(localStorage.getItem("user"));
-        setUser(storedUser)
-        console.log(storedUser);
-        const storedUserdata = JSON.parse(localStorage.getItem("userdata"));
-        setUserdata(storedUserdata)
-        console.log(storedUserdata);
-    }, []);
+    // useEffect(() => {
+    //     const storedUser = JSON.parse(localStorage.getItem("user"));
+    //     localStorage.removeItem("user");
+    //     localStorage.setItem("user", JSON.stringify(storedUser));
+    //     setUser(storedUser)
+    //     console.log(storedUser);
+    //     const storedUserdata = JSON.parse(localStorage.getItem("userdata"));
+    //     setUserdata(storedUserdata)
+    //     console.log(storedUserdata);
+    // }, []);
 
     const [selectedFile, setSelectedFile] = useState(null);
     const handleFileChange = (event) => {

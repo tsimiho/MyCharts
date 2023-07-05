@@ -4,7 +4,7 @@ import kafka from "../config/kafka";
 
 const returnDiagram = async (diagram_id: string, action: string) => {
     const diagram = await LineChartSchema.findById(diagram_id);
-
+    console.log(diagram)
     if (diagram) {
         console.log("here");
         try {
