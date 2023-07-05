@@ -4,6 +4,7 @@ import kafka from "../config/kafka";
 const producer = kafka.producer();
 
 const polarchart = async (req: Request, res: Response) => {
+    console.log("polar");
     try {
         const { email, data, name } = req.body;
 

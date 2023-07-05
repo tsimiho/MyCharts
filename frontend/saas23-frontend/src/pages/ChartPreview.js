@@ -95,6 +95,12 @@ function ChartPreview({ user, setUser, userdata, setUserdata }) {
                     });
                 }
             }
+        } else if (options.chart.polar === "true") {
+            console.log("polar");
+            axios.post("http://localhost:9001/api/create/polarchart", {
+                email: userdata.email,
+                data: options,
+            });
         }
 
         setSave(false);

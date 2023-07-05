@@ -35,6 +35,7 @@ const run = async () => {
     await consumer.run({
         eachMessage: async ({ topic, partition, message }) => {
             if (message.value != null) {
+                console.log("polar");
                 const { email, data } = JSON.parse(message.value.toString());
                 await addpolarchart(email, data);
             }

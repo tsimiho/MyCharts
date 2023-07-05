@@ -7,71 +7,72 @@ const PolarChartSchema = new mongoose.Schema({
     title: {
         text: {
             type: String,
-            default: "",
+            // default: "",
         },
         align: {
             type: String,
-            default: "left",
         },
     },
     subtitle: {
         text: {
             type: String,
-            default: "",
         },
     },
     pane: {
         startAngle: {
             type: Number,
-            default: 0,
+            // default: 0,
         },
         endAngle: {
             type: Number,
-            default: 360,
+            // default: 360,
         },
     },
     xAxis: {
         tickInterval: {
             type: Number,
-            default: 45,
+            // default: 45,
         },
         min: {
             type: Number,
-            default: 0,
+            // default: 0,
         },
         max: {
             type: Number,
-            default: 360,
+            // default: 360,
         },
         labels: {
             format: {
                 type: String,
-                default: "{value}°",
+                // default: "{value}°",
             },
         },
     },
     yAxis: {
-        min: { type: Number, default: 0 },
+        min: {
+            type: Number,
+            // default: 0
+        },
     },
     plotOptions: {
         series: {
             pointStart: {
                 type: Number,
-                default: 0,
+                // default: 0,
             },
             pointInterval: {
                 type: Number,
-                default: 45,
+                // default: 45,
             },
         },
         column: {
             pointPadding: {
                 type: Number,
-                default: 0,
+                // default: 0,
             },
             groupPadding: {
                 type: Number,
-                default: 0,
+                // default: 0,
             },
         },
     },
@@ -79,22 +80,25 @@ const PolarChartSchema = new mongoose.Schema({
         {
             type: {
                 type: String,
-                default: "",
+                // default: "",
             },
             name: {
                 type: String,
-                default: "",
+                // default: "",
             },
             data: {
                 type: [Number],
-                default: [],
+                // default: [],
             },
             pointPlacement: {
                 type: String,
-                default: "between",
+                // default: "between",
             },
         },
     ],
+    exporting: {
+        enabled: { type: Boolean },
+    },
 });
 
 export default mongoose.model("PolarChartSchema", PolarChartSchema);
