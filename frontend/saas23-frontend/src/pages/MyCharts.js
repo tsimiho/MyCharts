@@ -13,6 +13,7 @@ import socket from "../components/WebSocket";
 import ExportingModule from "highcharts/modules/exporting";
 import ExportDataModule from "highcharts/modules/export-data";
 import HighchartsNetworkgraph from 'highcharts/modules/networkgraph';
+// import DepWheelMy from "../components/DependencyWheelChart";
 
 function MyCharts({ user, setUser, userdata, setUserdata }) {
     const [chartData, setChartData] = useState(null);
@@ -21,6 +22,11 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
     ExportingModule(Highcharts);
     ExportDataModule(Highcharts);
     offlineExporting(Highcharts);
+    HighchartsExporting(Highcharts);
+    HighchartsAccessibility(Highcharts);
+    Sankey(Highcharts);
+    HighchartsDependencyWheel(Highcharts);
+    HighchartsNetworkgraph(Highcharts);
     const [i, setI] = useState(0);
     let chartComponent;
 
@@ -67,11 +73,8 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
         console.log(data)
         const { diagram, action } = JSON.parse(data);
         console.log(diagram)
-        HighchartsExporting(Highcharts);
-        HighchartsAccessibility(Highcharts);
-        Sankey(Highcharts);
-        HighchartsDependencyWheel(Highcharts);
-        HighchartsNetworkgraph(Highcharts);
+        delete diagram.__v;
+        delete diagram._id;
         console.log(userdata)
         if (action === "display") {
             setChartData(diagram);

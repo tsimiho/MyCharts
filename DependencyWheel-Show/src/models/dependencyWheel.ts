@@ -2,8 +2,10 @@ import mongoose from "mongoose";
 
 const DependencyWheelSchema = new mongoose.Schema({
     chart: {
-        type: String,
-        default: "dependencywheel",
+        type: {
+            type: String,
+            default: "dependencywheel",
+        },
     },
     title: {
         text: {
@@ -35,42 +37,31 @@ const DependencyWheelSchema = new mongoose.Schema({
                 type: [[String, String, Number]],
                 default: [],
             },
-            type: {
-                type: String,
-                default: "",
+            linkWeight: {
+                type: Number,
+                default: 5,
             },
-            name: {
-                type: String,
-                default: "",
+            centeredLinks: {
+                type: Boolean,
+                default: true,
             },
             dataLabels: {
                 color: {
                     type: String,
                     default: "",
                 },
-                style: {
-                    textOutline: {
-                        type: String,
-                        default: "",
-                    },
+                format: {
+                    type: String,
+                    default: "",
                 },
-                textPath: {
-                    enabled: {
-                        type: Boolean,
-                        default: true,
-                    },
-                },
-                distance: {
-                    type: Number,
-                    default: 0,
-                },
-            },
-            size: {
-                type: String,
-                default: "",
+                nodeFormat: {
+                    type: String,
+                    default: "",
+                },                
             },
         },
     ],
 });
 
 export default mongoose.model("DependencyWheelSchema", DependencyWheelSchema);
+
