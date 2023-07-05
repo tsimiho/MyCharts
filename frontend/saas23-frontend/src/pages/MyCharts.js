@@ -21,6 +21,11 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
     ExportingModule(Highcharts);
     ExportDataModule(Highcharts);
     offlineExporting(Highcharts);
+    HighchartsExporting(Highcharts);
+    HighchartsAccessibility(Highcharts);
+    Sankey(Highcharts);
+    HighchartsDependencyWheel(Highcharts);
+    HighchartsNetworkgraph(Highcharts);
     const [i, setI] = useState(0);
     let chartComponent;
 
