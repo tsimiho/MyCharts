@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+const Schema = mongoose.Schema;
 
 const DependencyWheelSchema = new mongoose.Schema({
     chart: {
@@ -34,7 +35,7 @@ const DependencyWheelSchema = new mongoose.Schema({
                 default: [],
             },
             data: {
-                type: [[String, String, Number]],
+                type: [Schema.Types.Mixed],
                 default: [],
             },
             linkWeight: {
@@ -57,11 +58,10 @@ const DependencyWheelSchema = new mongoose.Schema({
                 nodeFormat: {
                     type: String,
                     default: "",
-                },                
+                },
             },
         },
     ],
 });
 
 export default mongoose.model("DependencyWheelSchema", DependencyWheelSchema);
-

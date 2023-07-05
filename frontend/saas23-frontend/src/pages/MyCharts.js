@@ -63,59 +63,28 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
     //     );
     // }
 
-    useEffect(() => {
-        socket.onmessage = ({ data }) => {
-            console.log(data);
-            const { diagram, action } = JSON.parse(data);
-            console.log(diagram);
-            HighchartsExporting(Highcharts);
-            HighchartsAccessibility(Highcharts);
-            Sankey(Highcharts);
-            HighchartsDependencyWheel(Highcharts);
-            HighchartsNetworkgraph(Highcharts);
-            console.log(userdata);
-
-    
-            if (action === "display") {
-                setChartData(diagram);
-            } else if (action === "pdf") {
-                // download pdf
-                downloadChart(diagram, "application/pdf");
-            } else if (action === "png") {
-                // download png
-                downloadChart(diagram, "image/png");
-            } else if (action === "svg") {
-                // download svg
-                downloadChart(diagram, "image/svg+xml");
-            } else if (action === "html") {
-                // download html
-                downloadChart(diagram, "html");
+    const displayChart = (options) => {
+        if (options.chart.type === "bar") {
+            setChartComponent(<BarChart height={"250"} opts={options} />);
+        } else if (options.chart.type === "networkgraph") {
+            setChartComponent(<NetworkGraph height={"250"} opts={options} />);
+        } else if (options.chart.type === "dependencywheel") {
+            console.log("dw", options);
+            setChartComponent(
+                <DependencyWheelChart height={"250"} opts={options} />
+            );
+        } else if (options.chart.type === "line") {
+            if (options.hasOwnProperty("annotations")) {
+                setChartComponent(
+                    <LineChartWithAnnotations height={"250"} opts={options} />
+                );
+            } else {
+                setChartComponent(<LineChart height={"250"} opts={options} />);
             }
-        };
-
-        // const storedUser = localStorage.getItem("user");
-        const storedUserdata = localStorage.getItem("userdata");
-
-        try {
-            // setUser(JSON.parse(storedUser));
-            setUserdata(JSON.parse(storedUserdata));
-        } catch (error) {
-            // setUser(null);
-            setUserdata(null);
+        } else {
+            setChartComponent(<PolarChart height={"250"} opts={options} />);
         }
-
-        // if (!storedUser) {
-        //     setLoggedin(0);
-        // }
-
-        // setUserdata(JSON.parse(localStorage.getItem("userdata")));
-
-        setLoading(false);
-    }, []);
-
-    if (loading) {
-        return <div></div>;
-    }
+    };
 
     const downloadChart = (chartOptions, fileType) => {
         const container = document.createElement("div");
@@ -181,6 +150,52 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
                 action
         );
     };
+
+    useEffect(() => {
+        socket.onmessage = ({ data }) => {
+            console.log(data);
+            const { diagram, action } = JSON.parse(data);
+            console.log(diagram);
+            HighchartsExporting(Highcharts);
+            HighchartsAccessibility(Highcharts);
+            Sankey(Highcharts);
+            HighchartsDependencyWheel(Highcharts);
+            HighchartsNetworkgraph(Highcharts);
+            console.log(userdata);
+            setChartData(diagram);
+
+            if (action === "display") {
+                displayChart(diagram);
+            } else if (action === "pdf") {
+                // download pdf
+                downloadChart(diagram, "application/pdf");
+            } else if (action === "png") {
+                // download png
+                downloadChart(diagram, "image/png");
+            } else if (action === "svg") {
+                // download svg
+                downloadChart(diagram, "image/svg+xml");
+            } else if (action === "html") {
+                // download html
+                downloadChart(diagram, "html");
+            }
+        };
+
+        // const storedUser = localStorage.getItem("user");
+        const storedUserdata = localStorage.getItem("userdata");
+
+        try {
+            setUserdata(JSON.parse(storedUserdata));
+        } catch (error) {
+            setUserdata(null);
+        }
+
+        setLoading(false);
+    }, []);
+
+    if (loading) {
+        return <div></div>;
+    }
 
     if (loggedin === 0) return <Navigate replace to="/" />;
     else
