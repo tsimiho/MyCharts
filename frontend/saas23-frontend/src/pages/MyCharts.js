@@ -142,7 +142,7 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
 
     const requestChart = async (type, id, action) => {
         await axios.get(
-            "http://localhost:9001/api/request/" +
+            `http://192.168.1.227:9001/api/request/` +
                 type +
                 "/" +
                 id +

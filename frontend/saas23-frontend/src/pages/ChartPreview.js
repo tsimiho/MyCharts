@@ -63,25 +63,31 @@ function ChartPreview({ user, setUser, userdata, setUserdata }) {
         if (options.chart.hasOwnProperty("type")) {
             console.log(options.chart.type);
             if (options.chart.type === "bar") {
-                axios.post("http://localhost:9001/api/create/basicColumn", {
+                axios.post(`http://192.168.1.227:9001/api/create/basicColumn`, {
                     email: userdata.email,
                     data: options,
                 });
             } else if (options.chart.type === "networkgraph") {
                 console.log("hereskjsdfhsakjhfalskdfhsakldjfh");
-                axios.post("http://localhost:9001/api/create/networkGraph", {
-                    email: userdata.email,
-                    data: options,
-                });
+                axios.post(
+                    `http://192.168.1.227:9001/api/create/networkGraph`,
+                    {
+                        email: userdata.email,
+                        data: options,
+                    }
+                );
             } else if (options.chart.type === "dependencywheel") {
-                axios.post("http://localhost:9001/api/create/dependencyWheel", {
-                    email: userdata.email,
-                    data: options,
-                });
+                axios.post(
+                    `http://192.168.1.227:9001/api/create/dependencyWheel`,
+                    {
+                        email: userdata.email,
+                        data: options,
+                    }
+                );
             } else if (options.chart.type === "line") {
                 if (options.hasOwnProperty("annotations")) {
                     axios.post(
-                        "http://localhost:9001/api/create/lineWithAnnotations",
+                        `http://192.168.1.227:9001/api/create/lineWithAnnotations`,
                         {
                             email: userdata.email,
                             data: options,
@@ -89,15 +95,18 @@ function ChartPreview({ user, setUser, userdata, setUserdata }) {
                     );
                 } else {
                     console.log("Here");
-                    axios.post("http://localhost:9001/api/create/linechart", {
-                        email: userdata.email,
-                        data: options,
-                    });
+                    axios.post(
+                        `http://192.168.1.227:9001/api/create/linechart`,
+                        {
+                            email: userdata.email,
+                            data: options,
+                        }
+                    );
                 }
             }
         } else if (options.chart.polar === "true") {
             console.log("polar");
-            axios.post("http://localhost:9001/api/create/polarchart", {
+            axios.post(`http://192.168.1.227:9001/api/create/polarchart`, {
                 email: userdata.email,
                 data: options,
             });

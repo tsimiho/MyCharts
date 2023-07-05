@@ -49,7 +49,7 @@ services:
             KAFKA_BROKER_ID: 1
             KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
             KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
-            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://broker:29092
+            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://192.168.1.227:9092,PLAINTEXT_INTERNAL://broker:29092
             KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
             KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
             KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
@@ -61,6 +61,8 @@ services:
         ports:
             - "9001:9001"
             - "8090:8090"
+        depends_on:
+            - broker
         environment:
             - MONGO_URI=mongodb+srv://user:user@cluster0.pt64z19.mongodb.net/
             - BASE_URL=192.168.1.227
@@ -72,6 +74,8 @@ services:
             dockerfile: dockerfile
         ports:
             - "9000:9000"
+        depends_on:
+            - broker
         environment:
             - MONGO_URI=mongodb+srv://user:user@cluster0.pt64z19.mongodb.net/
             - BASE_URL=192.168.1.227
@@ -83,6 +87,8 @@ services:
             dockerfile: dockerfile
         ports:
             - "9002:9002"
+        depends_on:
+            - broker
         environment:
             - MONGO_URI=mongodb+srv://user:user@cluster0.moa9dz2.mongodb.net/
             - BASE_URL=192.168.1.227
@@ -94,6 +100,8 @@ services:
             dockerfile: dockerfile
         ports:
             - "9003:9003"
+        depends_on:
+            - broker
         environment:
             - MONGO_URI=mongodb+srv://user:user@cluster0.moa9dz2.mongodb.net/
             - BASE_URL=192.168.1.227
@@ -105,6 +113,8 @@ services:
             dockerfile: dockerfile
         ports:
             - "9004:9004"
+        depends_on:
+            - broker
         environment:
             - MONGO_URI=mongodb+srv://user:user@cluster0.r25s0uy.mongodb.net/
             - BASE_URL=192.168.1.227
@@ -116,6 +126,8 @@ services:
             dockerfile: dockerfile
         ports:
             - "9005:9005"
+        depends_on:
+            - broker
         environment:
             - MONGO_URI=mongodb+srv://user:user@cluster0.r25s0uy.mongodb.net/
             - BASE_URL=192.168.1.227
@@ -127,6 +139,8 @@ services:
             dockerfile: dockerfile
         ports:
             - "9006:9006"
+        depends_on:
+            - broker
         environment:
             - MONGO_URI=mongodb+srv://user:user@cluster0.ouceens.mongodb.net/
             - BASE_URL=192.168.1.227
@@ -138,6 +152,8 @@ services:
             dockerfile: dockerfile
         ports:
             - "9007:9007"
+        depends_on:
+            - broker
         environment:
             - MONGO_URI=mongodb+srv://user:user@cluster0.ouceens.mongodb.net/
             - BASE_URL=192.168.1.227
@@ -149,6 +165,8 @@ services:
             dockerfile: dockerfile
         ports:
             - "9008:9008"
+        depends_on:
+            - broker
         environment:
             - MONGO_URI=mongodb+srv://user:user@cluster0.y2sphyl.mongodb.net/
             - BASE_URL=192.168.1.227
@@ -160,6 +178,8 @@ services:
             dockerfile: dockerfile
         ports:
             - "9009:9009"
+        depends_on:
+            - broker
         environment:
             - MONGO_URI=mongodb+srv://user:user@cluster0.y2sphyl.mongodb.net/
             - BASE_URL=192.168.1.227
@@ -171,6 +191,8 @@ services:
             dockerfile: dockerfile
         ports:
             - "9010:9010"
+        depends_on:
+            - broker
         environment:
             - MONGO_URI=mongodb+srv://user:user@cluster0.svdqmsb.mongodb.net/
             - BASE_URL=192.168.1.227
@@ -182,6 +204,8 @@ services:
             dockerfile: dockerfile
         ports:
             - "9011:9011"
+        depends_on:
+            - broker
         environment:
             - MONGO_URI=mongodb+srv://user:user@cluster0.svdqmsb.mongodb.net/
             - BASE_URL=192.168.1.227
@@ -193,6 +217,8 @@ services:
             dockerfile: dockerfile
         ports:
             - "9012:9012"
+        depends_on:
+            - broker
         environment:
             - MONGO_URI=mongodb+srv://user:user@cluster0.zhha7md.mongodb.net/
             - BASE_URL=192.168.1.227
@@ -204,6 +230,8 @@ services:
             dockerfile: dockerfile
         ports:
             - "9013:9013"
+        depends_on:
+            - broker
         environment:
             - MONGO_URI=mongodb+srv://user:user@cluster0.zhha7md.mongodb.net/
             - BASE_URL=192.168.1.227
@@ -215,6 +243,8 @@ services:
             dockerfile: dockerfile
         ports:
             - "9014:9014"
+        depends_on:
+            - broker
         environment:
             - BASE_URL=192.168.1.227
         restart: always
@@ -225,6 +255,8 @@ services:
             dockerfile: dockerfile
         ports:
             - "4007:4007"
+        depends_on:
+            - broker
         environment:
             - BASE_URL=192.168.1.227
         restart: always

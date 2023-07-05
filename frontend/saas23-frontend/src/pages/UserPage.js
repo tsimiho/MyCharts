@@ -50,7 +50,7 @@ function UserPage({
             updateuserdata(data);
         };
 
-        axios.post("http://localhost:9001/api/login", {
+        axios.post(`http://192.168.1.227:9001/api/login`, {
             email: userdata.email,
         });
 

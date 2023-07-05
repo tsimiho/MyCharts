@@ -65,7 +65,7 @@ function NewChart({ user, setUser, userdata, setUserdata }) {
     };
 
     const download_csv = (diagram_type) => {
-        const url = `http://localhost:9011/api/download_csv?param=${encodeURIComponent(
+        const url = `http://192.168.1.227:9011/api/download_csv?param=${encodeURIComponent(
             diagram_type
         )}`;
         window.location.href = url;

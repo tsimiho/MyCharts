@@ -51,7 +51,7 @@ function MainPage({
         var userObject = jwt_decode(response.credential);
         console.log(userObject.email);
         setUser(userObject);
-        axios.post("http://localhost:9001/api/login", {
+        axios.post(`http://192.168.1.227:9001/api/login`, {
             email: userObject.email,
         });
 

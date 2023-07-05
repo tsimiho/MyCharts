@@ -1,4 +1,4 @@
-const socket = new WebSocket("ws://localhost:8090");
+const socket = new WebSocket(`ws://192.168.1.227:8090`);
 
 socket.onopen = () => {
     console.log("WebSocket connection established");
