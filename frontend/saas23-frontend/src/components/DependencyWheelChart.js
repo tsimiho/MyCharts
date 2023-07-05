@@ -17,6 +17,7 @@ const DependencyWheelChart = ({ height, opts = null }) => {
         : {
               chart: {
                   type: "dependencywheel",
+                  height: height, // Set the desired height for the chart
               },
               title: {
                   text: "Dependency wheel chart",
@@ -49,48 +50,6 @@ const DependencyWheelChart = ({ height, opts = null }) => {
                   enabled: false,
               },
           };
-
-    const test = {
-        chart: {
-            type: "dependencywheel",
-        },
-        title: {
-            text: "Dependency wheel title",
-        },
-        subtitle: {
-            text: "Your Chart Subtitle",
-        },
-        accessibility: {
-            point: {
-                valueDescriptionFormat:
-                    "{index}. From {point.from} to {point.to}: {point.weight}.",
-            },
-        },
-        _id: "64a5af24a665f69d422634a8",
-        series: [
-            {
-                dataLabels: {
-                    color: "black",
-                    format: "{point.fromNode.name} ? {point.toNode.name}: {point.weight}",
-                    nodeFormat: "{point.name}",
-                },
-                keys: ["from", "to", "weight"],
-                data: [
-                    ["A", "B", "1"],
-                    ["A", "C", "1"],
-                    ["A", "D", "2"],
-                    ["B", "C", "2"],
-                    ["C", "D", "1"],
-                    ["E", "D", "3"],
-                    ["E", "F", "1"],
-                ],
-                linkWeight: 5,
-                centeredLinks: true,
-                _id: "64a5af24a665f69d422634a9",
-            },
-        ],
-        __v: 0,
-    };
 
     return <HighchartsReact highcharts={Highcharts} options={options} />;
 };
