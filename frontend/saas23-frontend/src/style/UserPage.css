@@ -149,11 +149,14 @@
 }
 
 .upload-box {
+    position: relative;
     border: 1px dashed #ccc;
     padding: 20px;
     text-align: center;
     width: 90%px; /* Adjust the width as needed */
     background-color: #fe0000; /* Change the background color */
+    border-radius: 6px;
+    margin-top: 20px; /* Add margin to create space below the button */
 }
 
 .upload-box.active {
@@ -280,7 +283,6 @@
     color: #bb5a5a;
 }
 
-
 .containerpreview {
     display: flex;
     flex-direction: column;
@@ -288,8 +290,8 @@
     justify-content: center;
     width: 80%;
     margin: 0 auto;
-  }
-  
+}
+
 .highcharts-container {
     width: 100%;
     height: 370px;

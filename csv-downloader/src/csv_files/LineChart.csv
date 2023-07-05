@@ -1,2 +1,0 @@
-chart,title,subtitle,yAxis,xAxis,legend,series
-"{""type"":""line""}","{""text"":""Add title here""}","{""text"":""Add sub-title here""}","{""title"":{""text"":""Y Axis Title""}}","{""title"":{""text"":""X Axis Title ""},""categories"":[]}","{""layout"":""vertical"",""align"":""right"",""verticalAlign"":""middle""}","[{""name"":""Series 1"",""data"":[1,2,3,4,5,6,7,8,9,10,11,12]},{""name"":""Series 2"",""data"":[1,2,3,4,5,6,7,8,9,10,11,12]}]"

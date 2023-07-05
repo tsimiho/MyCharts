@@ -72,6 +72,7 @@ function BuyCredits({ user, setUser, userdata, setUserdata }) {
                     <img src="/logo.png" alt="Logo" />
                     <h1 className="title"> MyCharts App</h1>
                 </div>
+
                 <div className="container">
                     <h1 className="title">
                         {" "}

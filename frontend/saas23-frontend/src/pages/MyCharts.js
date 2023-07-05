@@ -169,8 +169,14 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
                     <img src="/logo.png" alt="Logo" />
                     <h1 className="title"> MyCharts App</h1>
                 </div>
+
                 <div className="containermycharts">
-                    <h1 className="title">
+                    <div className="title">
+                        <Link to="/user">
+                            <button className="logout">Back</button>
+                        </Link>
+                    </div>
+                    {/* <h1 className="title">
                         {" "}
                         Account:{" "}
                         <span style={{ color: "lightcoral" }}>
@@ -184,7 +190,7 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
                         <Link to="/user">
                             <button className="mainbutton">Log out</button>
                         </Link>
-                    </div>
+                    </div> */}
                 </div>
                 <br />
                 <div className="containermy">
