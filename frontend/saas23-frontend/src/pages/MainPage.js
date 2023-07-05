@@ -99,7 +99,7 @@ function MainPage({
             theme: "outline",
             size: "large",
         });
-        // localStorage.removeItem("user");
+        localStorage.removeItem("user");
         const storedUser = localStorage.getItem("user");
         const storedUserdata = localStorage.getItem("userdata");
 
@@ -180,13 +180,15 @@ function MainPage({
                         </button>
                     </Modal>
                 </div>
-                <div className="container">
+                <div className="containerparent">
+                <div className="containermain">
                     <h2 className="title">
                         {" "}
                         Press on a diagram to see how it works, or login with
                         your google account to start creating your diagrams
                     </h2>
                     <div id="signInDiv"></div>
+                </div>
                 </div>
             </div>
         );
