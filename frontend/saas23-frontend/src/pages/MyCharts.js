@@ -41,7 +41,9 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
     }
 
     socket.onmessage = ({ data }) => {
+        console.log(data);
         const { diagram, action } = JSON.parse(data);
+        console.log("after");
 
         if (action === "display") {
             handleRowClick(diagram);
@@ -114,36 +116,10 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
         container.remove();
     };
 
-    function handleRowClick(rows) {
+    function handleRowClick(chart) {
         // Assuming `rows` contains the chart data for the clicked row
 
-        setChartData({
-            chart: {
-                type: "bar",
-                height: 250,
-            },
-            title: {
-                text: "My Chart",
-            },
-            xAxis: {
-                categories: ["Apples", "Bananas", "Oranges"],
-            },
-            yAxis: {
-                title: {
-                    text: "Fruit Eaten",
-                },
-            },
-            series: [
-                {
-                    name: "Jane",
-                    data: [1, 0, 4],
-                },
-                {
-                    name: "John",
-                    data: [5, 7, 3],
-                },
-            ],
-        });
+        setChartData(chart);
 
         // Use the chart data in your application (e.g., set it to state)
         // Example: setChartData(chartData);
