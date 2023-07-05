@@ -17,66 +17,24 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function ChartPreview({ user, setUser, userdata, setUserdata }) {
-  HighchartsExporting(Highcharts);
-  HighchartsAccessibility(Highcharts);
-  Sankey(Highcharts);
-  HighchartsDependencyWheel(Highcharts);
-  HighchartsNetworkgraph(Highcharts);
-  const location = useLocation();
-  const [save,setSave] = useState(true);
-  var jsonData=[];
-  try {
-    jsonData = JSON.parse(
-      decodeURIComponent(new URLSearchParams(location.search).get("jsonData"))
-    );
-  } catch (error) {
-    console.error("Error decoding jsonData:", error);
-    jsonData = [[]];
-  }
-  const options = {};
-  Object.entries(jsonData[0]).forEach(([key, value]) => {
-    options[key] = JSON.parse(value);
-  });
-  console.log(options)
-
-  const savechart = () => {
-    // Create the chart on the according microservice
-    if(options.chart.hasOwnProperty('type')){
-      console.log(options.chart.type)
-      if(options.chart.type === "column"){
-        console.log("col")
-        axios.post("http://localhost:9001/api/create/basicColumn", {
-            email: userdata.email,
-            data: options, 
-        })
-      } else if(options.chart.type === "networkgraph"){
-        axios.post("http://localhost:9001/api/create/networkGraph", {
-            email: userdata.email,
-            data: options, 
-        })
-      } else if(options.chart.type === "dependencywheel"){
-        console.log("dependency")
-        axios.post("http://localhost:9001/api/create/dependencyWheel", {
-            email: userdata.email,
-            data: options, 
-        })
-      } else if(options.hasOwnProperty('annotations')) {
-        console.log("annot")
-        axios.post("http://localhost:9001/api/create/lineWithAnnotations", {
-          email: userdata.email,
-          data: options, 
-        })
-      } else if(options.chart.type === "line"){
-        console.log("Here")
-        axios.post("http://localhost:9001/api/create/linechart", {
-          email: userdata.email,
-          data: options, 
-        })
-      }
+    HighchartsExporting(Highcharts);
+    HighchartsAccessibility(Highcharts);
+    Sankey(Highcharts);
+    HighchartsDependencyWheel(Highcharts);
+    HighchartsNetworkgraph(Highcharts);
+    const location = useLocation();
+    const [save,setSave] = useState(true);
+    var jsonData=[];
+    try {
+        jsonData = JSON.parse(
+        decodeURIComponent(new URLSearchParams(location.search).get("jsonData"))
+        );
+    } catch (error) {
+        console.error("Error decoding jsonData:", error);
+        jsonData = [[]];
     }
     const options = {};
     Object.entries(jsonData[0]).forEach(([key, value]) => {
-        console.log(key, value);
         options[key] = JSON.parse(value);
     });
     console.log(options);
@@ -174,6 +132,6 @@ function ChartPreview({ user, setUser, userdata, setUserdata }) {
             <ToastContainer />
         </div>
     );
-}}
+}
 
 export default ChartPreview;
