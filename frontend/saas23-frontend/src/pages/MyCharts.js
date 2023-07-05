@@ -13,6 +13,12 @@ import socket from "../components/WebSocket";
 import ExportingModule from "highcharts/modules/exporting";
 import ExportDataModule from "highcharts/modules/export-data";
 import HighchartsNetworkgraph from "highcharts/modules/networkgraph";
+import DependencyWheelChart from "../components/DependencyWheelChart";
+import LineChart from "../components/LineChart";
+import LineChartWithAnnotations from "../components/LineChartwithAnnotations";
+import BarChart from "../components/BarChart";
+import NetworkGraph from "../components/NetworkGraph";
+import PolarChart from "../components/PolarChart";
 
 function MyCharts({ user, setUser, userdata, setUserdata }) {
     const [chartData, setChartData] = useState(null);
@@ -26,34 +32,36 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
     Sankey(Highcharts);
     HighchartsDependencyWheel(Highcharts);
     HighchartsNetworkgraph(Highcharts);
-    const [i, setI] = useState(0);
-    let chartComponent;
+    const [i, setI] = useState(-1);
+    // let chartComponent;
 
-    if (i % 6 === 0) {
-        chartComponent = (
-            <HighchartsReact highcharts={Highcharts} options={chartData} />
-        );
-    } else if (i % 6 === 1) {
-        chartComponent = (
-            <HighchartsReact highcharts={Highcharts} options={chartData} />
-        );
-    } else if (i % 6 === 2) {
-        chartComponent = (
-            <HighchartsReact highcharts={Highcharts} options={chartData} />
-        );
-    } else if (i % 6 === 3) {
-        chartComponent = (
-            <HighchartsReact highcharts={Highcharts} options={chartData} />
-        );
-    } else if (i % 6 === 4) {
-        chartComponent = (
-            <HighchartsReact highcharts={Highcharts} options={chartData} />
-        );
-    } else if (i % 6 === 5) {
-        chartComponent = (
-            <HighchartsReact highcharts={Highcharts} options={chartData} />
-        );
-    }
+    const [chartComponent, setChartComponent] = useState(null);
+
+    // if (i % 6 === 0) {
+    //     setChartComponent(
+    //         <HighchartsReact highcharts={Highcharts} options={chartData} />
+    //     );
+    // } else if (i % 6 === 1) {
+    //     setChartComponent(
+    //         <HighchartsReact highcharts={Highcharts} options={chartData} />
+    //     );
+    // } else if (i % 6 === 2) {
+    //     setChartComponent(
+    //         <HighchartsReact highcharts={Highcharts} options={chartData} />
+    //     );
+    // } else if (i % 6 === 3) {
+    //     setChartComponent(
+    //         <HighchartsReact highcharts={Highcharts} options={chartData} />
+    //     );
+    // } else if (i % 6 === 4) {
+    //     setChartComponent(
+    //         <HighchartsReact highcharts={Highcharts} options={chartData} />
+    //     );
+    // } else if (i % 6 === 5) {
+    //     setChartComponent(
+    //         <HighchartsReact highcharts={Highcharts} options={chartData} />
+    //     );
+    // }
 
     useEffect(() => {
         socket.onmessage = ({ data }) => {
@@ -66,6 +74,8 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
             HighchartsDependencyWheel(Highcharts);
             HighchartsNetworkgraph(Highcharts);
             console.log(userdata);
+
+    
             if (action === "display") {
                 setChartData(diagram);
             } else if (action === "pdf") {

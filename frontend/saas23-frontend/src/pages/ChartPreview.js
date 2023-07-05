@@ -60,7 +60,6 @@ function ChartPreview({ user, setUser, userdata, setUserdata }) {
     }, []);
 
     const savechart = () => {
-        // Create the chart on the according microservice
         if (options.chart.hasOwnProperty("type")) {
             console.log(options.chart.type);
             if (options.chart.type === "bar") {
@@ -97,16 +96,8 @@ function ChartPreview({ user, setUser, userdata, setUserdata }) {
                 }
             }
         }
-        // userdata.quotas -= 1;
-        // console.log(userdata);
-        // setUserdata(userdata);
-        // localStorage.setItem("userdata", JSON.stringify(userdata));
 
         setSave(false);
-        //   // get the new user data
-        //   axios.post("http://localhost:9001/api/login", {
-        //     email: userdata.email,
-        // });
     };
 
     return (

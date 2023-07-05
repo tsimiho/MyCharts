@@ -16,4 +16,4 @@ const DepWheelmy = ({options}) => {
   return <HighchartsReact highcharts={Highcharts} options={options} />;
 };
 
-export default DependencyWheelChart;
+export default DepWheelmy;

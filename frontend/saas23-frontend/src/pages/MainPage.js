@@ -45,32 +45,8 @@ function MainPage({
 
     const closeModal = () => {
         setModalIsOpen(false);
-        //window.history.back();
     };
 
-    // for Google Login
-    // Handle messages received from the backend
-    // socket.onmessage = (event) => {
-    //   const message = JSON.parse(event.data);
-    //   if (message.status === 'acknowledgment') {
-    //     // Handle acknowledgment response
-    //   } else if (message.status === 'data') {
-    //     // Handle data response
-    //     console.log(message)
-    //   }
-    // };
-
-    // Send user email to the backend
-    // function handleCallbackResponse(response) {
-    //     console.log("token" + response.credential);
-    //     var userObject = jwt_decode(response.credential);
-    //     console.log(userObject.email);
-    //     setUser(userObject);
-
-    //     // socket.send(JSON.stringify({ email: userObject.email }));
-
-    //     document.getElementById("signInDiv").hidden = true;
-    // }
     function handleCallbackResponse(response) {
         var userObject = jwt_decode(response.credential);
         console.log(userObject.email);
@@ -78,10 +54,7 @@ function MainPage({
         axios.post("http://localhost:9001/api/login", {
             email: userObject.email,
         });
-        // .then((response) => {
-        //   console.log(response.data);
-        // })
-        // localStorage.setItem("user", JSON.stringify(userObject)); // Store user object in local storage
+
         document.getElementById("signInDiv").hidden = false;
     }
 
@@ -92,7 +65,6 @@ function MainPage({
         script.onload = initializeGoogleButton;
         document.body.appendChild(script);
 
-        // Function to initialize the Google button
         function initializeGoogleButton() {
             google.accounts.id.initialize({
                 client_id:
@@ -142,10 +114,9 @@ function MainPage({
             // setUser(JSON.parse(storedUser));
             setUserdata(JSON.parse(storedUserdata));
         } catch (error) {
-            // setUser(null);
             setUserdata(null);
         }
-        setLoading(false); // Set loading to false after data fetching completes
+        setLoading(false);
     }, []);
 
     if (loading) {
@@ -158,15 +129,6 @@ function MainPage({
             return <Navigate replace to="/confirmation" />;
     }
 
-    // function signout() {
-    //     setUser({});
-    //     document.getElementById("signInDiv").hidden = false;
-    // }
-
-    // if (userdata.new === false) return <Navigate replace to="/user" />;
-    // else if (userdata.new === true)
-    //     return <Navigate replace to="/confirmation" />;
-    // else
     return (
         <div className="background">
             <div className="wrapper">
