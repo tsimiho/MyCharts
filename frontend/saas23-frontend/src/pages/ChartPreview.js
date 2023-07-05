@@ -35,7 +35,6 @@ function ChartPreview({ user, setUser, userdata, setUserdata }) {
   }
   const options = {};
   Object.entries(jsonData[0]).forEach(([key, value]) => {
-    console.log(key,value)
     options[key] = JSON.parse(value);
   });
   console.log(options)
@@ -44,7 +43,8 @@ function ChartPreview({ user, setUser, userdata, setUserdata }) {
     // Create the chart on the according microservice
     if(options.chart.hasOwnProperty('type')){
       console.log(options.chart.type)
-      if(options.chart.type === "bar"){
+      if(options.chart.type === "column"){
+        console.log("col")
         axios.post("http://localhost:9001/api/create/basicColumn", {
             email: userdata.email,
             data: options, 
@@ -55,23 +55,23 @@ function ChartPreview({ user, setUser, userdata, setUserdata }) {
             data: options, 
         })
       } else if(options.chart.type === "dependencywheel"){
+        console.log("dependency")
         axios.post("http://localhost:9001/api/create/dependencyWheel", {
             email: userdata.email,
             data: options, 
         })
+      } else if(options.hasOwnProperty('annotations')) {
+        console.log("annot")
+        axios.post("http://localhost:9001/api/create/lineWithAnnotations", {
+          email: userdata.email,
+          data: options, 
+        })
       } else if(options.chart.type === "line"){
-        if(options.hasOwnProperty('annotations')) {
-          axios.post("http://localhost:9001/api/create/lineWithAnnotations", {
-            email: userdata.email,
-            data: options, 
-          })
-        } else {
-          console.log("Here")
-          axios.post("http://localhost:9001/api/create/linechart", {
-            email: userdata.email,
-            data: options, 
-          })
-        }
+        console.log("Here")
+        axios.post("http://localhost:9001/api/create/linechart", {
+          email: userdata.email,
+          data: options, 
+        })
       }
     }
     userdata.quotas -= 1;
