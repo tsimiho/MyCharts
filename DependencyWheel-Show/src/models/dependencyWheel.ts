@@ -1,69 +1,76 @@
 import mongoose from "mongoose";
 
 const DependencyWheelSchema = new mongoose.Schema({
-    _id: {
-        type: mongoose.Schema.Types.ObjectId,
-        default: undefined,
+    chart: {
+        type: String,
+        default: "dependencywheel",
     },
-    labels: {
-        type: [String],
-        required: true,
+    title: {
+        text: {
+            type: String,
+            default: "Title",
+        },
     },
-    datasets: {
-        type: [
-            {
-                label: {
+    subtitle: {
+        text: {
+            type: String,
+            default: "Subtitle",
+        },
+    },
+    accessibility: {
+        point: {
+            valueDescriptionFormat: {
+                type: String,
+                default: "",
+            },
+        },
+    },
+    series: [
+        {
+            keys: {
+                type: [String],
+                default: [],
+            },
+            data: {
+                type: [[String, String, Number]],
+                default: [],
+            },
+            type: {
+                type: String,
+                default: "",
+            },
+            name: {
+                type: String,
+                default: "",
+            },
+            dataLabels: {
+                color: {
                     type: String,
                     default: "",
                 },
-                data: {
-                    type: [Number],
-                    required: true,
+                style: {
+                    textOutline: {
+                        type: String,
+                        default: "",
+                    },
                 },
-                backgroundColor: {
-                    type: String,
-                    default: "rgba(0, 0, 0, 0.1)",
+                textPath: {
+                    enabled: {
+                        type: Boolean,
+                        default: true,
+                    },
                 },
-                borderCapStyle: {
-                    type: String,
-                    default: "butt",
-                },
-                borderColor: {
-                    type: String,
-                    default: "rgba(0, 0, 0, 0.1)",
-                },
-                borderWidth: {
-                    type: Number,
-                    default: 1,
-                },
-                hoverBorderCapStyle: {
-                    type: String,
-                    required: false,
-                },
-                hoverBorderColor: {
-                    type: String,
-                    required: false,
-                },
-                pointBackgroundColor: {
-                    type: String,
-                    default: "rgba(0, 0, 0, 0.1)",
-                },
-                pointBorderColor: {
-                    type: String,
-                    default: "rgba(0, 0, 0, 0.1)",
-                },
-                pointBorderWidth: {
-                    type: Number,
-                    default: 1,
-                },
-                tension: {
+                distance: {
                     type: Number,
                     default: 0,
                 },
             },
-        ],
-        required: true,
-    },
+            size: {
+                type: String,
+                default: "",
+            },
+        },
+    ],
 });
 
 export default mongoose.model("DependencyWheelSchema", DependencyWheelSchema);

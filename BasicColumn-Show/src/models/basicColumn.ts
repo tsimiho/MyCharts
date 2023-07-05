@@ -1,69 +1,68 @@
 import mongoose from "mongoose";
 
 const BasicColumnSchema = new mongoose.Schema({
-    _id: {
-        type: mongoose.Schema.Types.ObjectId,
-        default: undefined,
+    chart: {
+        type: String,
+        default: "column",
     },
-    labels: {
-        type: [String],
-        required: true,
+    title: {
+        text: {
+            type: String,
+            default: "",
+        },
     },
-    datasets: {
-        type: [
-            {
-                label: {
-                    type: String,
-                    default: "",
-                },
-                data: {
-                    type: [Number],
-                    required: true,
-                },
-                backgroundColor: {
-                    type: String,
-                    default: "rgba(0, 0, 0, 0.1)",
-                },
-                borderCapStyle: {
-                    type: String,
-                    default: "butt",
-                },
-                borderColor: {
-                    type: String,
-                    default: "rgba(0, 0, 0, 0.1)",
-                },
-                borderWidth: {
-                    type: Number,
-                    default: 1,
-                },
-                hoverBorderCapStyle: {
-                    type: String,
-                    required: false,
-                },
-                hoverBorderColor: {
-                    type: String,
-                    required: false,
-                },
-                pointBackgroundColor: {
-                    type: String,
-                    default: "rgba(0, 0, 0, 0.1)",
-                },
-                pointBorderColor: {
-                    type: String,
-                    default: "rgba(0, 0, 0, 0.1)",
-                },
-                pointBorderWidth: {
-                    type: Number,
-                    default: 1,
-                },
-                tension: {
-                    type: Number,
-                    default: 0,
-                },
+    subtitle: {
+        text: {
+            type: String,
+            default: "",
+        },
+    },
+    xAxis: {
+        categories: {
+            type: [String],
+            default: [],
+        },
+        crosshair: {
+            type: Boolean,
+            default: true,
+        },
+    },
+    yAxis: {
+        min: {
+            type: Number,
+            default: 0,
+        },
+        title: {
+            text: {
+                type: String,
+                default: "",
             },
-        ],
-        required: true,
+        },
     },
+    plotOptions: {
+        column: {
+            pointPadding: {
+                type: Number,
+                default: 0.2,
+            },
+            borderWidth: {
+                type: Number,
+                default: 0,
+            },
+        },
+    },
+    series: [
+        {
+            name: {
+                type: String,
+                default: "",
+            },
+            data: {
+                type: [Number],
+                default: [],
+            },
+        },
+    ],
 });
 
 export default mongoose.model("BasicColumnSchema", BasicColumnSchema);
