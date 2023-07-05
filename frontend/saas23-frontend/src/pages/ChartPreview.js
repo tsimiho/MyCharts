@@ -1,16 +1,16 @@
-import "../style/UserPage.css";
-import { Link, Navigate, useParams } from "react-router-dom";
-import React, { useEffect, useState } from "react";
-import Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
+import '../style/UserPage.css';
+import {Link,Navigate,useParams} from 'react-router-dom'
+import React, { useEffect,useState } from 'react';
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
 import HighchartsExporting from "highcharts/modules/exporting";
 import HighchartsAccessibility from "highcharts/modules/accessibility";
 import HighchartsDependencyWheel from "highcharts/modules/dependency-wheel";
 import Sankey from "highcharts/modules/sankey";
-import HighchartsNetworkgraph from "highcharts/modules/networkgraph";
-import axios from "axios";
-import { useLocation } from "react-router-dom";
-import csvtojson from "csvtojson";
+import HighchartsNetworkgraph from 'highcharts/modules/networkgraph';
+import axios from 'axios'
+import { useLocation } from 'react-router-dom';
+import csvtojson from 'csvtojson';
 import socket from "../components/WebSocket.js";
 import { ToastContainer } from "react-toastify";
 import { toast } from "react-toastify";
@@ -174,6 +174,6 @@ function ChartPreview({ user, setUser, userdata, setUserdata }) {
             <ToastContainer />
         </div>
     );
-}
-}
+}}
+
 export default ChartPreview;
