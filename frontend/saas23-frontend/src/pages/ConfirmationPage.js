@@ -3,31 +3,38 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import socket from "../components/WebSocket.js";
 
-function Confirmation({ newuser, setNewuser, user, setUser, userdata, setUserdata }) {
+function Confirmation({
+    newuser,
+    setNewuser,
+    user,
+    setUser,
+    userdata,
+    setUserdata,
+}) {
     const nothanks = () => {
-        setUser({});
+        // setUser({});
         setUserdata({});
-        localStorage.removeItem("user");
+        // localStorage.removeItem("user");
     };
 
     useEffect(() => {
-        const newu = localStorage.getItem("newuser")
-        const user = localStorage.getItem("user")
-        setNewuser(newu);
-        console.log(user)
-    }, [setNewuser]);
+        socket.onmessage = ({ data }) => {
+            data = JSON.parse(data);
+            console.log(data);
+            // setNewuser(data.new.toString());
+            // localStorage.setItem("newuser", false);
+            setUserdata(data);
+            localStorage.setItem("userdata", JSON.stringify(data));
+        };
 
-    socket.onmessage = ({ data }) => {
-        data = JSON.parse(data);
-        console.log(data);
-        setNewuser(data.new.toString());
-        localStorage.setItem("newuser", false);
-        setUserdata(data);
-        localStorage.setItem("userdata", JSON.stringify(data));
-    };
+        // const newu = localStorage.getItem("newuser");
+        // const user = localStorage.getItem("user");
+        // setNewuser(newu);
+        // console.log(user);
+    }, []);
 
-    if (newuser === "false") return <Navigate replace to="/user" />;
-    else
+    // if (newuser === "false") return <Navigate replace to="/user" />;
+    // else
         return (
             <div className="background">
                 <div className="wrapper">

@@ -75,6 +75,7 @@ const run = async () => {
     await consumer.subscribe({ topic: "lineWithAnnotations_show" });
     await consumer.subscribe({ topic: "networkGraph_show" });
     await consumer.subscribe({ topic: "polarchart_show" });
+    await consumer.subscribe({ topic: "diagram_id" });
     await consumer.run({
         eachMessage: async ({ topic, partition, message }) => {
             if (message.value != null) {
@@ -102,6 +103,8 @@ const run = async () => {
                     console.log("done");
                 } else if (topic === "quotas_added") {
                     console.log(message.value.toString());
+                    broadcastMessage(message.value.toString());
+                } else if (topic === "diagram_id") {
                     broadcastMessage(message.value.toString());
                 }
             }

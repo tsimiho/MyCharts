@@ -24,8 +24,7 @@ function MainPage({
     const [type, setType] = useState("bar");
     const [ann, setAnn] = useState(0);
     const [chartComponent, setChartComponent] = useState(null);
-
-    socket.onmessage = ({ data }) => {};
+    const [loading, setLoading] = useState(true); // New loading state
 
     const openModal = (i) => {
         if (i % 6 === 0) {
@@ -73,7 +72,6 @@ function MainPage({
     //     document.getElementById("signInDiv").hidden = true;
     // }
     function handleCallbackResponse(response) {
-        // console.log("token" + response.credential);
         var userObject = jwt_decode(response.credential);
         console.log(userObject.email);
         setUser(userObject);
@@ -83,117 +81,161 @@ function MainPage({
         // .then((response) => {
         //   console.log(response.data);
         // })
-        localStorage.setItem("user", JSON.stringify(userObject)); // Store user object in local storage
-        document.getElementById("signInDiv").hidden = true;
-    }
-
-    useEffect(() => {
-        // localStorage.clear();
-
-        /* global google */
-        google.accounts.id.initialize({
-            client_id:
-                "919864012907-eihr65v77jminklnqd7j61r2bf6q2pdt.apps.googleusercontent.com",
-            callback: handleCallbackResponse,
-        });
-
-        google.accounts.id.renderButton(document.getElementById("signInDiv"), {
-            theme: "outline",
-            size: "large",
-        });
-        localStorage.removeItem("user");
-        const storedUser = localStorage.getItem("user");
-        const storedUserdata = localStorage.getItem("userdata");
-
-        if (storedUser) {
-            const userObject = JSON.parse(storedUser);
-            setUser(userObject);
-            const userdataObject = JSON.parse(storedUserdata);
-            setUserdata(userdataObject);
-        }
-    }, [setUser, setUserdata]);
-
-    function signout() {
-        setUser({});
+        // localStorage.setItem("user", JSON.stringify(userObject)); // Store user object in local storage
         document.getElementById("signInDiv").hidden = false;
     }
 
-    if (newuser === "false") return <Navigate replace to="/user" />;
-    else if (Object.keys(user).length !== 0)
-        return <Navigate replace to="/confirmation" />;
-    else
-        return (
-            <div className="background">
-                <div className="wrapper">
-                    <img src="/logo.png" alt="Logo" />
-                    <h1 className="title"> MyCharts App</h1>
-                </div>
-                <div className="buttonscontainer">
-                    <button className="mainbutton" onClick={() => openModal(0)}>
-                        <img src="/linechart.png" alt="LineChart" />
-                        LineChart
-                    </button>{" "}
-                    &nbsp;&nbsp;
-                    <button className="mainbutton" onClick={() => openModal(1)}>
-                        <img src="/lineann.png" alt="LineChart with Ann" />
-                        LineChart with annotations
-                    </button>{" "}
-                    &nbsp;&nbsp;
-                    <button className="mainbutton" onClick={() => openModal(2)}>
-                        <img src="/barchart.jpg" alt="BarChart" />
-                        Column Chart
-                    </button>{" "}
-                    &nbsp;&nbsp;
-                    <button className="mainbutton" onClick={() => openModal(3)}>
-                        <img
-                            src="/dependencywheel.jpg"
-                            alt="LineChart with Ann"
-                        />
-                        Dependency wheel
+    useEffect(() => {
+        const script = document.createElement("script");
+        script.src = "https://accounts.google.com/gsi/client";
+        script.async = true;
+        script.onload = initializeGoogleButton;
+        document.body.appendChild(script);
+
+        // Function to initialize the Google button
+        function initializeGoogleButton() {
+            google.accounts.id.initialize({
+                client_id:
+                    "919864012907-eihr65v77jminklnqd7j61r2bf6q2pdt.apps.googleusercontent.com",
+                callback: handleCallbackResponse,
+            });
+
+            google.accounts.id.renderButton(
+                document.getElementById("signInDiv"),
+                {
+                    theme: "outline",
+                    size: "large",
+                }
+            );
+        }
+
+        socket.onmessage = ({ data }) => {
+            setUserdata(JSON.parse(data));
+            localStorage.setItem("userdata", data);
+        };
+        // google.accounts.id.renderButton(document.getElementById("signInDiv"), {
+        //     theme: "outline",
+        //     size: "large",
+        // });
+        // localStorage.clear();
+
+        /* global google */
+        // google.accounts.id.initialize({
+        //     client_id:
+        //         "919864012907-eihr65v77jminklnqd7j61r2bf6q2pdt.apps.googleusercontent.com",
+        //     callback: handleCallbackResponse,
+        // });
+
+        // localStorage.removeItem("user");
+        // const storedUser = localStorage.getItem("user");
+        // const storedUserdata = localStorage.getItem("userdata");
+
+        // if (storedUserdata) {
+        //     // const userObject = JSON.parse(storedUser);
+        //     // setUser(userObject);
+        //     const userdataObject = JSON.parse(storedUserdata);
+        //     setUserdata(userdataObject);
+        // }
+        const storedUserdata = localStorage.getItem("userdata");
+
+        try {
+            // setUser(JSON.parse(storedUser));
+            setUserdata(JSON.parse(storedUserdata));
+        } catch (error) {
+            // setUser(null);
+            setUserdata(null);
+        }
+        setLoading(false); // Set loading to false after data fetching completes
+    }, []);
+
+    if (loading) {
+        return <div></div>;
+    }
+
+    if (userdata) {
+        if (userdata.new === false) return <Navigate replace to="/user" />;
+        else if (userdata.new === true)
+            return <Navigate replace to="/confirmation" />;
+    }
+
+    // function signout() {
+    //     setUser({});
+    //     document.getElementById("signInDiv").hidden = false;
+    // }
+
+    // if (userdata.new === false) return <Navigate replace to="/user" />;
+    // else if (userdata.new === true)
+    //     return <Navigate replace to="/confirmation" />;
+    // else
+    return (
+        <div className="background">
+            <div className="wrapper">
+                <img src="/logo.png" alt="Logo" />
+                <h1 className="title"> MyCharts App</h1>
+            </div>
+            <div className="buttonscontainer">
+                <button className="mainbutton" onClick={() => openModal(0)}>
+                    <img src="/linechart.png" alt="LineChart" />
+                    LineChart
+                </button>{" "}
+                &nbsp;&nbsp;
+                <button className="mainbutton" onClick={() => openModal(1)}>
+                    <img src="/lineann.png" alt="LineChart with Ann" />
+                    LineChart with annotations
+                </button>{" "}
+                &nbsp;&nbsp;
+                <button className="mainbutton" onClick={() => openModal(2)}>
+                    <img src="/barchart.jpg" alt="BarChart" />
+                    Column Chart
+                </button>{" "}
+                &nbsp;&nbsp;
+                <button className="mainbutton" onClick={() => openModal(3)}>
+                    <img src="/dependencywheel.jpg" alt="LineChart with Ann" />
+                    Dependency wheel
+                </button>
+                &nbsp;&nbsp;
+                <button className="mainbutton" onClick={() => openModal(4)}>
+                    <img src="/networkgraph.png" alt="LineChart with Ann" />
+                    Network Graph
+                </button>
+                &nbsp;&nbsp;
+                <button className="mainbutton" onClick={() => openModal(5)}>
+                    <img src="/polarchart.png" alt="LineChart with Ann" />
+                    Polar chart
+                </button>
+                <Modal
+                    isOpen={modalIsOpen}
+                    onRequestClose={closeModal}
+                    contentLabel="Chart Modal"
+                    style={{
+                        overlay: {
+                            backgroundColor: "rgba(0, 0, 0, 0.5)",
+                        },
+                        content: {
+                            width: "50%",
+                            height: "55%",
+                            margin: "auto",
+                        },
+                    }}
+                >
+                    {chartComponent}
+                    <button className="mainbutton" onClick={closeModal}>
+                        Back
                     </button>
-                    &nbsp;&nbsp;
-                    <button className="mainbutton" onClick={() => openModal(4)}>
-                        <img src="/networkgraph.png" alt="LineChart with Ann" />
-                        Network Graph
-                    </button>
-                    &nbsp;&nbsp;
-                    <button className="mainbutton" onClick={() => openModal(5)}>
-                        <img src="/polarchart.png" alt="LineChart with Ann" />
-                        Polar chart
-                    </button>
-                    <Modal
-                        isOpen={modalIsOpen}
-                        onRequestClose={closeModal}
-                        contentLabel="Chart Modal"
-                        style={{
-                            overlay: {
-                                backgroundColor: "rgba(0, 0, 0, 0.5)",
-                            },
-                            content: {
-                                width: "50%",
-                                height: "55%",
-                                margin: "auto",
-                            },
-                        }}
-                    >
-                        {chartComponent}
-                        <button className="mainbutton" onClick={closeModal}>
-                            Back
-                        </button>
-                    </Modal>
-                </div>
-                <div className="containerparent">
+                </Modal>
+            </div>
+            <div className="containerparent">
                 <div className="containermain">
                     <h2 className="title">
                         {" "}
                         Press on a diagram to see how it works, or login with
-                        your google account to start creating your diagrams
+                        your google account to start creating your own diagrams
                     </h2>
                     <div id="signInDiv"></div>
                 </div>
-                </div>
             </div>
-        );
+        </div>
+    );
 }
 
 export default MainPage;
