@@ -41,12 +41,10 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
     }
 
     socket.onmessage = ({ data }) => {
-        console.log(data);
         const { diagram, action } = JSON.parse(data);
-        console.log("after");
 
         if (action === "display") {
-            handleRowClick(diagram);
+            setChartData(diagram);
         } else if (action === "pdf") {
             // download pdf
             downloadChart(diagram, "application/pdf");
@@ -115,16 +113,6 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
         chart.destroy();
         container.remove();
     };
-
-    function handleRowClick(chart) {
-        // Assuming `rows` contains the chart data for the clicked row
-
-        setChartData(chart);
-
-        // Use the chart data in your application (e.g., set it to state)
-        // Example: setChartData(chartData);
-        // Replace `setChartData` with the appropriate state setter function in your code
-    }
 
     const requestChart = async (type, id, action) => {
         await axios.get(
