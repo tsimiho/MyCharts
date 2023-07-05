@@ -11,7 +11,7 @@ const adddependencyWheel = async (email: string, data: object) => {
 
         const id = diagram._id;
         const title = diagram.title ? diagram.title["text"] : "";
-        const type = "depenencyWheel";
+        const type = "dependencyWheel";
 
         const message = JSON.stringify({
             email,
