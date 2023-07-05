@@ -175,5 +175,5 @@ function ChartPreview({ user, setUser, userdata, setUserdata }) {
         </div>
     );
 }
-
+}
 export default ChartPreview;
