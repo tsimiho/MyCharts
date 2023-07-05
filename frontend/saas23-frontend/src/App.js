@@ -8,6 +8,7 @@ import LoginPage from "./pages/LoginPage";
 import ChartPreview from "./pages/ChartPreview";
 import BuyCredits from "./pages/BuyCredits";
 import MyCharts from "./pages/MyCharts";
+import MyCharts2 from "./pages/MyCharts";
 import Confirmation from "./pages/ConfirmationPage";
 
 // ClientID: 919864012907-eihr65v77jminklnqd7j61r2bf6q2pdt.apps.googleusercontent.com
