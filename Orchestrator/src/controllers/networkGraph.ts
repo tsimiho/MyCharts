@@ -4,6 +4,7 @@ import kafka from "../config/kafka";
 const producer = kafka.producer();
 
 const networkGraph = async (req: Request, res: Response) => {
+    console.log("here");
     try {
         const { email, data, name } = req.body;
 

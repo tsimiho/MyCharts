@@ -59,7 +59,7 @@ services:
             context: ./Orchestrator
             dockerfile: dockerfile
         ports:
-            - "9000:9000"
+            - "9001:9001"
             - "8090:8090"
         environment:
             - MONGO_URI=mongodb+srv://user:user@cluster0.pt64z19.mongodb.net/
@@ -71,7 +71,7 @@ services:
             context: ./Users
             dockerfile: dockerfile
         ports:
-            - "9001:9001"
+            - "9000:9000"
         environment:
             - MONGO_URI=mongodb+srv://user:user@cluster0.pt64z19.mongodb.net/
             - BASE_URL=192.168.1.227

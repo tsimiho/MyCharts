@@ -86,20 +86,20 @@ const run = async () => {
                     broadcastMessage(message.value.toString());
                     console.log("done");
                 } else if (topic === "basicColumn_show") {
-                    const { diagram } = JSON.parse(message.value.toString());
-                    broadcastMessage(diagram.toString());
+                    broadcastMessage(message.value.toString());
+                    console.log("done");
                 } else if (topic === "dependencyWheel_show") {
-                    const { diagram } = JSON.parse(message.value.toString());
-                    broadcastMessage(diagram.toString());
+                    broadcastMessage(message.value.toString());
+                    console.log("done");
                 } else if (topic === "lineWithAnnotations_show") {
-                    const { diagram } = JSON.parse(message.value.toString());
-                    broadcastMessage(diagram.toString());
+                    broadcastMessage(message.value.toString());
+                    console.log("done");
                 } else if (topic === "networkGraph_show") {
-                    const { diagram } = JSON.parse(message.value.toString());
-                    broadcastMessage(diagram.toString());
+                    broadcastMessage(message.value.toString());
+                    console.log("done");
                 } else if (topic === "polarchart_show") {
-                    const { diagram } = JSON.parse(message.value.toString());
-                    broadcastMessage(diagram.toString());
+                    broadcastMessage(message.value.toString());
+                    console.log("done");
                 } else if (topic === "quotas_added") {
                     console.log(message.value.toString());
                     broadcastMessage(message.value.toString());

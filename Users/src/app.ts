@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-const port = 9010;
+const port = 9000;
 
 const start = async () => {
     const mongoURI = process.env.MONGO_URI;
