@@ -9,33 +9,10 @@ function BuyCredits({ user, setUser, userdata, setUserdata }) {
     var [loggedin, setLoggedin] = useState(1);
     const [loading, setLoading] = useState(true); // New loading state
 
-    useEffect(() => {
-        const storedUser = localStorage.getItem("user");
-        const storedUserdata = localStorage.getItem("userdata");
-
-        try {
-            setUser(JSON.parse(storedUser));
-            setUserdata(JSON.parse(storedUserdata));
-        } catch (error) {
-            setUser(null);
-            setUserdata(null);
-        }
-        if (!storedUser) {
-            setLoggedin(0);
-        }
-
-        setLoading(false); // Set loading to false after data fetching completes
-    }, []);
-
-    socket.onmessage = ({ data }) => {
-        updateQuotas(data);
-    };
-
     const updateQuotas = (data) => {
         userdata.quotas = parseInt(data);
         console.log(userdata.quotas);
         setUserdata(userdata);
-        localStorage.removeItem("userdata");
         localStorage.setItem("userdata", JSON.stringify(userdata));
         setNumber(0);
     };
@@ -63,6 +40,32 @@ function BuyCredits({ user, setUser, userdata, setUserdata }) {
         });
         console.log(number);
     };
+
+    useEffect(() => {
+        socket.onmessage = ({ data }) => {
+            updateQuotas(data);
+        };
+
+        // const storedUser = localStorage.getItem("user");
+        const storedUserdata = localStorage.getItem("userdata");
+
+        try {
+            // setUser(JSON.parse(storedUser));
+            setUserdata(JSON.parse(storedUserdata));
+        } catch (error) {
+            // setUser(null);
+            setUserdata(null);
+        }
+        // if (!storedUser) {
+        //     setLoggedin(0);
+        // }
+
+        setLoading(false); // Set loading to false after data fetching completes
+    }, []);
+
+    if (loading) {
+        return <div></div>;
+    }
 
     if (loggedin === 0) return <Navigate replace to="/" />;
     else

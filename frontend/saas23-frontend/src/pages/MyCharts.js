@@ -2,8 +2,8 @@ import "../style/UserPage.css";
 import { Link, Navigate, useParams } from "react-router-dom";
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
+import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
 import HighchartsExporting from "highcharts/modules/exporting";
 import HighchartsAccessibility from "highcharts/modules/accessibility";
 import HighchartsDependencyWheel from "highcharts/modules/dependency-wheel";
@@ -12,7 +12,7 @@ import offlineExporting from "highcharts/modules/offline-exporting";
 import socket from "../components/WebSocket";
 import ExportingModule from "highcharts/modules/exporting";
 import ExportDataModule from "highcharts/modules/export-data";
-import HighchartsNetworkgraph from 'highcharts/modules/networkgraph';
+import HighchartsNetworkgraph from "highcharts/modules/networkgraph";
 
 function MyCharts({ user, setUser, userdata, setUserdata }) {
     const [chartData, setChartData] = useState(null);
@@ -25,36 +25,75 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
     let chartComponent;
 
     if (i % 6 === 0) {
-        chartComponent = <HighchartsReact highcharts={Highcharts} options={chartData}/>;
+        chartComponent = (
+            <HighchartsReact highcharts={Highcharts} options={chartData} />
+        );
     } else if (i % 6 === 1) {
-        chartComponent = <HighchartsReact highcharts={Highcharts} options={chartData}/>;
+        chartComponent = (
+            <HighchartsReact highcharts={Highcharts} options={chartData} />
+        );
     } else if (i % 6 === 2) {
-        chartComponent = <HighchartsReact highcharts={Highcharts} options={chartData}/>;
+        chartComponent = (
+            <HighchartsReact highcharts={Highcharts} options={chartData} />
+        );
     } else if (i % 6 === 3) {
-        chartComponent = <HighchartsReact highcharts={Highcharts} options={chartData}/>;
+        chartComponent = (
+            <HighchartsReact highcharts={Highcharts} options={chartData} />
+        );
     } else if (i % 6 === 4) {
-        chartComponent = <HighchartsReact highcharts={Highcharts} options={chartData}/>;
+        chartComponent = (
+            <HighchartsReact highcharts={Highcharts} options={chartData} />
+        );
     } else if (i % 6 === 5) {
-        chartComponent = <HighchartsReact highcharts={Highcharts} options={chartData}/>;
+        chartComponent = (
+            <HighchartsReact highcharts={Highcharts} options={chartData} />
+        );
     }
 
     useEffect(() => {
-        // const storedUser = localStorage.getItem("user");
-        // const storedUserdata = localStorage.getItem("userdata");
+        socket.onmessage = ({ data }) => {
+            console.log(data);
+            const { diagram, action } = JSON.parse(data);
+            console.log(diagram);
+            HighchartsExporting(Highcharts);
+            HighchartsAccessibility(Highcharts);
+            Sankey(Highcharts);
+            HighchartsDependencyWheel(Highcharts);
+            HighchartsNetworkgraph(Highcharts);
+            console.log(userdata);
+            if (action === "display") {
+                setChartData(diagram);
+            } else if (action === "pdf") {
+                // download pdf
+                downloadChart(diagram, "application/pdf");
+            } else if (action === "png") {
+                // download png
+                downloadChart(diagram, "image/png");
+            } else if (action === "svg") {
+                // download svg
+                downloadChart(diagram, "image/svg+xml");
+            } else if (action === "html") {
+                // download html
+                downloadChart(diagram, "html");
+            }
+        };
 
-        // try {
-        //     setUser(JSON.parse(storedUser));
-        //     setUserdata(JSON.parse(storedUserdata));
-        // } catch (error) {
-        //     setUser(null);
-        //     setUserdata(null);
-        // }
+        // const storedUser = localStorage.getItem("user");
+        const storedUserdata = localStorage.getItem("userdata");
+
+        try {
+            // setUser(JSON.parse(storedUser));
+            setUserdata(JSON.parse(storedUserdata));
+        } catch (error) {
+            // setUser(null);
+            setUserdata(null);
+        }
 
         // if (!storedUser) {
         //     setLoggedin(0);
         // }
 
-        setUserdata(JSON.parse(localStorage.getItem("userdata")));
+        // setUserdata(JSON.parse(localStorage.getItem("userdata")));
 
         setLoading(false);
     }, []);
@@ -62,33 +101,6 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
     if (loading) {
         return <div></div>;
     }
-
-    socket.onmessage = ({ data }) => {
-        console.log(data)
-        const { diagram, action } = JSON.parse(data);
-        console.log(diagram)
-        HighchartsExporting(Highcharts);
-        HighchartsAccessibility(Highcharts);
-        Sankey(Highcharts);
-        HighchartsDependencyWheel(Highcharts);
-        HighchartsNetworkgraph(Highcharts);
-        console.log(userdata)
-        if (action === "display") {
-            setChartData(diagram);
-        } else if (action === "pdf") {
-            // download pdf
-            downloadChart(diagram, "application/pdf");
-        } else if (action === "png") {
-            // download png
-            downloadChart(diagram, "image/png");
-        } else if (action === "svg") {
-            // download svg
-            downloadChart(diagram, "image/svg+xml");
-        } else if (action === "html") {
-            // download html
-            downloadChart(diagram, "html");
-        }
-    };
 
     const downloadChart = (chartOptions, fileType) => {
         const container = document.createElement("div");
@@ -284,9 +296,9 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
                             </tbody>
                         </table>
                     </div>
-                    {chartData ? 
+                    {chartData ? (
                         chartComponent
-                    : (
+                    ) : (
                         <div className="no-chart-container">
                             <div className="no-chart-box">
                                 Press a chart to preview

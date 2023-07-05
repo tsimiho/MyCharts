@@ -1,16 +1,16 @@
-import '../style/UserPage.css';
-import {Link,Navigate,useParams} from 'react-router-dom'
-import React, { useEffect,useState } from 'react';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
+import "../style/UserPage.css";
+import { Link, Navigate, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
 import HighchartsExporting from "highcharts/modules/exporting";
 import HighchartsAccessibility from "highcharts/modules/accessibility";
 import HighchartsDependencyWheel from "highcharts/modules/dependency-wheel";
 import Sankey from "highcharts/modules/sankey";
-import HighchartsNetworkgraph from 'highcharts/modules/networkgraph';
-import axios from 'axios'
-import { useLocation } from 'react-router-dom';
-import csvtojson from 'csvtojson';
+import HighchartsNetworkgraph from "highcharts/modules/networkgraph";
+import axios from "axios";
+import { useLocation } from "react-router-dom";
+import csvtojson from "csvtojson";
 import socket from "../components/WebSocket.js";
 import { ToastContainer } from "react-toastify";
 import { toast } from "react-toastify";
@@ -23,15 +23,31 @@ function ChartPreview({ user, setUser, userdata, setUserdata }) {
     HighchartsDependencyWheel(Highcharts);
     HighchartsNetworkgraph(Highcharts);
     const location = useLocation();
-    const [save,setSave] = useState(true);
-    var jsonData=[];
+    const [save, setSave] = useState(true);
+    var jsonData = [];
     const options = {};
 
-
     useEffect(() => {
+        socket.onmessage = ({ data }) => {
+            const { id, type, title } = JSON.parse(data);
+            const new_diagram = { id, type, title };
+            userdata.diagrams.push(new_diagram);
+            userdata.quotas -= 1;
+
+            setUserdata(userdata);
+            localStorage.setItem("userdata", JSON.stringify(userdata));
+
+            toast.success("Your diagram has been successfully added!", {
+                position: "top-left",
+                autoClose: 5000,
+            });
+        };
+
         try {
             jsonData = JSON.parse(
-            decodeURIComponent(new URLSearchParams(location.search).get("jsonData"))
+                decodeURIComponent(
+                    new URLSearchParams(location.search).get("jsonData")
+                )
             );
         } catch (error) {
             console.error("Error decoding jsonData:", error);
@@ -81,15 +97,11 @@ function ChartPreview({ user, setUser, userdata, setUserdata }) {
                 }
             }
         }
-        userdata.quotas -= 1;
-        console.log(userdata);
-        setUserdata(userdata);
-        localStorage.removeItem("userdata");
-        localStorage.setItem("userdata", JSON.stringify(userdata));
-        toast.success("Your diagram has been successfully added!", {
-            position: "top-left",
-            autoClose: 5000,
-        });
+        // userdata.quotas -= 1;
+        // console.log(userdata);
+        // setUserdata(userdata);
+        // localStorage.setItem("userdata", JSON.stringify(userdata));
+
         setSave(false);
         //   // get the new user data
         //   axios.post("http://localhost:9001/api/login", {
