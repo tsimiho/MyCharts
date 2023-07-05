@@ -2,8 +2,10 @@ import mongoose from "mongoose";
 
 const DependencyWheelSchema = new mongoose.Schema({
     chart: {
-        type: String,
-        default: "dependencywheel",
+        type: {
+            type: String,
+            default: "dependencywheel",
+        },
     },
     title: {
         text: {

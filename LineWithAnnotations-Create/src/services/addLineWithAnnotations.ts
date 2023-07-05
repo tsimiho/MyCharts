@@ -2,6 +2,7 @@ import LineWithAnnotationsSchema from "../models/lineWithAnnotations";
 import kafka from "../config/kafka";
 
 const addLineWithAnnotations = async (email: string, data: object) => {
+    console.log(data)
     const diagram = await LineWithAnnotationsSchema.create(data);
 
     const producer = kafka.producer();

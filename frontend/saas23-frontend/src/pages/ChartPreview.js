@@ -35,6 +35,151 @@ function ChartPreview({ user, setUser, userdata, setUserdata }) {
   }
   const options = {};
   Object.entries(jsonData[0]).forEach(([key, value]) => {
+    options[key] = JSON.parse(value);
+  });
+  console.log(options)
+
+  const savechart = () => {
+    // Create the chart on the according microservice
+    if(options.chart.hasOwnProperty('type')){
+      console.log(options.chart.type)
+      if(options.chart.type === "column"){
+        console.log("col")
+        axios.post("http://localhost:9001/api/create/basicColumn", {
+            email: userdata.email,
+            data: options, 
+        })
+      } else if(options.chart.type === "networkgraph"){
+        axios.post("http://localhost:9001/api/create/networkGraph", {
+            email: userdata.email,
+            data: options, 
+        })
+      } else if(options.chart.type === "dependencywheel"){
+        console.log("dependency")
+        axios.post("http://localhost:9001/api/create/dependencyWheel", {
+            email: userdata.email,
+            data: options, 
+        })
+      } else if(options.hasOwnProperty('annotations')) {
+        console.log("annot")
+        axios.post("http://localhost:9001/api/create/lineWithAnnotations", {
+          email: userdata.email,
+          data: options, 
+        })
+      } else if(options.chart.type === "line"){
+        console.log("Here")
+        axios.post("http://localhost:9001/api/create/linechart", {
+          email: userdata.email,
+          data: options, 
+        })
+      }
+    }
+    const options = {};
+    Object.entries(jsonData[0]).forEach(([key, value]) => {
+        console.log(key, value);
+        options[key] = JSON.parse(value);
+    });
+    console.log(options);
+
+    const savechart = () => {
+        // Create the chart on the according microservice
+        if (options.chart.hasOwnProperty("type")) {
+            console.log(options.chart.type);
+            if (options.chart.type === "bar") {
+                axios.post("http://localhost:9001/api/create/basicColumn", {
+                    email: userdata.email,
+                    data: options,
+                });
+            } else if (options.chart.type === "networkgraph") {
+                console.log("hereskjsdfhsakjhfalskdfhsakldjfh");
+                axios.post("http://localhost:9001/api/create/networkGraph", {
+                    email: userdata.email,
+                    data: options,
+                });
+            } else if (options.chart.type === "dependencywheel") {
+                axios.post("http://localhost:9001/api/create/dependencyWheel", {
+                    email: userdata.email,
+                    data: options,
+                });
+            } else if (options.chart.type === "line") {
+                if (options.hasOwnProperty("annotations")) {
+                    axios.post(
+                        "http://localhost:9001/api/create/lineWithAnnotations",
+                        {
+                            email: userdata.email,
+                            data: options,
+                        }
+                    );
+                } else {
+                    console.log("Here");
+                    axios.post("http://localhost:9001/api/create/linechart", {
+                        email: userdata.email,
+                        data: options,
+                    });
+                }
+            }
+        }
+        userdata.quotas -= 1;
+        console.log(userdata);
+        setUserdata(userdata);
+        localStorage.removeItem("userdata");
+        localStorage.setItem("userdata", JSON.stringify(userdata));
+        toast.success("Your diagram has been successfully added!", {
+            position: "top-left",
+            autoClose: 5000,
+        });
+        setSave(false);
+        //   // get the new user data
+        //   axios.post("http://localhost:9001/api/login", {
+        //     email: userdata.email,
+        // });
+    };
+
+    return (
+        <div className="background">
+            <div className="wrapper">
+                <img src="/logo.png" alt="Logo" />
+                <h1 className="title"> MyCharts App</h1>
+            </div>
+            <div className="containerpreview">
+                <h1 className="titleuser">
+                    {" "}
+                    This is what your chart will look like!
+                </h1>
+                <div className="highcharts-container">
+                    <HighchartsReact
+                        highcharts={Highcharts}
+                        options={options}
+                    />
+                </div>
+                <div className="buttonsuser">
+                    {save ? (
+                        <button
+                            className="mainbutton"
+                            onClick={() => savechart()}
+                        >
+                            Save chart
+                        </button>
+                    ) : (
+                        <Link to="/user">
+                            <button className="mainbutton">Return</button>
+                        </Link>
+                    )}
+                    &nbsp; &nbsp;
+                    <Link to="/newchart">
+                        <button className="mainbutton">Cancel</button>
+                    </Link>
+                </div>
+            </div>
+            <ToastContainer />
+        </div>
+    );
+  } catch (error) {
+    console.error("Error decoding jsonData:", error);
+    jsonData = [[]];
+  }
+  const options = {};
+  Object.entries(jsonData[0]).forEach(([key, value]) => {
     console.log(key,value)
     options[key] = JSON.parse(value);
   });

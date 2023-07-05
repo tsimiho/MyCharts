@@ -1,5 +1,5 @@
 chart,title,subtitle,accessibility,series
-"{""type"":""dependencywheel""}","{""text"":""Your Chart Title""}","{""text"":""Your Chart Subtitle""}","{""point"":{""valueDescriptionFormat"":""{index}. From {point.from} to {point.to}: {point.weight}.""}}","[{
+"{""type"":""dependencywheel""}","{""text"":""Dependency wheel title""}","{""text"":""Your Chart Subtitle""}","{""point"":{""valueDescriptionFormat"":""{index}. From {point.from} to {point.to}: {point.weight}.""}}","[{
     ""keys"": [""from"", ""to"", ""weight""],
     ""linkWeight"": 5,
     ""centeredLinks"": true,

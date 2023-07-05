@@ -2,8 +2,10 @@ import mongoose from "mongoose";
 
 const BasicColumnSchema = new mongoose.Schema({
     chart: {
-        type: String,
-        default: "column",
+        type: {
+            type: String,
+            default: "column",
+        },
     },
     title: {
         text: {

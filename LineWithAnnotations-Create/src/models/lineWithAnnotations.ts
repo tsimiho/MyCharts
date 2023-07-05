@@ -2,8 +2,10 @@ import mongoose from "mongoose";
 
 const LineWithAnnotationsSchema = new mongoose.Schema({
     chart: {
-        type: String,
-        default: "area",
+        type: {
+            type: String,
+            default: "area",
+        },
     },
     title: {
         text: {
