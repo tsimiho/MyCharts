@@ -4,6 +4,7 @@ import kafka from "../config/kafka";
 const producer = kafka.producer();
 
 const basicColumn = async (req: Request, res: Response) => {
+    console.log("basicColumn");
     try {
         const { email, data, name } = req.body;
 

@@ -81,7 +81,7 @@ function ChartPreview({ user, setUser, userdata, setUserdata }) {
     const savechart = () => {
         if (options.chart.hasOwnProperty("type")) {
             console.log(options.chart.type);
-            if (options.chart.type === "bar") {
+            if (options.chart.type === "column") {
                 axios.post("http://localhost:9001/api/create/basicColumn", {
                     email: userdata.email,
                     data: options,
