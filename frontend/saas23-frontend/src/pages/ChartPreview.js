@@ -11,7 +11,7 @@ import HighchartsNetworkgraph from "highcharts/modules/networkgraph";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import csvtojson from "csvtojson";
-import socket from "../components/WebSocket.js";
+// import socket from "../components/WebSocket.js";
 import { ToastContainer } from "react-toastify";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -28,9 +28,24 @@ function ChartPreview({ user, setUser, userdata, setUserdata }) {
     const options = {};
 
     useEffect(() => {
+        const socket = new WebSocket("ws://localhost:8090");
+
+        socket.onopen = () => {
+            console.log("WebSocket connection established");
+        };
+
+        socket.onclose = () => {
+            console.log("WebSocket connection closed");
+        };
+
         socket.onmessage = ({ data }) => {
             const { id, type, title } = JSON.parse(data);
-            const new_diagram = { id, type, title };
+            const new_diagram = {
+                DiagramID: id,
+                Type: type,
+                Name: title,
+                Created_On: new Date(),
+            };
             userdata.diagrams.push(new_diagram);
             userdata.quotas -= 1;
 
@@ -57,6 +72,10 @@ function ChartPreview({ user, setUser, userdata, setUserdata }) {
             options[key] = JSON.parse(value);
         });
         console.log(options);
+
+        return () => {
+            socket.close();
+        };
     }, []);
 
     const savechart = () => {

@@ -10,7 +10,7 @@ import LineChartWithAnnotations from "../components/LineChartwithAnnotations";
 import BarChart from "../components/BarChart";
 import NetworkGraph from "../components/NetworkGraph";
 import PolarChart from "../components/PolarChart";
-import socket from "../components/WebSocket.js";
+// import socket from "../components/WebSocket.js";
 
 function MainPage({
     newuser,
@@ -80,11 +80,25 @@ function MainPage({
                 }
             );
         }
+        const socket = new WebSocket("ws://localhost:8090");
+
+        socket.onopen = () => {
+            console.log("WebSocket connection established");
+        };
+
+        socket.onclose = () => {
+            console.log("WebSocket connection closed");
+        };
 
         socket.onmessage = ({ data }) => {
             setUserdata(JSON.parse(data));
             localStorage.setItem("userdata", data);
         };
+
+        
+
+        // Cleanup the WebSocket connection when the component unmounts
+
         // google.accounts.id.renderButton(document.getElementById("signInDiv"), {
         //     theme: "outline",
         //     size: "large",
@@ -117,6 +131,10 @@ function MainPage({
             setUserdata(null);
         }
         setLoading(false);
+
+        return () => {
+            socket.close();
+        };
     }, []);
 
     if (loading) {
