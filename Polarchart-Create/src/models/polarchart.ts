@@ -2,8 +2,7 @@ import mongoose from "mongoose";
 
 const PolarChartSchema = new mongoose.Schema({
     chart: {
-        polar: { type: Boolean, 
-                 default: 1 },
+        polar: { type: Boolean, default: true },
     },
     title: {
         text: {

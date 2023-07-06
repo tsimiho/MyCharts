@@ -1,6 +1,8 @@
 import React from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import Annotations from "highcharts/modules/annotations";
+Annotations(Highcharts);
 
 const LineChartWithAnnotations = ({ height, opts = null }) => {
     const options = opts
@@ -14,11 +16,11 @@ const LineChartWithAnnotations = ({ height, opts = null }) => {
                   text: "Line Chart with Annotations",
               },
               xAxis: {
-                  categories: ["Apples", "Bananas", "Oranges"],
+                categories: ["Apples","Bananas","Oranges"]
               },
               yAxis: {
                   title: {
-                      text: "Fruit Eaten",
+                      text: "Fruit Eatenn",
                   },
               },
               series: [
@@ -37,24 +39,26 @@ const LineChartWithAnnotations = ({ height, opts = null }) => {
               annotations: [
                   {
                       labelOptions: {
-                          shape: "connector",
-                          align: "right",
-                          justify: false,
+                          //shape: "connector",
+                          verticalAlign: 'top',
+                          y:10,
+                          justify: true,
                           crop: true,
                           style: {
-                              fontSize: "0.8em",
-                              textOutline: "1px white",
+                              fontSize: "1em",
+                              textOutline: "0.1px white",
                           },
                       },
                       labels: [
                           {
                               point: {
-                                  x: 0,
-                                  y: 1,
-                                  xAxis: 0,
+                                 xAxis: 0,
                                   yAxis: 0,
+                                  x: 0,
+                                  y: 5,
+                                  
                               },
-                              text: "Annotation 1",
+                              text: "John was really hungry",
                           },
                           {
                               point: {
@@ -63,7 +67,7 @@ const LineChartWithAnnotations = ({ height, opts = null }) => {
                                   xAxis: 0,
                                   yAxis: 0,
                               },
-                              text: "Annotation 2",
+                              text: "Jane was pretty hungry too",
                           },
                       ],
                   },
