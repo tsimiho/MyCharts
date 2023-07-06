@@ -17,6 +17,16 @@ const LineWithAnnotationsSchema = new mongoose.Schema({
             default: "left",
         },
     },
+    subtitle: {
+        text: {
+            type: String,
+            default: "",
+        },
+        align: {
+            type: String,
+            default: "left",
+        },
+    },
     caption: {
         text: {
             type: String,

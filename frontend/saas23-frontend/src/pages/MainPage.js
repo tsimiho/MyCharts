@@ -140,7 +140,7 @@ function MainPage({
     if (loading) {
         return <div></div>;
     }
-
+    
     if (userdata) {
         if (userdata.new === false) return <Navigate replace to="/user" />;
         else if (userdata.new === true)

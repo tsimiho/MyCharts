@@ -15,6 +15,16 @@ const LineWitAnnotationsSchema = {
             default: "left",
         },
     },
+    subtitle: {
+        text: {
+            type: String,
+            default: "",
+        },
+        align: {
+            type: String,
+            default: "left",
+        },
+    },
     caption: {
         text: {
             type: String,

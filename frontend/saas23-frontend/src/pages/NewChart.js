@@ -76,9 +76,9 @@ function NewChart({ user, setUser, userdata, setUserdata }) {
         const referenceKeys = Object.keys(reference);
       
         // Check if the number of keys is the same
-        if (jsonKeys.length !== referenceKeys.length) {
-          return false;
-        }
+        // if (jsonKeys.length !== referenceKeys.length) {
+        //   return false;
+        // }
       
         // Iterate over the keys
         for (let key of jsonKeys) {

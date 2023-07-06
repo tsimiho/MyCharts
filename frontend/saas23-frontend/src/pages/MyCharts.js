@@ -37,24 +37,24 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
 
     const displayChart = (options) => {
         if (options.chart.type === "bar") {
-            setChartComponent(<BarChart height={"250"} opts={options} />);
+            setChartComponent(<BarChart height={"350"} opts={options} />);
         } else if (options.chart.type === "networkgraph") {
-            setChartComponent(<NetworkGraph height={"250"} opts={options} />);
+            setChartComponent(<NetworkGraph height={"350"} opts={options} />);
         } else if (options.chart.type === "dependencywheel") {
             console.log("dw", options);
             setChartComponent(
-                <DependencyWheelChart height={"250"} opts={options} />
+                <DependencyWheelChart height={"350"} opts={options} />
             );
         } else if (options.chart.type === "line") {
             if (options.hasOwnProperty("annotations")) {
                 setChartComponent(
-                    <LineChartWithAnnotations height={"250"} opts={options} />
+                    <LineChartWithAnnotations height={"350"} opts={options} />
                 );
             } else {
-                setChartComponent(<LineChart height={"250"} opts={options} />);
+                setChartComponent(<LineChart height={"350"} opts={options} />);
             }
         } else {
-            setChartComponent(<PolarChart height={"250"} opts={options} />);
+            setChartComponent(<PolarChart height={"350"} opts={options} />);
         }
     };
 
