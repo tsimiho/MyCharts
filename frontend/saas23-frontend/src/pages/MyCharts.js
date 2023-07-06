@@ -36,7 +36,8 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
     const [chartComponent, setChartComponent] = useState(null);
 
     const displayChart = (options) => {
-        if (options.chart.type === "bar") {
+        console.log("options", options);
+        if (options.chart.type === "column") {
             setChartComponent(<BarChart height={"350"} opts={options} />);
         } else if (options.chart.type === "networkgraph") {
             setChartComponent(<NetworkGraph height={"350"} opts={options} />);
