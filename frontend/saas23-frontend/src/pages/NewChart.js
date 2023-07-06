@@ -13,10 +13,16 @@ import LineChartWithAnnotations from "../components/LineChartwithAnnotations";
 import BarChart from "../components/BarChart";
 import NetworkGraph from "../components/NetworkGraph";
 import PolarChart from "../components/PolarChart";
+import LineChartSchema from "../schemas/LineChartSchema";
+import LineWithAnnotationsSchema from "../schemas/LineWithAnnotationsSchema";
+import ColumnSchema from "../schemas/ColumnSchema";
+import NetworkSchema from "../schemas/NetworkSchema";
+import DependencyWheelSchema from "../schemas/DependencyWheelSchema";
+import PolarSchema from "../schemas/PolarSchema";
 
 function NewChart({ user, setUser, userdata, setUserdata }) {
     const [i, setI] = useState(0);
-    const [jsonData, setJsonData] = useState([]);
+    const [jsonData, setJsonData] = useState(null);
     const types = [
         "LineChart",
         "LineAnnotationChart",
@@ -64,6 +70,77 @@ function NewChart({ user, setUser, userdata, setUserdata }) {
         }
     };
 
+    function hasSameSchema(json, reference) {
+        // Get the keys of the JSON object and the reference schema
+        const jsonKeys = Object.keys(json);
+        const referenceKeys = Object.keys(reference);
+      
+        // Check if the number of keys is the same
+        if (jsonKeys.length !== referenceKeys.length) {
+          return false;
+        }
+      
+        // Iterate over the keys
+        for (let key of jsonKeys) {
+          // Check if the key exists in the reference schema
+          if (!reference.hasOwnProperty(key)) {
+            console.log(key)
+            toast.error(
+                "There is no property named "+key+" in the schema for the specific chart",
+                {
+                    position: "top-left",
+                    autoClose: 5000,
+                }
+            );
+            return false;
+          }
+        }
+      
+        return true;
+      }
+
+    const checkandsetjson = (json) => {
+        const jsonnew = {};
+        Object.entries(json[0]).forEach(([key, value]) => {
+            jsonnew[key] = JSON.parse(value);
+        });
+        // console.log(jsonnew.chart.hasOwnProperty("type"));
+        if (!jsonnew.hasOwnProperty("chart")){
+            toast.error(
+                "The csv doesn't have a 'chart' property",
+                {
+                    position: "top-left",
+                    autoClose: 3000,
+                }
+            );
+            return;
+        }
+        var hasschema = false;
+        if (jsonnew.chart.hasOwnProperty("type")) {
+            console.log(jsonnew.chart.type);
+            if (jsonnew.chart.type === "column") {
+                hasschema = hasSameSchema(jsonnew,ColumnSchema)               
+            } else if (jsonnew.chart.type === "networkgraph") {
+                hasschema = hasSameSchema(jsonnew,NetworkSchema)                
+            } else if (jsonnew.chart.type === "dependencywheel") {
+                hasschema = hasSameSchema(jsonnew,DependencyWheelSchema)                
+            } else if (jsonnew.chart.type === "line") {
+                if (jsonnew.hasOwnProperty("annotations")) {
+                    hasschema = hasSameSchema(jsonnew,LineWithAnnotationsSchema)                   
+                } else {
+                    hasschema = hasSameSchema(jsonnew,LineChartSchema)
+                }
+            }
+        } else if (jsonnew.chart.polar === "true") {
+            console.log("polar");
+            hasschema = hasSameSchema(jsonnew,PolarSchema)
+        }
+        console.log(hasschema)
+        if(hasschema){
+            setJsonData(json);
+        }
+    }
+
     const download_csv = (diagram_type) => {
         const url = `http://localhost:9011/api/download_csv?param=${encodeURIComponent(
             diagram_type
@@ -89,6 +166,13 @@ function NewChart({ user, setUser, userdata, setUserdata }) {
             );
             return;
         }
+        if (userdata.quotas < 1) {
+            toast.error("You don't have enough quotas to create a chart!", {
+                position: "top-left",
+                autoClose: false,
+            }); // Display an error toast notification
+        }
+
         setSelectedFile(file);
 
         const reader = new FileReader();
@@ -96,8 +180,8 @@ function NewChart({ user, setUser, userdata, setUserdata }) {
         reader.onload = async (event) => {
             const contents = event.target.result;
             const json = await convertCSVToJson(contents);
-            console.log(json);
-            setJsonData(json);
+            console.log(json[0]);
+            checkandsetjson(json);
         };
 
         reader.onerror = (event) => {
@@ -105,12 +189,7 @@ function NewChart({ user, setUser, userdata, setUserdata }) {
         };
 
         reader.readAsText(file);
-        if (userdata.quotas < 1) {
-            toast.error("You don't have enough quotas to create a chart!", {
-                position: "top-left",
-                autoClose: false,
-            }); // Display an error toast notification
-        }
+        
     };
 
     const handleDragOver = (event) => {
@@ -143,8 +222,9 @@ function NewChart({ user, setUser, userdata, setUserdata }) {
         reader.onload = async (event) => {
             const contents = event.target.result;
             const json = await convertCSVToJson(contents);
-            console.log(json);
-            setJsonData(json);
+            console.log(json[0]);
+            // check if csv file has correct format
+            checkandsetjson(json);
         };
 
         reader.onerror = (event) => {
@@ -218,7 +298,7 @@ function NewChart({ user, setUser, userdata, setUserdata }) {
                         )}
                     </div>
                     <div className="buttonsuser">
-                        {userdata.quotas < 1 || selectedFile === null ? (
+                        {userdata.quotas < 1 || jsonData === null ? (
                             <h1 className="titleuser"> </h1>
                         ) : (
                             <Link

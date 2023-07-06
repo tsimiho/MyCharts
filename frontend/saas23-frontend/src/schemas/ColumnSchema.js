@@ -1,6 +1,4 @@
-import mongoose from "mongoose";
-
-const BasicColumnSchema = new mongoose.Schema({
+const ColumnSchema = {
     chart: {
         type: {
             type: String,
@@ -65,6 +63,6 @@ const BasicColumnSchema = new mongoose.Schema({
             },
         },
     ],
-});
-
-export default mongoose.model("BasicColumnSchema", BasicColumnSchema);
+};
+  
+export default ColumnSchema;
