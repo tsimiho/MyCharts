@@ -35,7 +35,7 @@ function BuyCredits({ user, setUser, userdata, setUserdata }) {
     };
 
     const AddTokens = () => {
-        axios.post("http://localhost:9001/api/quotas", {
+        axios.post(`http://192.168.1.227:9001/api/quotas`, {
             email: user.email,
             quotas: parseInt(number),
         });
