@@ -102,8 +102,8 @@ const run = async () => {
                     broadcastMessage(message.value.toString());
                     console.log("done");
                 } else if (topic === "quotas_added") {
-                    console.log(message.value.toString());
                     broadcastMessage(message.value.toString());
+                    console.log("123", message.value.toString());
                 } else if (topic === "diagram_id") {
                     broadcastMessage(message.value.toString());
                 }

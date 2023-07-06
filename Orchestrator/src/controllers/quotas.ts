@@ -4,6 +4,7 @@ import kafka from "../config/kafka";
 const producer = kafka.producer();
 
 const quotas = async (req: Request, res: Response) => {
+    console.log("received");
     try {
         console.log(req.body.email + " " + req.body.quotas);
         const { email, quotas } = req.body;

@@ -1,13 +1,14 @@
 import "../style/UserPage.css";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Link, Navigate, useParams, useNavigate } from "react-router-dom";
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import socket from "../components/WebSocket";
+// import socket from "../components/WebSocket";
 
 function BuyCredits({ user, setUser, userdata, setUserdata }) {
     const [number, setNumber] = useState(0);
     var [loggedin, setLoggedin] = useState(1);
     const [loading, setLoading] = useState(true); // New loading state
+    const [backToUser, setBackToUser] = useState(false); // New loading state
 
     const updateQuotas = (data) => {
         userdata.quotas = parseInt(data);
@@ -42,6 +43,16 @@ function BuyCredits({ user, setUser, userdata, setUserdata }) {
     };
 
     useEffect(() => {
+        const socket = new WebSocket("ws://localhost:8090");
+
+        socket.onopen = () => {
+            console.log("WebSocket connection established");
+        };
+
+        socket.onclose = () => {
+            console.log("WebSocket connection closed");
+        };
+
         socket.onmessage = ({ data }) => {
             updateQuotas(data);
         };
@@ -55,7 +66,15 @@ function BuyCredits({ user, setUser, userdata, setUserdata }) {
         }
 
         setLoading(false);
+
+        return () => {
+            socket.close();
+        };
     }, []);
+
+    if (backToUser === true) {
+        return <Navigate replace to="/user" />;
+    }
 
     if (loading) {
         return <div></div>;
@@ -75,7 +94,7 @@ function BuyCredits({ user, setUser, userdata, setUserdata }) {
                         {" "}
                         You are logged in as{" "}
                         <span style={{ color: "lightcoral" }}>
-                            {user.email}
+                            {userdata.email}
                         </span>
                     </h1>
                     <h1 className="title">

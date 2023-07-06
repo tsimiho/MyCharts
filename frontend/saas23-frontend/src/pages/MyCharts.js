@@ -9,7 +9,7 @@ import HighchartsAccessibility from "highcharts/modules/accessibility";
 import HighchartsDependencyWheel from "highcharts/modules/dependency-wheel";
 import Sankey from "highcharts/modules/sankey";
 import offlineExporting from "highcharts/modules/offline-exporting";
-import socket from "../components/WebSocket";
+// import socket from "../components/WebSocket";
 import ExportingModule from "highcharts/modules/exporting";
 import ExportDataModule from "highcharts/modules/export-data";
 import HighchartsNetworkgraph from "highcharts/modules/networkgraph";
@@ -32,36 +32,8 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
     Sankey(Highcharts);
     HighchartsDependencyWheel(Highcharts);
     HighchartsNetworkgraph(Highcharts);
-    const [i, setI] = useState(-1);
-    // let chartComponent;
 
     const [chartComponent, setChartComponent] = useState(null);
-
-    // if (i % 6 === 0) {
-    //     setChartComponent(
-    //         <HighchartsReact highcharts={Highcharts} options={chartData} />
-    //     );
-    // } else if (i % 6 === 1) {
-    //     setChartComponent(
-    //         <HighchartsReact highcharts={Highcharts} options={chartData} />
-    //     );
-    // } else if (i % 6 === 2) {
-    //     setChartComponent(
-    //         <HighchartsReact highcharts={Highcharts} options={chartData} />
-    //     );
-    // } else if (i % 6 === 3) {
-    //     setChartComponent(
-    //         <HighchartsReact highcharts={Highcharts} options={chartData} />
-    //     );
-    // } else if (i % 6 === 4) {
-    //     setChartComponent(
-    //         <HighchartsReact highcharts={Highcharts} options={chartData} />
-    //     );
-    // } else if (i % 6 === 5) {
-    //     setChartComponent(
-    //         <HighchartsReact highcharts={Highcharts} options={chartData} />
-    //     );
-    // }
 
     const displayChart = (options) => {
         if (options.chart.type === "bar") {
@@ -152,6 +124,16 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
     };
 
     useEffect(() => {
+        const socket = new WebSocket("ws://localhost:8090");
+
+        socket.onopen = () => {
+            console.log("WebSocket connection established");
+        };
+
+        socket.onclose = () => {
+            console.log("WebSocket connection closed");
+        };
+
         socket.onmessage = ({ data }) => {
             console.log(data);
             const { diagram, action } = JSON.parse(data);
@@ -181,7 +163,6 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
             }
         };
 
-        // const storedUser = localStorage.getItem("user");
         const storedUserdata = localStorage.getItem("userdata");
 
         try {
@@ -191,6 +172,10 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
         }
 
         setLoading(false);
+
+        return () => {
+            socket.close();
+        };
     }, []);
 
     if (loading) {
@@ -212,21 +197,6 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
                             <button className="logout">Back</button>
                         </Link>
                     </div>
-                    {/* <h1 className="title">
-                        {" "}
-                        Account:{" "}
-                        <span style={{ color: "lightcoral" }}>
-                            {user.email}
-                        </span>
-                    </h1>
-                    <div className="buttonsmycharts">
-                        <Link to="/user">
-                            <button className="mainbutton">My Account</button>
-                        </Link>
-                        <Link to="/user">
-                            <button className="mainbutton">Log out</button>
-                        </Link>
-                    </div> */}
                 </div>
                 <br />
                 <div className="containermy">

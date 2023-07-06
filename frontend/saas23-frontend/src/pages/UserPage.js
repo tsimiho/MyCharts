@@ -1,7 +1,7 @@
 import "../style/UserPage.css";
 import { Link, Navigate, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import socket from "../components/WebSocket.js";
+// import socket from "../components/WebSocket.js";
 import axios from "axios";
 
 function UserPage({
@@ -23,6 +23,7 @@ function UserPage({
 
     const [loading, setLoading] = useState(true); // New loading state
     const [loggedOut, setLoggedOut] = useState(false); // New loading state
+    const [navigeCredits, setNevigateCredits] = useState(false); // New loading state
 
     const rows = data.map((row, index) => {
         const cells = row.map((cell, cellIndex) => {
@@ -37,6 +38,10 @@ function UserPage({
         setLoggedOut(true);
     }
 
+    const nevigateToCredits = () => {
+        setNevigateCredits(true);
+    };
+
     const updateuserdata = (data) => {
         data = JSON.parse(data);
         console.log(data);
@@ -45,14 +50,20 @@ function UserPage({
     };
 
     useEffect(() => {
+        const socket = new WebSocket("ws://localhost:8090");
+
+        socket.onopen = () => {
+            console.log("WebSocket connection established");
+        };
+
+        socket.onclose = () => {
+            console.log("WebSocket connection closed");
+        };
+
         socket.onmessage = ({ data }) => {
             console.log("message");
             updateuserdata(data);
         };
-
-        axios.post("http://localhost:9001/api/login", {
-            email: userdata.email,
-        });
 
         const storedUserdata = localStorage.getItem("userdata");
 
@@ -63,6 +74,10 @@ function UserPage({
         }
 
         setLoading(false);
+
+        return () => {
+            socket.close();
+        };
     }, []);
 
     if (loggedOut === true) {
@@ -71,6 +86,10 @@ function UserPage({
 
     if (loading) {
         return <div></div>;
+    }
+
+    if (navigeCredits === true) {
+        return <Navigate replace to="/purchasecredits" />;
     }
 
     return (
@@ -97,7 +116,7 @@ function UserPage({
                     </Link>
                     &nbsp;&nbsp;&nbsp;
                     <Link to="/purchasecredits">
-                        <button className="mainbutton">Buy credits</button>
+                        <button className="mainbutton"> Buy credits</button>
                     </Link>
                 </div>
             </div>

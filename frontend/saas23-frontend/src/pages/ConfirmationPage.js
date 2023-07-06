@@ -1,7 +1,7 @@
 import "../style/UserPage.css";
 import { Link, Navigate, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import socket from "../components/WebSocket.js";
+// import socket from "../components/WebSocket.js";
 
 function Confirmation({
     newuser,
@@ -15,14 +15,7 @@ function Confirmation({
         setUserdata({});
     };
 
-    useEffect(() => {
-        socket.onmessage = ({ data }) => {
-            data = JSON.parse(data);
-            console.log(data);
-            setUserdata(data);
-            localStorage.setItem("userdata", JSON.stringify(data));
-        };
-    }, []);
+    useEffect(() => {}, []);
 
     return (
         <div className="background">
@@ -39,7 +32,7 @@ function Confirmation({
                 </h2>
                 <h2 className="title">
                     {" "}
-                    If you continue your email will be stored in our database
+                    If you continue, your email will be stored in our database
                 </h2>
                 <h2 className="title">
                     {" "}
