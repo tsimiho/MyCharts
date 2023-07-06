@@ -36,7 +36,7 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
     const [chartComponent, setChartComponent] = useState(null);
 
     const displayChart = (options) => {
-        console.log("options", options);
+        options.chart.height = 350;
         if (options.chart.type === "column") {
             setChartComponent(<BarChart height={"350"} opts={options} />);
         } else if (options.chart.type === "networkgraph") {
@@ -297,15 +297,15 @@ function MyCharts({ user, setUser, userdata, setUserdata }) {
                             </tbody>
                         </table>
                     </div>
-                    {chartData ? (
-                        chartComponent
-                    ) : (
-                        <div className="no-chart-container">
+                    <div className="no-chart-container">
+                        {chartData ? (
+                            chartComponent
+                        ) : (
                             <div className="no-chart-box">
                                 Press a chart to preview
                             </div>
-                        </div>
-                    )}
+                        )}
+                    </div>
                 </div>
                 <div id="chart-container"></div>
             </div>

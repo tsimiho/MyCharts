@@ -29,8 +29,16 @@ for microservice_name in "${microservice_names[@]}"; do
     echo "Starting $service_dir"
     cd "$service_dir" || continue
     npm start &
+    pids+=($!)
     cd ..
   fi
 done
 
+# Wait for some time (adjust the duration as needed)
+sleep 10m
 
+# Stop the running microservices
+for pid in "${pids[@]}"; do
+  echo "Stopping process with PID $pid"
+  kill "$pid"
+done
