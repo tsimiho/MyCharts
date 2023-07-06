@@ -30,26 +30,41 @@
 version: "3"
 services:
     zookeeper:
-    image: zookeeper
-    container_name: zookeeper
-    ports:
-      - "2181:2181"
-    networks:
-      - kafka-network
+        image: confluentinc/cp-zookeeper
+        container_name: zookeeper
+        ports:
+            - "2181:2181"
+        environment:
+            - ZOOKEEPER_CLIENT_PORT=2181
 
     kafka:
         image: confluentinc/cp-kafka
         container_name: kafka
-        ports:
-        - "9092:9092"
-        environment:
-        - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
-        - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
-        - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
         depends_on:
-        - zookeeper
-        networks:
-        - kafka-network
+            - zookeeper
+        ports:
+            - "19092:19092"
+        environment:
+            - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+            - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,CONNECTIONS_FROM_HOST://localhost:19092
+            # Change 172.19.0.3:9092 to kafka:9092
+            # Tested actual IP where kafka runs above but does not work.
+            # Ideally it should work with kafka:9092 (dns issues tho ??)
+
+            # Works for client - docker services
+            # TODO: Migrate services to docker, change brokers to only docker ips
+            - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,CONNECTIONS_FROM_HOST:PLAINTEXT
+            - KAFKA_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+            - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
+        healthcheck:
+            test:
+                [
+                    "CMD-SHELL",
+                    "echo 'ReplicaVerification' | kafka-console-consumer --bootstrap-server kafka:9092 --topic __consumer_offsets --from-beginning --max-messages 1 --timeout-ms 2000 >/dev/null 2>&1",
+                ]
+            interval: 30s
+            timeout: 10s
+            retries: 5
 
     orchestrator_service:
         build:
@@ -62,8 +77,9 @@ services:
             - MONGO_URI=mongodb+srv://user:user@cluster0.pt64z19.mongodb.net/
             - BASE_URL=192.168.1.227
         restart: always
-        networks:
-        - kafka-network
+        depends_on:
+            kafka:
+                condition: service_healthy
 
     users_service:
         build:
@@ -75,8 +91,19 @@ services:
             - MONGO_URI=mongodb+srv://user:user@cluster0.pt64z19.mongodb.net/
             - BASE_URL=192.168.1.227
         restart: always
-        networks:
-        - kafka-network
+        depends_on:
+            kafka:
+                condition: service_healthy
+
+    frontend_service:
+        build:
+            context: ./frontend/saas23-frontend
+            dockerfile: dockerfile
+        ports:
+            - "4007:4007"
+        environment:
+            - BASE_URL=192.168.1.227
+        restart: always
 
     linechart_create_service:
         build:
@@ -88,8 +115,9 @@ services:
             - MONGO_URI=mongodb+srv://user:user@cluster0.moa9dz2.mongodb.net/
             - BASE_URL=192.168.1.227
         restart: always
-        networks:
-        - kafka-network
+        depends_on:
+            kafka:
+                condition: service_healthy
 
     linechart_show_service:
         build:
@@ -101,8 +129,9 @@ services:
             - MONGO_URI=mongodb+srv://user:user@cluster0.moa9dz2.mongodb.net/
             - BASE_URL=192.168.1.227
         restart: always
-        networks:
-        - kafka-network
+        depends_on:
+            kafka:
+                condition: service_healthy
 
     linewithannotations_create_service:
         build:
@@ -114,8 +143,9 @@ services:
             - MONGO_URI=mongodb+srv://user:user@cluster0.r25s0uy.mongodb.net/
             - BASE_URL=192.168.1.227
         restart: always
-        networks:
-        - kafka-network
+        depends_on:
+            kafka:
+                condition: service_healthy
 
     linewithannotations_show_service:
         build:
@@ -127,8 +157,9 @@ services:
             - MONGO_URI=mongodb+srv://user:user@cluster0.r25s0uy.mongodb.net/
             - BASE_URL=192.168.1.227
         restart: always
-        networks:
-        - kafka-network
+        depends_on:
+            kafka:
+                condition: service_healthy
 
     dependencywheel_create_service:
         build:
@@ -140,8 +171,9 @@ services:
             - MONGO_URI=mongodb+srv://user:user@cluster0.ouceens.mongodb.net/
             - BASE_URL=192.168.1.227
         restart: always
-        networks:
-        - kafka-network
+        depends_on:
+            kafka:
+                condition: service_healthy
 
     dependencywheel_show_service:
         build:
@@ -153,8 +185,9 @@ services:
             - MONGO_URI=mongodb+srv://user:user@cluster0.ouceens.mongodb.net/
             - BASE_URL=192.168.1.227
         restart: always
-        networks:
-        - kafka-network
+        depends_on:
+            kafka:
+                condition: service_healthy
 
     basiccolumn_create_service:
         build:
@@ -166,8 +199,9 @@ services:
             - MONGO_URI=mongodb+srv://user:user@cluster0.y2sphyl.mongodb.net/
             - BASE_URL=192.168.1.227
         restart: always
-        networks:
-        - kafka-network
+        depends_on:
+            kafka:
+                condition: service_healthy
 
     basiccolumn_show_service:
         build:
@@ -179,8 +213,9 @@ services:
             - MONGO_URI=mongodb+srv://user:user@cluster0.y2sphyl.mongodb.net/
             - BASE_URL=192.168.1.227
         restart: always
-        networks:
-        - kafka-network
+        depends_on:
+            kafka:
+                condition: service_healthy
 
     networkgraph_create_service:
         build:
@@ -192,8 +227,9 @@ services:
             - MONGO_URI=mongodb+srv://user:user@cluster0.svdqmsb.mongodb.net/
             - BASE_URL=192.168.1.227
         restart: always
-        networks:
-        - kafka-network
+        depends_on:
+            kafka:
+                condition: service_healthy
 
     networkgraph_show_service:
         build:
@@ -205,8 +241,9 @@ services:
             - MONGO_URI=mongodb+srv://user:user@cluster0.svdqmsb.mongodb.net/
             - BASE_URL=192.168.1.227
         restart: always
-        networks:
-        - kafka-network
+        depends_on:
+            kafka:
+                condition: service_healthy
 
     polarchart_create_service:
         build:
@@ -218,8 +255,9 @@ services:
             - MONGO_URI=mongodb+srv://user:user@cluster0.zhha7md.mongodb.net/
             - BASE_URL=192.168.1.227
         restart: always
-        networks:
-        - kafka-network
+        depends_on:
+            kafka:
+                condition: service_healthy
 
     polarchart_show_service:
         build:
@@ -231,8 +269,9 @@ services:
             - MONGO_URI=mongodb+srv://user:user@cluster0.zhha7md.mongodb.net/
             - BASE_URL=192.168.1.227
         restart: always
-        networks:
-        - kafka-network
+        depends_on:
+            kafka:
+                condition: service_healthy
 
     csv_downloader_service:
         build:
@@ -243,20 +282,4 @@ services:
         environment:
             - BASE_URL=192.168.1.227
         restart: always
-        networks:
-        - kafka-network
-
-    frontend_service:
-        build:
-            context: ./frontend/saas23-frontend
-            dockerfile: dockerfile
-        ports:
-            - "4007:4007"
-        environment:
-            - BASE_URL=192.168.1.227
-        restart: always
-        networks:
-        - kafka-network
-
-networks:
-  kafka-network:
+        
