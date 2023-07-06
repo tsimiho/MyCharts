@@ -4,7 +4,7 @@ chart,title,subtitle,accessibility,series
     ""linkWeight"": 5,
     ""centeredLinks"": true,
     ""dataLabels"": {
-        ""format"": ""{point.fromNode.name} ? {point.toNode.name}: {point.weight}"",
+        ""format"": ""{point.fromNode.name} --> {point.toNode.name}: {point.weight}"",
         ""nodeFormat"": ""{point.name}"",
         ""color"": ""black""
     },
