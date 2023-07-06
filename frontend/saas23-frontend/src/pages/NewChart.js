@@ -20,6 +20,8 @@ import NetworkSchema from "../schemas/NetworkSchema";
 import DependencyWheelSchema from "../schemas/DependencyWheelSchema";
 import PolarSchema from "../schemas/PolarSchema";
 
+
+
 function NewChart({ user, setUser, userdata, setUserdata }) {
     const [i, setI] = useState(0);
     const [jsonData, setJsonData] = useState(null);

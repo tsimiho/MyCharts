@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import Highcharts from "highcharts";
-
+import HighchartsMore from "highcharts/highcharts-more";
 const PolarChart = ({ height, opts = null }) => {
     const chartRef = useRef(null);
+    HighchartsMore(Highcharts);
 
     useEffect(() => {
         const options = opts

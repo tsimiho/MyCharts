@@ -15,6 +15,7 @@ import csvtojson from "csvtojson";
 import { ToastContainer } from "react-toastify";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import HighchartsMore from "highcharts/highcharts-more";
 
 function ChartPreview({ user, setUser, userdata, setUserdata }) {
     HighchartsExporting(Highcharts);
@@ -22,6 +23,7 @@ function ChartPreview({ user, setUser, userdata, setUserdata }) {
     Sankey(Highcharts);
     HighchartsDependencyWheel(Highcharts);
     HighchartsNetworkgraph(Highcharts);
+    HighchartsMore(Highcharts);
     const location = useLocation();
     const [save, setSave] = useState(true);
     var jsonData = [];
