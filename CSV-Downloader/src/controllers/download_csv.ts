@@ -5,9 +5,12 @@ import path from "path";
 const download_csv = async (req: Request, res: Response) => {
     const parameter = req.query.param; // Accessing the parameter
     console.log(parameter);
-    const filePath = path.join(__dirname, "../csv_files/"+parameter+".csv");
+    const filePath = path.join(__dirname, "../csv_files/" + parameter + ".csv");
 
-    res.setHeader("Content-Disposition", 'attachment; filename="descriptiontemplate.csv"');
+    res.setHeader(
+        "Content-Disposition",
+        `attachment; filename="${parameter}.csv"`
+    );
     res.sendFile(filePath);
 };
 

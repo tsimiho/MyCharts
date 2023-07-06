@@ -74,30 +74,32 @@ function NewChart({ user, setUser, userdata, setUserdata }) {
         // Get the keys of the JSON object and the reference schema
         const jsonKeys = Object.keys(json);
         const referenceKeys = Object.keys(reference);
-      
+
         // Check if the number of keys is the same
         // if (jsonKeys.length !== referenceKeys.length) {
         //   return false;
         // }
-      
+
         // Iterate over the keys
         for (let key of jsonKeys) {
-          // Check if the key exists in the reference schema
-          if (!reference.hasOwnProperty(key)) {
-            console.log(key)
-            toast.error(
-                "There is no property named "+key+" in the schema for the specific chart",
-                {
-                    position: "top-left",
-                    autoClose: 5000,
-                }
-            );
-            return false;
-          }
+            // Check if the key exists in the reference schema
+            if (!reference.hasOwnProperty(key)) {
+                console.log(key);
+                toast.error(
+                    "There is no property named " +
+                        key +
+                        " in the schema for the specific chart",
+                    {
+                        position: "top-left",
+                        autoClose: 5000,
+                    }
+                );
+                return false;
+            }
         }
-      
+
         return true;
-      }
+    }
 
     const checkandsetjson = (json) => {
         const jsonnew = {};
@@ -105,44 +107,44 @@ function NewChart({ user, setUser, userdata, setUserdata }) {
             jsonnew[key] = JSON.parse(value);
         });
         // console.log(jsonnew.chart.hasOwnProperty("type"));
-        if (!jsonnew.hasOwnProperty("chart")){
-            toast.error(
-                "The csv doesn't have a 'chart' property",
-                {
-                    position: "top-left",
-                    autoClose: 3000,
-                }
-            );
+        if (!jsonnew.hasOwnProperty("chart")) {
+            toast.error("The csv doesn't have a 'chart' property", {
+                position: "top-left",
+                autoClose: 3000,
+            });
             return;
         }
         var hasschema = false;
         if (jsonnew.chart.hasOwnProperty("type")) {
             console.log(jsonnew.chart.type);
             if (jsonnew.chart.type === "column") {
-                hasschema = hasSameSchema(jsonnew,ColumnSchema)               
+                hasschema = hasSameSchema(jsonnew, ColumnSchema);
             } else if (jsonnew.chart.type === "networkgraph") {
-                hasschema = hasSameSchema(jsonnew,NetworkSchema)                
+                hasschema = hasSameSchema(jsonnew, NetworkSchema);
             } else if (jsonnew.chart.type === "dependencywheel") {
-                hasschema = hasSameSchema(jsonnew,DependencyWheelSchema)                
+                hasschema = hasSameSchema(jsonnew, DependencyWheelSchema);
             } else if (jsonnew.chart.type === "line") {
                 if (jsonnew.hasOwnProperty("annotations")) {
-                    hasschema = hasSameSchema(jsonnew,LineWithAnnotationsSchema)                   
+                    hasschema = hasSameSchema(
+                        jsonnew,
+                        LineWithAnnotationsSchema
+                    );
                 } else {
-                    hasschema = hasSameSchema(jsonnew,LineChartSchema)
+                    hasschema = hasSameSchema(jsonnew, LineChartSchema);
                 }
             }
         } else if (jsonnew.chart.polar === "true") {
             console.log("polar");
-            hasschema = hasSameSchema(jsonnew,PolarSchema)
+            hasschema = hasSameSchema(jsonnew, PolarSchema);
         }
-        console.log(hasschema)
-        if(hasschema){
+        console.log(hasschema);
+        if (hasschema) {
             setJsonData(json);
         }
-    }
+    };
 
     const download_csv = (diagram_type) => {
-        const url = `http://localhost:9011/api/download_csv?param=${encodeURIComponent(
+        const url = `http://localhost:9014/api/download_csv?param=${encodeURIComponent(
             diagram_type
         )}`;
         window.location.href = url;
@@ -189,7 +191,6 @@ function NewChart({ user, setUser, userdata, setUserdata }) {
         };
 
         reader.readAsText(file);
-        
     };
 
     const handleDragOver = (event) => {
