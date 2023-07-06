@@ -32,7 +32,7 @@ function Confirmation({
                 </h2>
                 <h2 className="title">
                     {" "}
-                    If you continue your email will be stored in our database
+                    If you continue, your email will be stored in our database
                 </h2>
                 <h2 className="title">
                     {" "}
